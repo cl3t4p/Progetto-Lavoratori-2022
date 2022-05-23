@@ -45,9 +45,7 @@ public class Lavoratore {
         automunito = result.getString("automunito");
         inizio_disponibile = result.getDate("inizio_disponibile");
         fine_disponibile = result.getDate("fine_disponibile");
-        nome_emergenza = result.getString("Nome")
-
-        Arrays.stream(Lavoratore.class.getDeclaredFields()).forEach(field -> field.)
+        nome_emergenza = result.getString("Nome");
         l.setId(Integer.parseInt(tx.getText()));
         l.setNome(tx1.getText());
         l.setCognome(tx2.getText());

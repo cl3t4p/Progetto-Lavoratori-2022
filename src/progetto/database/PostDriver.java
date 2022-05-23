@@ -63,6 +63,17 @@ public class PostDriver {
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setInt(1,limit);
         ResultSet resultSet = statement.executeQuery();
+        return getLavoratori(resultSet);
+    }
+
+    public Set<Lavoratore> getLavoratori() throws SQLException {
+        String sql = "SELECT * from lavoratore";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        return getLavoratori(resultSet);
+    }
+
+    private Set<Lavoratore> getLavoratori(ResultSet resultSet) throws SQLException {
         Set<Lavoratore> lavoratori = new HashSet<>();
         while (resultSet.next()){
             try {
@@ -74,20 +85,7 @@ public class PostDriver {
         return lavoratori;
     }
 
-    public Set<Lavoratore> getLavoratori() throws SQLException {
-        String sql = "SELECT * from lavoratore";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery();
-        Set<Lavoratore> lavoratori = new HashSet<>();
-        while (resultSet.next()){
-            try {
-                lavoratori.add(SQLMapper.deserializeSQL(resultSet,Lavoratore.class));
-            } catch (IllegalAccessException | InstantiationException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return lavoratori;
-    }
+
     public int addLavoro(Lavoro lavoro) throws SQLException {
         String sql = "INSERT INTO lavoro_svolto " +
                 "(id,inizio_periodo,fine_periodo,nome_azienda,mansione_svolta,luogo_lavoro,retribuzione_lorda_giornaliera ,id_lavoratore) " +
@@ -116,7 +114,7 @@ public class PostDriver {
         }
         return comuni;
     }
-    public int addLavComune(Comune comune,int id_lavoratore) throws SQLException {
+    public int addLavCoume(Comune comune, int id_lavoratore) throws SQLException {
         String sql = "INSERT INTO lav_comune(comune,id_lavoratore) VALUES(?,?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,comune.getNome_comune().toUpperCase(Locale.ROOT));
@@ -139,25 +137,25 @@ public class PostDriver {
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name);
         ResultSet resultSet = statement.executeQuery();
-        Set<Comune> comuni = new HashSet<>();
+        Set<String> strings = new HashSet<>();
         while (resultSet.next()){
-            try {
-                comuni.add(SQLMapper.deserializeSQL(resultSet,Comune.class));
-            } catch (IllegalAccessException | InstantiationException e) {
-                throw new RuntimeException(e);
-            }
+            strings.add(resultSet.getString(1));
         }
-        return comuni;
+        return strings;
     }
 
-    public int addLavComune(String lingua,int id_lavoratore) throws SQLException {
+    public int addLavLingua(String lingua, int id_lavoratore) throws SQLException {
         String sql = "INSERT INTO lingua_lav(nome_lingua,id_lavoratore) VALUES(?,?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,comune.getNome_comune().toUpperCase(Locale.ROOT));
+        statement.setString(1,lingua);
         statement.setInt(2,id_lavoratore);
         return statement.executeUpdate();
     }
 
+
+    public int addEsperienza(String nome_esperienza){
+
+    }
 }
 
 
