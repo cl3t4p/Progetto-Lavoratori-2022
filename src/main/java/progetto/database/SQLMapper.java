@@ -12,6 +12,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Set;
 
+/***
+ * Serialize any java object into SQL Statments
+ * Desirialize any SQL Result into java object
+ */
 public class SQLMapper {
 
     /***
@@ -33,6 +37,7 @@ public class SQLMapper {
                 }
             if (ignore)
                 continue;
+            field.setAccessible(true);
             switch (field.getType().getSimpleName()) {
                 case "String":
                     statement.setString(cursor, (String) field.get(a));
@@ -66,6 +71,7 @@ public class SQLMapper {
                 }
             if(ignore)
                 continue;
+            field.setAccessible(true);
             switch (field.getType().getSimpleName()){
                 case "String":
                     field.set(a,result.getString(name));

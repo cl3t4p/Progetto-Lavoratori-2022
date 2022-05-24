@@ -2,13 +2,12 @@ package progetto.database;
 
 
 import progetto.Comune;
+import progetto.Dipendente;
 import progetto.Lavoratore;
 import progetto.Lavoro;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class PostDriver {
     private Connection connection;
@@ -23,7 +22,7 @@ public class PostDriver {
         this.port = port;
     }
 
-    private Connection getConnection() {
+    public Connection getConnection() {
         if (connection == null)
             try {
                 Class.forName("org.postgresql.Driver");
@@ -99,13 +98,13 @@ public class PostDriver {
         }
         return statement.executeUpdate();
     }
-    public Set<Comune> getComune(String name) throws SQLException {
+    public List<Comune> getComune(String name) throws SQLException {
         name = "%"+name+"%";
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name.toUpperCase(Locale.ROOT));
         ResultSet resultSet = statement.executeQuery();
-        Set<Comune> comuni = new HashSet<>();
+        List<Comune> comuni = new ArrayList<>();
         while (resultSet.next()){
             try {
                 comuni.add(SQLMapper.deserializeSQL(resultSet,Comune.class));
@@ -169,9 +168,23 @@ public class PostDriver {
     }
 
 
-    public int addEsperienza(String nome_esperienza){
-
+    public Dipendente getDipendenteByUserAndPassword(String user,String pass) throws SQLException {
+        String sql = "SELECT * FROM dipendente WHERE username=? and password=?";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setString(1,user);
+        statement.setString(2,pass);
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next())
+            try {
+                return (SQLMapper.deserializeSQL(resultSet,Dipendente.class));
+            } catch (IllegalAccessException | InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+        return null;
     }
+
+
+
 }
 
 
