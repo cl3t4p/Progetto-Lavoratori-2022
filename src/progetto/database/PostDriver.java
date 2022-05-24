@@ -100,7 +100,8 @@ public class PostDriver {
         return statement.executeUpdate();
     }
     public Set<Comune> getComune(String name) throws SQLException {
-        String sql = "SELECT * FROM comuni WHERE nome_comune LIKE %?";
+        name = "%"+name+"%";
+        String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name.toUpperCase(Locale.ROOT));
         ResultSet resultSet = statement.executeQuery();
@@ -113,6 +114,19 @@ public class PostDriver {
             }
         }
         return comuni;
+    }
+    public Comune getComuneByName(String name) throws SQLException {
+        String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setString(1,name.toUpperCase(Locale.ROOT));
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next())
+            try {
+                return (SQLMapper.deserializeSQL(resultSet,Comune.class));
+            } catch (IllegalAccessException | InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+        return null;
     }
     public int addLavCoume(Comune comune, int id_lavoratore) throws SQLException {
         String sql = "INSERT INTO lav_comune(comune,id_lavoratore) VALUES(?,?)";
@@ -132,10 +146,12 @@ public class PostDriver {
         return patenti;
     }
 
-    public Set<String> getLingua(String name) throws SQLException {
-        String sql = "SELECT * FROM lingua WHERE nome_lingua ILIKE %?";
+    public Set<String> getLinguaLike(String name,int limite) throws SQLException {
+        name = "%"+name+"%";
+        String sql = "SELECT * FROM lingua WHERE nome_lingua ILIKE ? LIMIT ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name);
+        statement.setInt(2,limite);
         ResultSet resultSet = statement.executeQuery();
         Set<String> strings = new HashSet<>();
         while (resultSet.next()){
