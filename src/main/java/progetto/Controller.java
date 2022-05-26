@@ -93,7 +93,7 @@ public class Controller {
         Lavoratore l=new Lavoratore();
         Connection conn=connect();
         try {
-          //  l.setId(Integer.parseInt(tx.getText()));
+            l.setId(Integer.parseInt(tx.getText()));
             l.setNome(tx1.getText());
             l.setCognome(tx2.getText());
             l.setLuogo_nascita(tx3.getText());
@@ -466,7 +466,7 @@ public class Controller {
         Lavoratore l=new Lavoratore();
         Connection conn=connect();
         try {
-            //l.setId(Integer.parseInt(tx31.getText()));
+            l.setId(Integer.parseInt(tx31.getText()));
             l.setNome(tx27.getText());
             l.setCognome(tx28.getText());
             l.setLuogo_nascita(tx29.getText());
