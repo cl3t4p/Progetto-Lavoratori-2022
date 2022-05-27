@@ -1,4 +1,4 @@
-package progetto;
+package progetto.fx.controllers;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,7 +24,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import progetto.Lavoratore;
+import progetto.Lavoro;
+import progetto.Main;
 import progetto.database.PostDriver;
+import progetto.database.exception.DatabaseDataError;
 
 /**
  *
@@ -32,7 +36,7 @@ import progetto.database.PostDriver;
  */
 public class Controller {
 
-    PostDriver postDriver = new PostDriver("postgres","example","postgres","localhost",5432);
+
 
     @FXML
     TextField tx,tx1,tx2,tx3,tx4,tx5,tx6,tx8,tx7,tx9,tx12,tx13,tx14,tx15,tx16,tx17,tx18,tx19,tx20,tx21,tx22,tx23,tx24,tx25,tx26,tx27,tx28,tx29,tx30,tx31,tx32,tx33,tx34,tx35,tx36,tx37,tx38,txuser,txpass;
@@ -61,39 +65,17 @@ public class Controller {
         return conn; 
      }
     
-    public void login(ActionEvent event) throws Exception{ 
-        Connection conn=connect();
-        String u = txuser.getText();
-        String p = txpass.getText();
-        String sqlString = "SELECT id FROM dipendente WHERE username=? and password=?";
-        PreparedStatement pst = conn.prepareStatement(sqlString);
-        pst.setString(1, u);
-        pst.setString(2, p);
-        ResultSet rs = pst.executeQuery();
-        if( rs.next()){
-            Parent root= FXMLLoader.load(getClass().getResource("view/MENU.fxml"));
-            Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene=new Scene(root);
-            stage.setScene(scene);
-            stage.show();          
-        } else {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("ERRORE");
-            alert.setHeaderText("USERNAME E/O PASSWORD NON CORRETTI");
-            if(alert.showAndWait().get() == ButtonType.OK){   
-            }    
-       }   
-    }
+
 
     private Connection connect() {
-        return postDriver.getConnection();
+        return Main.getPostDriver().getConnection();
     }
 
     public void inserimento_lavoratore() throws Exception{
         Lavoratore l=new Lavoratore();
         Connection conn=connect();
         try {
-            l.setId(Integer.parseInt(tx.getText()));
+            //l.setId(Integer.parseInt(tx.getText()));
             l.setNome(tx1.getText());
             l.setCognome(tx2.getText());
             l.setLuogo_nascita(tx3.getText());
@@ -466,7 +448,7 @@ public class Controller {
         Lavoratore l=new Lavoratore();
         Connection conn=connect();
         try {
-            l.setId(Integer.parseInt(tx31.getText()));
+            //l.setId(Integer.parseInt(tx31.getText()));
             l.setNome(tx27.getText());
             l.setCognome(tx28.getText());
             l.setLuogo_nascita(tx29.getText());

@@ -20,6 +20,6 @@ public class DatabaseDataError extends Exception{
         alert.setTitle("Errore");
         alert.setHeaderText(getMessage());
         alert.show();
-        alert.showAndWait().get();
+       // alert.showAndWait().get();
     }
 }

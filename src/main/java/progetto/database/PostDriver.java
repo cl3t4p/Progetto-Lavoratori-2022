@@ -104,6 +104,19 @@ public class PostDriver {
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name.toUpperCase(Locale.ROOT));
+        return getComunes(statement);
+    }
+
+    public List<Comune> getComune(String name,int limit) throws SQLException {
+        name = "%"+name+"%";
+        String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ? LIMIT ?";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setString(1,name.toUpperCase(Locale.ROOT));
+        statement.setInt(2,limit);
+        return getComunes(statement);
+    }
+
+    private List<Comune> getComunes(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         List<Comune> comuni = new ArrayList<>();
         while (resultSet.next()){
@@ -115,6 +128,7 @@ public class PostDriver {
         }
         return comuni;
     }
+
     public Comune getComuneByName(String name) throws SQLException {
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);

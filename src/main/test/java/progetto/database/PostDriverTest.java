@@ -82,10 +82,9 @@ class PostDriverTest {
 
     @Test
     void getLavoratore() {
-        int id = 1;
         try {
             Lavoratore lavoratore = postDriver.getLavoratore(1);
-            System.out.println(lavoratore.toString());
+            assertEquals(lavoratore.getNome(),"Marco");
         }catch (SQLException e){
             fail("SQLException error");
         }
@@ -93,5 +92,6 @@ class PostDriverTest {
 
     @Test
     void getPatenti() {
+
     }
 }

@@ -34,6 +34,7 @@ public class ResearchCreator {
     }
     protected PreparedStatement getSQLStatment(Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
+        return null;
     }
 
     public void addStatment(PreparedStatement statement, Field field){
