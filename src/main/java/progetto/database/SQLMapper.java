@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Set;
 
 /***
@@ -25,12 +26,13 @@ public class SQLMapper {
      * @param fields Names of the field in the class (Not the names on the sql string)
      * @param <A> Class of a
      */
-    public static <A> void serializeSQL(PreparedStatement statement, A a, Set<String> fields) throws IllegalAccessException, SQLException, NoSuchFieldException {
-        int cursor = 1;
+    public static <A> void serializeSQL(PreparedStatement statement, A a, List<String> fields) throws IllegalAccessException, SQLException, NoSuchFieldException {
+        int cursor = 0;
 
         //Get fields based on the name of the give set of fields in order
         for (String field_name : fields) {
-            Field field = a.getClass().getField(field_name);
+
+            Field field = a.getClass().getDeclaredField(field_name);
             boolean ignore = false;
             //Check if thd field has some additional info with the annotation
             for (Annotation annotation : field.getAnnotations())
@@ -39,6 +41,7 @@ public class SQLMapper {
                 }
             if (ignore)
                 continue;
+            cursor++;
             //This will make us possibile to modify private fields in the class
             field.setAccessible(true);
             switch (field.getType().getSimpleName()) {
@@ -47,6 +50,12 @@ public class SQLMapper {
                     break;
                 case "int":
                     statement.setInt(cursor, (int) field.get(a));
+                    break;
+                case "double":
+                    statement.setDouble(cursor, (double) field.get(a));
+                    break;
+                case "long":
+                    statement.setLong(cursor, (Long) field.get(a));
                     break;
                 case "Date":
                     statement.setDate(cursor, new Date(((java.util.Date) field.get(a)).getTime()));
@@ -75,6 +84,7 @@ public class SQLMapper {
                     SQLDInfo info = (SQLDInfo) annotation;
                     name = info.sql_name().isEmpty() ? name : info.sql_name();
                     ignore = info.ignore();
+                    break;
                 }
             if(ignore)
                 continue;
@@ -87,6 +97,12 @@ public class SQLMapper {
                     break;
                 case "int":
                     field.set(a,result.getInt(name));
+                    break;
+                case "double":
+                    field.set(a, result.getDouble(name));
+                    break;
+                case "long":
+                    field.set(a, result.getLong(name));
                     break;
                 case "Date":
                     field.set(a,result.getDate(name));

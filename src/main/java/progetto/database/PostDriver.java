@@ -11,7 +11,7 @@ import java.util.*;
 
 public class PostDriver {
     private Connection connection;
-    private final String user,pass,db_name,host;
+    private final String user, pass, db_name, host;
     private final int port;
 
     public PostDriver(String user, String pass, String db_name, String host, int port) {
@@ -34,30 +34,60 @@ public class PostDriver {
     }
 
 
-
     public Lavoratore getLavoratore(int id) throws SQLException {
         String sql = "SELECT * FROM lavoratore WHERE id=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1,id);
+        statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
-        if(!resultSet.next())
+        if (!resultSet.next())
             return null;
         Lavoratore lavoratore;
         try {
-            lavoratore = SQLMapper.deserializeSQL(resultSet,Lavoratore.class);
+            lavoratore = SQLMapper.deserializeSQL(resultSet, Lavoratore.class);
         } catch (IllegalAccessException | InstantiationException e) {
             throw new RuntimeException(e);
         }
         return lavoratore;
     }
-    public boolean login(String username,String password) throws SQLException {
+
+    public boolean login(String username, String password) throws SQLException {
         String sql = "SELECT id FROM dipendente WHERE username=? and password=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,username);
-        statement.setString(2,password);
+        statement.setString(1, username);
+        statement.setString(2, password);
         ResultSet resultSet = statement.executeQuery();
         return resultSet.next();
     }
+
+    public int addLavoratore(Lavoratore lavoratore) throws SQLException {
+        String sql = "INSERT INTO lavoratore" +
+                "(nome, cognome, luogo_nascita, data_nascita, nazionalita, indirizzo" +
+                ", telefono, email, automunito, inizio_periodo_disp, fine_periodo_disp, nome_emergenze" +
+                ", cognome_emergenze, telefono_emergenze, email_emergenze,id_dipendente)" +
+                " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) RETURNING id;";
+        List<String> fields = List.of("nome", "cognome", "luogo_nascita", "data_nascita"
+                , "nazionalita", "indirizzo", "telefono", "email","automunito",
+                "inizio_disponibile","fine_disponibile","nome_emergenze","cognome_emergenze","telefono_emergenze","email_emergenze","id_dipendente");
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        try {
+            SQLMapper.serializeSQL(statement, lavoratore, fields);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        ResultSet set = statement.executeQuery();
+        set.next();
+        return set.getInt(1);
+    }
+
+    public boolean removeLavoratore(int id) throws SQLException {
+        String sql="DELETE FROM lavoratore WHERE id=?";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1,id);
+        return statement.executeUpdate() == 1;
+    }
+
+
+
     public Set<Lavoratore> getLavoratori(int limit) throws SQLException {
         String sql = "SELECT * from lavoratore LIMIT ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
@@ -90,7 +120,7 @@ public class PostDriver {
         String sql = "INSERT INTO lavoro_svolto " +
                 "(id,inizio_periodo,fine_periodo,nome_azienda,mansione_svolta,luogo_lavoro,retribuzione_lorda_giornaliera ,id_lavoratore) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
-        Set<String> fields = Set.of("id","inizio_periodo","fine_periodo","nome_azienda","mansione","luogo","retribuzione" ,"id_lavoratore");
+        List<String> fields = List.of("id","inizio_periodo","fine_periodo","nome_azienda","mansione","luogo","retribuzione" ,"id_lavoratore");
         PreparedStatement statement = getConnection().prepareStatement(sql);
         try {
             SQLMapper.serializeSQL(statement,lavoro,fields);

@@ -1,6 +1,7 @@
 package progetto.fx.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import progetto.Main;
 
 public class MenuController {

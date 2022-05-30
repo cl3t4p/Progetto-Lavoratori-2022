@@ -1,17 +1,11 @@
 package progetto.fx.controllers;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import progetto.Main;
-import progetto.database.exception.DatabaseDataError;
+import progetto.database.exception.JavaFXDataError;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -25,12 +19,12 @@ public class LoginController {
             if(Main.getPostDriver().login(username,password)){
                 Main.getLoader().loadView("MENU");
             }else
-                throw new DatabaseDataError("Wrong Username or Password");
-        }catch (DatabaseDataError e ){
+                throw new JavaFXDataError("Wrong Username or Password");
+        }catch (JavaFXDataError e ){
             e.printFX();
         } catch (SQLException e) {
             System.out.println("test");
-            new DatabaseDataError("Database error").printFX();
+            new JavaFXDataError("Database error").printFX();
         }
     }
 }

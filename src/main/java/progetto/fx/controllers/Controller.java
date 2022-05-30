@@ -27,8 +27,6 @@ import javafx.stage.Stage;
 import progetto.Lavoratore;
 import progetto.Lavoro;
 import progetto.Main;
-import progetto.database.PostDriver;
-import progetto.database.exception.DatabaseDataError;
 
 /**
  *
@@ -82,12 +80,12 @@ public class Controller {
             l.setNazionalita(tx5.getText());
             l.setIndirizzo(tx6.getText());
             l.setTelefono(Integer.parseInt(tx7.getText()));
-            l.setMail(tx8.getText());
+            //l.setMail(tx8.getText());
             l.setAutomunito(tx9.getText());
-            l.setNome_emergenza(tx12.getText());
-            l.setCognome_emergenza(tx13.getText());
-            l.setTelefono_emergenza(Integer.parseInt(tx14.getText()));
-            l.setMail_emergenza(tx15.getText());
+           // l.setNome_emergenza(tx12.getText());
+           // l.setCognome_emergenza(tx13.getText());
+           // l.setTelefono_emergenza(Integer.parseInt(tx14.getText()));
+          //  l.setMail_emergenza(tx15.getText());
         } catch (Exception e) {
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("ERRORE");
@@ -134,18 +132,18 @@ public class Controller {
 		pst.setString ( 2, l.getNome() ) ;
 		pst.setString( 3, l.getCognome() );
 		pst.setString( 4, l.getLuogo_nascita() );
-                pst.setDate(5, (Date) l.getData_nascita());
+                pst.setDate(5, l.getData_nascita());
 		pst.setString( 6, l.getNazionalita() );
 		pst.setString( 7, l.getIndirizzo() );
-		pst.setInt( 8, l.getTelefono() );
-		pst.setString( 9, l.getMail() );
+		//pst.setInt( 8, l.getTelefono() );
+		//pst.setString( 9, l.getMail() );
 		pst.setString( 10, l.getAutomunito() );
                 pst.setDate(11, (Date) l.getInizio_disponibile());
                 pst.setDate(12, (Date) l.getFine_disponibile());              
-		pst.setString( 13, l.getNome_emergenza() );
-		pst.setString( 14, l.getCognome_emergenza() );
-		pst.setInt( 15, l.getTelefono_emergenza() );
-                pst.setString( 16, l.getMail_emergenza() );
+		//pst.setString( 13, l.getNome_emergenza() );
+		//pst.setString( 14, l.getCognome_emergenza() );
+		//pst.setInt( 15, l.getTelefono_emergenza() );
+         //       pst.setString( 16, l.getMail_emergenza() );
                	pst.setInt( 17, Integer.parseInt(tx26.getText()));
 	        pst.executeUpdate ();
                 Alert alert =new Alert(Alert.AlertType.CONFIRMATION);

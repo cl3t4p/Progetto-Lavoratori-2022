@@ -5,8 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/17"
+<AnchorPane prefHeight="404.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="progetto.fx.controllers.MenuController">
+   <children>
    <Button layoutX="42.0" layoutY="151.0" mnemonicParsing="false" onAction="#ricerca_lav" prefHeight="59.0"
            prefWidth="143.0" text="RICERCA LAVORATORE"/>
    <Button layoutX="218.0" layoutY="151.0" mnemonicParsing="false" onAction="#aggiungi_lavoratore" prefHeight="59.0"
@@ -18,4 +19,5 @@
          <Font size="30.0"/>
       </font>
    </Label>
+   </children>
 </AnchorPane>

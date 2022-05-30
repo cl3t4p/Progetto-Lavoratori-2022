@@ -1,186 +1,183 @@
 package progetto;
 
+
+import progetto.data.CheckData;
+import progetto.data.FieldChecker;
+import progetto.data.RegexChecker;
 import progetto.database.annotation.SQLDInfo;
-import progetto.database.exception.DatabaseDataError;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 
-/**
- *
- * @author 1blan
- */
 
-public class Lavoratore {
-    int id;
+//@Data
+//@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Lavoratore implements CheckData {
+
+    @FieldChecker
+    int id,id_dipendente;
     String nome, cognome, luogo_nascita;
     Date data_nascita;
     String nazionalita, indirizzo;
-    int telefono;
-    @SQLDInfo(sql_name = "email")
-    String mail;
+    @FieldChecker
+    long telefono;
+    @FieldChecker
+    String email;
     String automunito;
     @SQLDInfo(sql_name = "inizio_periodo_disp")
     Date inizio_disponibile;
     @SQLDInfo(sql_name = "fine_periodo_disp")
     Date fine_disponibile;
-    @SQLDInfo(sql_name = "nome_emergenze")
-    String nome_emergenza;
-    @SQLDInfo(sql_name = "cognome_emergenze")
-    String cognome_emergenza;
-    @SQLDInfo(sql_name = "email_emergenze")
-    String mail_emergenza;
-    @SQLDInfo(sql_name = "telefono_emergenze")
-    int telefono_emergenza;
+    String nome_emergenze;
+    String cognome_emergenze;
+    String email_emergenze;
+    long telefono_emergenze;
 
     public Lavoratore() {
     }
 
-    public void setData_nascita(Date data_nascita) {
-        this.data_nascita = data_nascita;
-    }
-
-    public void setInizio_disponibile(Date inizio_disponibile) {
-        this.inizio_disponibile = inizio_disponibile;
-    }
-
-    public void setFine_disponibile(Date fine_disponibile) {
-        this.fine_disponibile = fine_disponibile;
-    }
-
-    public Date getData_nascita() {
-        return data_nascita;
-    }
-
-    public Date getInizio_disponibile() {
-        return inizio_disponibile;
-    }
-
-    public Date getFine_disponibile() {
-        return fine_disponibile;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public void setLuogo_nascita(String luogo_nascita) {
-        this.luogo_nascita = luogo_nascita;
-    }
-
-    public void setNazionalita(String nazionalita) {
-        this.nazionalita = nazionalita;
-    }
-
-    public void setIndirizzo(String indirizzo) {
-        this.indirizzo = indirizzo;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public void setAutomunito(String automunito) {
-        this.automunito = automunito;
-    }
-
-    public void setNome_emergenza(String nome_emergenza) {
-        this.nome_emergenza = nome_emergenza;
-    }
-
-    public void setCognome_emergenza(String cognome_emergenza) {
-        this.cognome_emergenza = cognome_emergenza;
-    }
-
-    public void setTelefono_emergenza(int telefono_emergenza) {
-        this.telefono_emergenza = telefono_emergenza;
-    }
-
-    public void setMail_emergenza(String mail_emergenza) {
-        this.mail_emergenza = mail_emergenza;
+    public boolean validate() {
+        if(!CheckData.super.validate()){
+            return false;
+        }
+        if(!RegexChecker.EMAIL.validate(email)){
+            return false;
+        }
+        return RegexChecker.TEL_NUMBER.validate(String.valueOf(telefono));
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public int getId_dipendente() {
+        return id_dipendente;
+    }
+
+    public void setId_dipendente(int id_dipendente) {
+        this.id_dipendente = id_dipendente;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCognome() {
         return cognome;
     }
 
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
     public String getLuogo_nascita() {
         return luogo_nascita;
+    }
+
+    public void setLuogo_nascita(String luogo_nascita) {
+        this.luogo_nascita = luogo_nascita;
+    }
+
+    public Date getData_nascita() {
+        return data_nascita;
+    }
+
+    public void setData_nascita(Date data_nascita) {
+        this.data_nascita = data_nascita;
     }
 
     public String getNazionalita() {
         return nazionalita;
     }
 
+    public void setNazionalita(String nazionalita) {
+        this.nazionalita = nazionalita;
+    }
+
     public String getIndirizzo() {
         return indirizzo;
     }
 
-    public int getTelefono() {
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public long getTelefono() {
         return telefono;
     }
 
-    public String getMail() {
-        return mail;
+    public void setTelefono(long telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAutomunito() {
         return automunito;
     }
 
-    public String getNome_emergenza() {
-        return nome_emergenza;
+    public void setAutomunito(String automunito) {
+        this.automunito = automunito;
     }
 
-    public String getCognome_emergenza() {
-        return cognome_emergenza;
+    public Date getInizio_disponibile() {
+        return inizio_disponibile;
     }
 
-    public int getTelefono_emergenza() {
-        return telefono_emergenza;
+    public void setInizio_disponibile(Date inizio_disponibile) {
+        this.inizio_disponibile = inizio_disponibile;
     }
 
-    public String getMail_emergenza() {
-        return mail_emergenza;
+    public Date getFine_disponibile() {
+        return fine_disponibile;
     }
 
-    @Override
-    public String toString() {
-        return "Lavoratore{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
-                ", luogo_nascita='" + luogo_nascita + '\'' +
-                ", data_nascita=" + data_nascita +
-                ", nazionalita='" + nazionalita + '\'' +
-                ", indirizzo='" + indirizzo + '\'' +
-                ", telefono=" + telefono +
-                ", mail='" + mail + '\'' +
-                ", automunito='" + automunito + '\'' +
-                ", inizio_disponibile=" + inizio_disponibile +
-                ", fine_disponibile=" + fine_disponibile +
-                ", nome_emergenza='" + nome_emergenza + '\'' +
-                ", cognome_emergenza='" + cognome_emergenza + '\'' +
-                ", mail_emergenza='" + mail_emergenza + '\'' +
-                ", telefono_emergenza=" + telefono_emergenza +
-                '}';
+    public void setFine_disponibile(Date fine_disponibile) {
+        this.fine_disponibile = fine_disponibile;
+    }
+
+    public String getNome_emergenze() {
+        return nome_emergenze;
+    }
+
+    public void setNome_emergenze(String nome_emergenze) {
+        this.nome_emergenze = nome_emergenze;
+    }
+
+    public String getCognome_emergenze() {
+        return cognome_emergenze;
+    }
+
+    public void setCognome_emergenze(String cognome_emergenze) {
+        this.cognome_emergenze = cognome_emergenze;
+    }
+
+    public String getEmail_emergenze() {
+        return email_emergenze;
+    }
+
+    public void setEmail_emergenze(String email_emergenze) {
+        this.email_emergenze = email_emergenze;
+    }
+
+    public long getTelefono_emergenze() {
+        return telefono_emergenze;
+    }
+
+    public void setTelefono_emergenze(long telefono_emergenze) {
+        this.telefono_emergenze = telefono_emergenze;
     }
 }
