@@ -44,7 +44,9 @@ public class AddLavController implements Initializable {
             patente.getItems().addAll(postDriver.getPatenti().stream().toList());
             comune.getEditor().setOnKeyReleased(this::comune_search);
             email.focusedProperty().addListener(this::check_email);
-
+            if(Main.getDataRepo().getDipendente() != null)
+             id_dipendente.setText(String.valueOf(Main.getDataRepo().getDipendente().getId()));
+            id_dipendente.setEditable(false);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

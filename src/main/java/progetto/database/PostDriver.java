@@ -50,13 +50,14 @@ public class PostDriver {
         return lavoratore;
     }
 
-    public boolean login(String username, String password) throws SQLException {
+    public int login(String username, String password) throws SQLException {
         String sql = "SELECT id FROM dipendente WHERE username=? and password=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1, username);
         statement.setString(2, password);
         ResultSet resultSet = statement.executeQuery();
-        return resultSet.next();
+        resultSet.next();
+        return resultSet.getInt(1);
     }
 
     public int addLavoratore(Lavoratore lavoratore) throws SQLException {
