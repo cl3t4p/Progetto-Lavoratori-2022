@@ -5,10 +5,22 @@ import progetto.Lavoratore;
 
 public class DataRepo {
 
+
+    Dipendente dipendente;
+    int lavoratore_id;
+
     public DataRepo() {
     }
 
-    Dipendente dipendente;
+
+    public int getLavoratore_id() {
+        //TODO return lavoratore_id
+        return 58;
+    }
+
+    public void setLavoratore_id(int lavoratore_id) {
+        this.lavoratore_id = lavoratore_id;
+    }
 
     public Dipendente getDipendente() {
         return dipendente;

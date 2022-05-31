@@ -54,7 +54,7 @@ class PostDriverTest {
     void getComune() {
         String comune = "aceRn";
         try {
-            assertEquals(postDriver.getComune(comune)
+            assertEquals(postDriver.getComuneILike(comune)
                     .get(0)
                     .getNome_comune()
                     ,"ACERNO","Can get names from the database");
@@ -69,7 +69,7 @@ class PostDriverTest {
     void getComuneByName() {
         String comune = "acerno";
         try {
-            Comune com = postDriver.getComuneByName(comune);
+            Comune com = postDriver.getComuniByName(comune);
             if(com == null){
                 fail("There is no comune with that name");
             }
@@ -84,7 +84,7 @@ class PostDriverTest {
     void getComuneByNameWrong() {
         String comune = "ACERNI";
         try {
-            assertNull(postDriver.getComuneByName(comune));
+            assertNull(postDriver.getComuniByName(comune));
         }catch (SQLException e){
             fail("SQLException error");
         }
@@ -105,7 +105,7 @@ class PostDriverTest {
     @Test
     void getLavoratore() {
         try {
-            Lavoratore lavoratore = postDriver.getLavoratore(1);
+            Lavoratore lavoratore = postDriver.getLavoratoreByID(1);
             assertEquals(lavoratore.getNome(),"Marco");
         }catch (SQLException e){
             fail("SQLException error");

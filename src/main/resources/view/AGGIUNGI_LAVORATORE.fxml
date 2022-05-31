@@ -1,70 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" fx:id="agg_lavoratore" prefHeight="516.0" prefWidth="857.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="progetto.fx.controllers.AddLavController">
+<AnchorPane id="AnchorPane" fx:id="agg_lavoratore" prefHeight="520.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progetto.fx.controllers.AddLavController">
    <children>
-   <TextField fx:id="nome" layoutX="155.0" layoutY="64.0" prefHeight="26.0" prefWidth="150.0" />
-   <TextField fx:id="cognome" layoutX="155.0" layoutY="96.0" />
-   <TextField fx:id="luogo_nascita" layoutX="155.0" layoutY="132.0" prefHeight="26.0" prefWidth="150.0" />
-   <TextField fx:id="nazionalita" layoutX="156.0" layoutY="209.0" />
-   <TextField fx:id="indirizzo" layoutX="157.0" layoutY="241.0" />
+   <TextField fx:id="nome" layoutX="119.0" layoutY="32.0" prefHeight="26.0" prefWidth="150.0" />
+   <TextField fx:id="cognome" layoutX="119.0" layoutY="64.0" prefHeight="26.0" prefWidth="150.0" />
+   <TextField fx:id="luogo_nascita" layoutX="119.0" layoutY="100.0" prefHeight="26.0" prefWidth="150.0" />
+   <TextField fx:id="nazionalita" layoutX="120.0" layoutY="177.0" prefHeight="26.0" prefWidth="150.0" />
+   <TextField fx:id="indirizzo" layoutX="121.0" layoutY="209.0" prefHeight="26.0" prefWidth="150.0" />
      <!--NumberField fx:id="telefono" layoutX="157.0" layoutY="279.0" /> -->
-   <TextField fx:id="email" layoutX="158.0" layoutY="312.0" />
-   <ChoiceBox fx:id="automunito" layoutX="158.0" layoutY="344.0" selectionModel="">
-      <items>
-         <FXCollections fx:factory="observableArrayList">
-            <String fx:value="SI" />
-            <String fx:value="NO" />
-         </FXCollections>
-      </items>
-   </ChoiceBox>
-   <TextField fx:id="em_nome" layoutX="539.0" layoutY="64.0" />
-   <TextField fx:id="em_cognome" layoutX="540.0" layoutY="96.0" />
-   <!-- NumberField fx:id="em_telefono" layoutX="540.0" layoutY="132.0" /> -->
-   <TextField fx:id="em_email" layoutX="541.0" layoutY="172.0" />
-   <Label layoutX="80.0" layoutY="63.0" prefHeight="26.0" prefWidth="50.0" text="NOME" />
-   <Label layoutX="75.0" layoutY="100.0" text="COGNOME" />
-   <Label layoutX="56.0" layoutY="136.0" text="LUOGO NASCITA" />
-   <Label layoutX="61.0" layoutY="176.0" text="DATA NASCITA" />
-   <Label layoutX="62.0" layoutY="213.0" text="NAZIONALITA'" />
-   <Label layoutX="81.0" layoutY="245.0" text="INDIRIZZO" />
-   <Label layoutX="81.0" layoutY="283.0" text="TELEFONO" />
-   <Label layoutX="93.0" layoutY="316.0" text="EMAIL" />
-   <Label layoutX="66.0" layoutY="348.0" text="AUTOMUNITO" />
-   <Label layoutX="69.0" layoutY="382.0" text="DATA INIZIO" />
-   <Label layoutX="69.0" layoutY="416.0" text="DATA FINE" />
-   <Label layoutX="424.0" layoutY="68.0" text="EMERGENZA NOME" />
-   <Label layoutX="403.0" layoutY="100.0" text="EMERGENZA COGNOME" />
-   <Label layoutX="405.0" layoutY="136.0" text="EMERGENZA TELEFONO" />
-   <Label layoutX="425.0" layoutY="176.0" text="EMERGENZA EMAIL" />
-   <DatePicker fx:id="data_inizio" layoutX="158.0" layoutY="378.0" />
-   <DatePicker fx:id="data_fine" layoutX="158.0" layoutY="412.0" />
-   <TextField fx:id="esperienza" layoutX="544.0" layoutY="353.0" />
-   <Label layoutX="485.0" layoutY="325.0" text="PATENTE" />
-   <Label layoutX="367.0" layoutY="357.0" text="ESPERIENZA/SPECIALIZZAZIONE" />
-   <Label layoutX="444.0" layoutY="395.0" text="COMUNE/ZONA" />
-   <TextField fx:id="lingua" layoutX="544.0" layoutY="421.0" />
-   <Label layoutX="488.0" layoutY="429.0" text="LINGUA" />
-   <Button layoutX="699.0" layoutY="320.0" mnemonicParsing="false" onAction="#agg_patente" prefHeight="26.0" prefWidth="142.0" text="AGGIUNGI PATENTE" />
-   <Button layoutX="700.0" layoutY="352.0" mnemonicParsing="false" onAction="#agg_esperienza" prefHeight="26.0" prefWidth="142.0" text="AGGIUNGI ESPERIENZA" />
-   <Button layoutX="699.0" layoutY="382.0" mnemonicParsing="false" onAction="#agg_comune" prefHeight="26.0" prefWidth="142.0" text="AGGIUNGI COMUNE" />
-   <Button layoutX="699.0" layoutY="416.0" mnemonicParsing="false" onAction="#agg_lingua" prefHeight="26.0" prefWidth="142.0" text="AGGIUNGI LINGUA" />
-   <Button layoutX="536.0" layoutY="228.0" mnemonicParsing="false" onAction="#inserimento_lavoratore" prefHeight="50.0" prefWidth="158.0" text="AGGIUNGI LAVORATORE" />
-   <TextField fx:id="id" layoutX="157.0" layoutY="30.0" />
-   <Label layoutX="89.0" layoutY="34.0" text="ID" />
-   <DatePicker fx:id="data_nascita" layoutX="158.0" layoutY="172.0" />
-   <Button layoutX="20.0" layoutY="456.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0" prefWidth="82.0" text="BACK" />
-   <TextField fx:id="id_dipendente" layoutX="614.0" layoutY="17.0" />
-   <Label layoutX="522.0" layoutY="21.0" text="ID DIPENDENTE" />
-   <Button layoutX="308.0" layoutY="29.0" mnemonicParsing="false" onAction="#generatore_id_lav" prefHeight="26.0" prefWidth="157.0" text="GENERA ID LAVORATORE" />
-      <ChoiceBox fx:id="patente" layoutX="544.0" layoutY="321.0" prefWidth="150.0" />
-      <ComboBox fx:id="comune" editable="true" layoutX="544.0" layoutY="387.0" prefWidth="150.0" promptText="Comune" visibleRowCount="7" />
-      <Label fx:id="email_invalida" layoutX="322.0" layoutY="316.0" text="Email invalida" textFill="RED" underline="true" visible="false" />
-      <Label fx:id="tel_invalido" layoutX="313.0" layoutY="283.0" text="Telefono invalido" textFill="RED" underline="true" visible="false" />
+   <TextField fx:id="email" layoutX="122.0" layoutY="280.0" prefHeight="26.0" prefWidth="150.0" />
+   <ChoiceBox fx:id="automunito" layoutX="122.0" layoutY="312.0">
+      <!--    <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="SI" />
+               <String fx:value="NO" />
+            </FXCollections>
+         </items> -->
+      </ChoiceBox>
+      <TextField fx:id="em_nome" layoutX="746.0" layoutY="38.0" />
+      <TextField fx:id="em_cognome" layoutX="746.0" layoutY="70.0" />
+      <!-- NumberField fx:id="em_telefono" layoutX="540.0" layoutY="132.0" /> -->
+   <TextField fx:id="em_email" layoutX="746.0" layoutY="146.0" />
+   <Label layoutX="44.0" layoutY="31.0" prefHeight="26.0" prefWidth="50.0" text="NOME" />
+   <Label layoutX="39.0" layoutY="68.0" text="COGNOME" />
+   <Label layoutX="20.0" layoutY="104.0" text="LUOGO NASCITA" />
+   <Label layoutX="25.0" layoutY="144.0" text="DATA NASCITA" />
+   <Label layoutX="26.0" layoutY="181.0" text="NAZIONALITA'" />
+   <Label layoutX="45.0" layoutY="213.0" text="INDIRIZZO" />
+   <Label layoutX="45.0" layoutY="251.0" text="TELEFONO" />
+   <Label layoutX="57.0" layoutY="284.0" text="EMAIL" />
+   <Label layoutX="30.0" layoutY="316.0" text="AUTOMUNITO" />
+   <Label layoutX="33.0" layoutY="350.0" text="DATA INIZIO" />
+   <Label layoutX="33.0" layoutY="384.0" text="DATA FINE" />
+   <Label layoutX="633.0" layoutY="43.0" text="EMERGENZA NOME" />
+   <Label layoutX="609.0" layoutY="75.0" text="EMERGENZA COGNOME" />
+   <Label layoutX="610.0" layoutY="110.0" text="EMERGENZA TELEFONO" />
+   <Label layoutX="634.0" layoutY="150.0" text="EMERGENZA EMAIL" />
+   <DatePicker fx:id="data_inizio" layoutX="122.0" layoutY="346.0" prefHeight="26.0" prefWidth="150.0" />
+   <DatePicker fx:id="data_fine" layoutX="122.0" layoutY="380.0" prefHeight="26.0" prefWidth="150.0" />
+   <TextField fx:id="esperienza" layoutX="705.0" layoutY="250.0" />
+   <Label layoutX="642.0" layoutY="222.0" text="PATENTE" />
+   <Label layoutX="519.0" layoutY="254.0" text="ESPERIENZA/SPECIALIZZAZIONE" />
+   <Label layoutX="604.0" layoutY="288.0" text="COMUNE/ZONA" />
+   <TextField fx:id="lingua" layoutX="705.0" layoutY="318.0" />
+   <Label layoutX="648.0" layoutY="322.0" text="LINGUA" />
+   <Button layoutX="860.0" layoutY="217.0" mnemonicParsing="false" onAction="#agg_patente" prefHeight="26.0" prefWidth="34.0" text="+" />
+   <Button layoutX="860.0" layoutY="250.0" mnemonicParsing="false" onAction="#agg_esperienza" prefHeight="26.0" prefWidth="34.0" text="+" />
+   <Button layoutX="860.0" layoutY="284.0" mnemonicParsing="false" onAction="#agg_comune" prefHeight="26.0" prefWidth="34.0" text="+" />
+   <Button layoutX="860.0" layoutY="318.0" mnemonicParsing="false" onAction="#agg_lingua" prefHeight="26.0" prefWidth="34.0" text="+" />
+   <Button layoutX="737.0" layoutY="456.0" mnemonicParsing="false" onAction="#inserimento_lavoratore" prefHeight="50.0" prefWidth="158.0" text="AGGIUNGI LAVORATORE" />
+   <DatePicker fx:id="data_nascita" layoutX="120.0" layoutY="140.0" prefHeight="26.0" prefWidth="150.0" />
+   <Button layoutX="21.0" layoutY="463.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0" prefWidth="82.0" text="BACK" />
+   <Label layoutX="409.0" layoutY="23.0" text="ID DIPENDENTE :" />
+      <ChoiceBox fx:id="patente" layoutX="705.0" layoutY="218.0" prefWidth="150.0" />
+      <ComboBox fx:id="comune" editable="true" layoutX="705.0" layoutY="284.0" prefWidth="150.0" promptText="Comune" visibleRowCount="7" />
+      <Label fx:id="email_invalida" layoutX="286.0" layoutY="284.0" text="Email invalida" textFill="RED" underline="true" visible="false" />
+      <Label fx:id="tel_invalido" layoutX="277.0" layoutY="251.0" text="Telefono invalido" textFill="RED" underline="true" />
+      <Label fx:id="nascita_invalida" layoutX="287.0" layoutY="68.0" text="Data invalida" textFill="RED" underline="true" />
+      <Label fx:id="nascita_invalida1" layoutX="287.0" layoutY="350.0" text="Data invalida" textFill="RED" underline="true" />
+      <Label fx:id="nascita_invalida11" layoutX="287.0" layoutY="384.0" text="Data invalida" textFill="RED" underline="true" />
+      <Label layoutX="502.0" layoutY="24.0" prefHeight="17.0" prefWidth="34.0" />
    </children>
 </AnchorPane>

@@ -41,7 +41,7 @@ public class AddLavController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            patente.getItems().addAll(postDriver.getPatenti().stream().toList());
+            patente.getItems().addAll(postDriver.getAllPatentI().stream().toList());
             comune.getEditor().setOnKeyReleased(this::comune_search);
             email.focusedProperty().addListener(this::check_email);
             if(Main.getDataRepo().getDipendente() != null)
@@ -120,13 +120,15 @@ public class AddLavController implements Initializable {
                 alert.setHeaderText("Campo vuoto o errore nell'inserimento di un dato");
             }
             try {
-                postDriver.addLavoratore(lavoratore);
+                Main.getDataRepo().setLavoratore_id(postDriver.addLavoratore(lavoratore));
+                Main.getLoader().loadView("AGG_LAV_OPZ");
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
             }
         }catch (JavaFXDataError e){
             e.printFX();
         }
+
 
 
     }
@@ -148,7 +150,7 @@ public class AddLavController implements Initializable {
         if(event.getCode().equals(KeyCode.ENTER)){
             List<Comune> comuni;
             try {
-                comuni = postDriver.getComune(comune.getEditor().getText(),20);
+                comuni = postDriver.getComuneILike(comune.getEditor().getText(),20);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

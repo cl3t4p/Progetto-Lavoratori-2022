@@ -32,7 +32,7 @@ public class Lavoro implements CheckData {
         if(!CheckData.super.validate())
             return false;
         try {
-            if(Main.getPostDriver().getComuneByName(luogo) == null)
+            if(Main.getPostDriver().getComuniByName(luogo) == null)
                 return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);

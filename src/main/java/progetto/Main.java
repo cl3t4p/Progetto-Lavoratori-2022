@@ -24,7 +24,7 @@ public class Main extends Application {
         stage.setResizable(false);
 
         loader.setPrimaryStage(stage);
-        loader.loadView("LOGIN");
+        loader.loadView("AGG_LAV_OPZ");
     }
 
     public static void main(String[] args) {

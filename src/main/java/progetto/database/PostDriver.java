@@ -34,7 +34,7 @@ public class PostDriver {
     }
 
 
-    public Lavoratore getLavoratore(int id) throws SQLException {
+    public Lavoratore getLavoratoreByID(int id) throws SQLException {
         String sql = "SELECT * FROM lavoratore WHERE id=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setInt(1, id);
@@ -80,31 +80,31 @@ public class PostDriver {
         return set.getInt(1);
     }
 
-    public boolean removeLavoratore(int id) throws SQLException {
+    public void removeLavoratore(int id) throws SQLException {
         String sql="DELETE FROM lavoratore WHERE id=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setInt(1,id);
-        return statement.executeUpdate() == 1;
+        statement.executeUpdate();
     }
 
 
 
-    public Set<Lavoratore> getLavoratori(int limit) throws SQLException {
+    public Set<Lavoratore> getAllLavoratori(int limit) throws SQLException {
         String sql = "SELECT * from lavoratore LIMIT ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setInt(1,limit);
         ResultSet resultSet = statement.executeQuery();
-        return getLavoratori(resultSet);
+        return getAllLavoratori(resultSet);
     }
 
-    public Set<Lavoratore> getLavoratori() throws SQLException {
+    public Set<Lavoratore> getAllLavoratori() throws SQLException {
         String sql = "SELECT * from lavoratore";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
-        return getLavoratori(resultSet);
+        return getAllLavoratori(resultSet);
     }
 
-    private Set<Lavoratore> getLavoratori(ResultSet resultSet) throws SQLException {
+    private Set<Lavoratore> getAllLavoratori(ResultSet resultSet) throws SQLException {
         Set<Lavoratore> lavoratori = new HashSet<>();
         while (resultSet.next()){
             try {
@@ -114,6 +114,31 @@ public class PostDriver {
             }
         }
         return lavoratori;
+    }
+
+    public Set<String> getPatentiByID(int id) throws SQLException {
+        String sql = "SELECT pat_lav.nome_patente FROM lavoratore INNER JOIN pat_lav ON(lavoratore.id=pat_lav.id_lavoratore) WHERE lavoratore.id=?";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1,id);
+        ResultSet resultSet = statement.executeQuery();
+        Set<String> patenti = new HashSet<>();
+        while (resultSet.next())
+            patenti.add(resultSet.getString(1));
+        return patenti;
+    }
+    public void addPatenteByID(int id, String patente) throws SQLException {
+        String sql = "INSERT INTO pat_lav (id_lavoratore, nome_patente) VALUES (?, ?)";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1,id);
+        statement.setString(2,patente);
+        statement.executeUpdate();
+    }
+    public void delPatenteByID(int id, String patente) throws SQLException {
+        String sql = "DELETE FROM pat_lav WHERE ( id_lavoratore = ? AND nome_patente = ?);";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1,id);
+        statement.setString(2,patente);
+        statement.executeUpdate();
     }
 
 
@@ -130,24 +155,24 @@ public class PostDriver {
         }
         return statement.executeUpdate();
     }
-    public List<Comune> getComune(String name) throws SQLException {
+    public List<Comune> getComuneILike(String name) throws SQLException {
         name = "%"+name+"%";
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name.toUpperCase(Locale.ROOT));
-        return getComunes(statement);
+        return getAllComuni(statement);
     }
 
-    public List<Comune> getComune(String name,int limit) throws SQLException {
+    public List<Comune> getComuneILike(String name, int limit) throws SQLException {
         name = "%"+name+"%";
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ? LIMIT ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name.toUpperCase(Locale.ROOT));
         statement.setInt(2,limit);
-        return getComunes(statement);
+        return getAllComuni(statement);
     }
 
-    private List<Comune> getComunes(PreparedStatement statement) throws SQLException {
+    private List<Comune> getAllComuni(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         List<Comune> comuni = new ArrayList<>();
         while (resultSet.next()){
@@ -160,7 +185,7 @@ public class PostDriver {
         return comuni;
     }
 
-    public Comune getComuneByName(String name) throws SQLException {
+    public Comune getComuniByName(String name) throws SQLException {
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,name.toUpperCase(Locale.ROOT));
@@ -173,7 +198,7 @@ public class PostDriver {
             }
         return null;
     }
-    public int addLavCoume(Comune comune, int id_lavoratore) throws SQLException {
+    public int addComuneByID(Comune comune, int id_lavoratore) throws SQLException {
         String sql = "INSERT INTO lav_comune(comune,id_lavoratore) VALUES(?,?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,comune.getNome_comune().toUpperCase(Locale.ROOT));
@@ -181,17 +206,17 @@ public class PostDriver {
         return statement.executeUpdate();
     }
 
-    public Set<String> getPatenti() throws SQLException {
+    public List<String> getAllPatentI() throws SQLException {
         String sql = "SELECT * FROM patente";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
-        Set<String> patenti = new HashSet<>();
+        List<String> patenti = new ArrayList<>();
         while (resultSet.next())
             patenti.add(resultSet.getString(1));
-        return patenti;
+        return patenti.stream().sorted().toList();
     }
 
-    public Set<String> getLinguaLike(String name,int limite) throws SQLException {
+/*    public Set<String> getLinguaLike(String name,int limite) throws SQLException {
         name = "%"+name+"%";
         String sql = "SELECT * FROM lingua WHERE nome_lingua ILIKE ? LIMIT ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
@@ -203,9 +228,9 @@ public class PostDriver {
             strings.add(resultSet.getString(1));
         }
         return strings;
-    }
+    }*/
 
-    public int addLavLingua(String lingua, int id_lavoratore) throws SQLException {
+    public int addLinguaByID(int id_lavoratore, String lingua ) throws SQLException {
         String sql = "INSERT INTO lingua_lav(nome_lingua,id_lavoratore) VALUES(?,?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1,lingua);
@@ -230,7 +255,24 @@ public class PostDriver {
     }
 
 
+    public void delLinguaByID(int lav_id, String key) throws SQLException {
+        String sql = "DELETE FROM lingua_lav WHERE ( id_lavoratore = ? AND nome_lingua = ?);";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1,lav_id);
+        statement.setString(2,key);
+        statement.executeUpdate();
+    }
 
+    public List<String> getLingueByID(int id) throws SQLException {
+        String sql = "SELECT lingua_lav.nome_lingua FROM lavoratore INNER JOIN lingua_lav ON(lavoratore.id=lingua_lav.id_lavoratore) WHERE lavoratore.id=?";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1,id);
+        ResultSet resultSet = statement.executeQuery();
+        List<String> patenti = new ArrayList<>();
+        while (resultSet.next())
+            patenti.add(resultSet.getString(1));
+        return patenti.stream().sorted().toList();
+    }
 }
 
 
