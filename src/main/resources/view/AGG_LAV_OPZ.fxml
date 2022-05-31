@@ -6,10 +6,13 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progetto.fx.controllers.AggLavOPController">
    <children>
       <Label layoutX="14.0" layoutY="22.0" text="ID:" />
-      <TableView fx:id="patenti_view" layoutX="484.0" layoutY="45.0" prefHeight="339.0" prefWidth="102.0" >
+      <TableView fx:id="patenti_view" layoutX="484.0" layoutY="45.0" prefHeight="339.0" prefWidth="102.0">
          <columns>
-            <TableColumn fx:id="patente_colum" editable="false" prefWidth="150.0" sortable="false" text="PATENTI" />
+            <TableColumn fx:id="patente_colum" prefWidth="75.0" text="PATENTI" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Label fx:id="label_id" layoutX="35.0" layoutY="22.0" prefHeight="17.0" prefWidth="48.0" />
       <Button layoutX="484.0" layoutY="17.0" mnemonicParsing="false" onAction="#addPatente" prefHeight="25.0" prefWidth="25.0" text="+" />

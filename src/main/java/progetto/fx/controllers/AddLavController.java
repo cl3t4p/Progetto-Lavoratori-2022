@@ -41,7 +41,7 @@ public class AddLavController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            patente.getItems().addAll(postDriver.getAllPatentI().stream().toList());
+            patente.getItems().addAll(postDriver.getAllPatenti().stream().toList());
             comune.getEditor().setOnKeyReleased(this::comune_search);
             email.focusedProperty().addListener(this::check_email);
             if(Main.getDataRepo().getDipendente() != null)

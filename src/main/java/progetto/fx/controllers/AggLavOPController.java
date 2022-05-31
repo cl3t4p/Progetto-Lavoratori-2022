@@ -55,28 +55,28 @@ public class AggLavOPController implements Initializable {
         //setupLingue();
 
     }
-
-
     private void setupLabel(){
         if(lavoratore_id != 0)
             label_id.setText(String.valueOf(lavoratore_id));
     }
 
- /*   private void setupCol(TableColumn<String, String> column,TableView<String> tableView,ButtonColumn.DB_Exec exec) {
+
+
+    private void setupCol(TableColumn<String, String> column,TableView<String> tableView,ButtonColumn.DB_Exec exec) {
         column.setEditable(false);
         column.setResizable(false);
         column.setReorderable(false);
         column.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue()));
         ButtonColumn buttonColumn = new ButtonColumn("",lavoratore_id,exec);
         column.prefWidthProperty().bind(tableView.widthProperty().subtract(buttonColumn.widthProperty()).subtract(2));
-        column.getColumns().add(buttonColumn.clone());
-    }*/
+        tableView.getColumns().add(buttonColumn.clone());
+    }
 
 
 
     //Esperienze
 
-  /*  private void setupLingue() {
+    private void setupLingue() {
         ButtonColumn.DB_Exec exec = ((lav_id, key) -> {
             postDriver.delLinguaByID(lav_id,key);
             refreshPatenteList();
@@ -88,7 +88,7 @@ public class AggLavOPController implements Initializable {
             e.printStackTrace();
             JavaFXError.DB_ERROR.fxMSG();
         }
-    }*/
+    }
 
     private void refreshLingue() throws SQLException{
         List<String> full_list = postDriver.getLingueByID(lavoratore_id);
@@ -96,21 +96,16 @@ public class AggLavOPController implements Initializable {
         lingue_list.addAll(full_list);
     }
 
-
-
     //Patenti
     private void setupPatenti(){
         patente_colum.setEditable(false);
         patente_colum.setResizable(false);
         patente_colum.setReorderable(false);
-
-
+        patente_colum.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue()));
        // setupCol(patente_colum,patenti_view,exec);
         try {
-            patente_colum.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue()));
-            patenti_view.setItems(patenti_list);
             refreshPatenteList();
-
+            patenti_view.setItems(patenti_list);
         } catch (SQLException e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.fxMSG();
@@ -119,13 +114,16 @@ public class AggLavOPController implements Initializable {
             postDriver.delPatenteByID(lav_id,key);
             refreshPatenteList();
         });
+        System.out.println(buttonColumn.widthProperty());
+
+        System.out.println(patente_colum.widthProperty());
 
         patente_colum.prefWidthProperty().bind(patenti_view.widthProperty().subtract(buttonColumn.widthProperty()).subtract(2));
-        patente_colum.getColumns().add(buttonColumn.clone());
+        patenti_view.getColumns().add(buttonColumn);
     }
 
     private void refreshPatenteList() throws SQLException {
-        List<String> full_list = postDriver.getAllPatentI();
+        List<String> full_list = postDriver.getAllPatenti();
         Set<String> lav_patenti = postDriver.getPatentiByID(lavoratore_id);
 
         patente.getItems().clear();
@@ -146,6 +144,8 @@ public class AggLavOPController implements Initializable {
             e.printStackTrace();
             JavaFXError.DB_ERROR.fxMSG();
         }
-
     }
+
+
+
 }

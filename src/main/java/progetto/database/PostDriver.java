@@ -206,7 +206,7 @@ public class PostDriver {
         return statement.executeUpdate();
     }
 
-    public List<String> getAllPatentI() throws SQLException {
+    public List<String> getAllPatenti() throws SQLException {
         String sql = "SELECT * FROM patente";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
