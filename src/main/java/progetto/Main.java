@@ -5,12 +5,11 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import progetto.data.DataRepo;
 import progetto.database.PostDriver;
+import progetto.database.exception.JavaFXError;
 import progetto.io.ViewLoader;
 
-/**
- *
- * @author 1blan
- */
+import java.sql.SQLException;
+
 public class Main extends Application {
 
     static PostDriver postDriver;
@@ -20,15 +19,32 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        //TODO Replace MENU with LOGIN
-        stage.setResizable(false);
+        if(!postDriver.testConnection()){
+            JavaFXError.fxErrorMSG("Database connection error!");
+            return;
+        }
 
+
+
+
+        stage.setResizable(false);
         loader.setPrimaryStage(stage);
-        loader.loadView("AGG_LAV_OPZ");
+
+        //TODO Replace AGG_LAV_OPZ with LOGIN
+        //Testing
+        try {
+            dataRepo.setDipendente(postDriver.getDipendenteByUserAndPassword("marco01","12345"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //End Testing
+        loader.loadView("AGGIUNGI_LAVORATORE");
+        //loader.loadView("LOGIN");
     }
 
     public static void main(String[] args) {
-        postDriver = new PostDriver("postgres","example","postgres","localhost",5432);
+        postDriver = new PostDriver("postgres","***REMOVED***","postgres","db.cl3t4p.com",5432);
         launch(args);
     }
 

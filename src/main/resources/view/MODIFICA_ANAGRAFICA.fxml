@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="505.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progetto.fx.controllers.Controller">
+<AnchorPane id="AnchorPane" prefHeight="505.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progetto.fx.controllers.ModificaController">
    <children>
-      <TextField fx:id="tx27" layoutX="81.0" layoutY="341.0" />
-      <TextField fx:id="tx28" layoutX="81.0" layoutY="383.0" />
-      <TextField fx:id="tx29" layoutX="359.0" layoutY="383.0" />
-      <DatePicker fx:id="dp3" layoutX="361.0" layoutY="341.0" />
-      <TextField fx:id="tx31" layoutX="125.0" layoutY="282.0" />
+      <TextField fx:id="nome" layoutX="81.0" layoutY="341.0" />
+      <TextField fx:id="cognome" layoutX="81.0" layoutY="383.0" />
+      <TextField fx:id="luogo" layoutX="359.0" layoutY="383.0" />
+      <DatePicker fx:id="nascita" layoutX="361.0" layoutY="341.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="id_lav" layoutX="125.0" layoutY="282.0" />
       <Button layoutX="286.0" layoutY="273.0" mnemonicParsing="false" onAction="#cerca_lav" prefHeight="43.0" prefWidth="89.0" text="CERCA" />
       <Button layoutX="536.0" layoutY="376.0" mnemonicParsing="false" onAction="#conferma_modifica" prefHeight="38.0" prefWidth="150.0" text="CONFERMA MODIFICA" />
       <Label layoutX="28.0" layoutY="345.0" text="NOME" />
       <Label layoutX="16.0" layoutY="387.0" text="COGNOME" />
       <Label layoutX="275.0" layoutY="345.0" text="DATA NASCITA" />
       <Label layoutX="265.0" layoutY="387.0" prefHeight="18.0" prefWidth="92.0" text="LUOGO NASCITA" />
-      <TextArea fx:id="txArea" layoutX="12.0" layoutY="63.0" prefHeight="195.0" prefWidth="693.0" />
       <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#carica_lav" prefHeight="38.0" prefWidth="138.0" text="CARICA LAVORATORI" />
       <Button layoutX="14.0" layoutY="451.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0" prefWidth="82.0" text="BACK" />
       <Button layoutX="542.0" layoutY="435.0" mnemonicParsing="false" onAction="#aggiungi_lavoro_svolto" prefHeight="53.0" prefWidth="160.0" text="AGGIUNGI LAVORO ---&gt;" />
       <Label layoutX="32.0" layoutY="286.0" text="ID LAVORATORE" />
+      <TreeTableView fx:id="view" layoutX="13.0" layoutY="61.0" prefHeight="200.0" prefWidth="693.0">
+        <columns>
+          <TreeTableColumn fx:id="id_col" prefWidth="33.0" text="ID" />
+          <TreeTableColumn fx:id="nome_col" prefWidth="112.0" text="NOME" />
+            <TreeTableColumn fx:id="cognome_col" prefWidth="124.0" text="COGNOME" />
+            <TreeTableColumn fx:id="luogo_col" prefWidth="121.0" text="LUOGO DI NASCITA" />
+            <TreeTableColumn fx:id="data_col" prefWidth="131.0" text="DATA DI NASCITA" />
+        </columns>
+      </TreeTableView>
    </children>
 </AnchorPane>

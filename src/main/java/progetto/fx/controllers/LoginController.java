@@ -1,6 +1,7 @@
 package progetto.fx.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import progetto.Dipendente;
@@ -10,10 +11,12 @@ import progetto.database.exception.JavaFXDataError;
 import java.sql.SQLException;
 
 public class LoginController {
-    public TextField txuser;
-    public PasswordField txpass;
-
-    public void login(ActionEvent event) {
+    @FXML
+    private TextField txuser;
+    @FXML
+    private PasswordField txpass;
+    @FXML
+    private void login(ActionEvent event) {
         String username = txuser.getText();
         String password = txpass.getText();
         try {
