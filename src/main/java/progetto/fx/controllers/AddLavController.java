@@ -2,59 +2,84 @@ package progetto.fx.controllers;
 
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import progetto.Comune;
 import progetto.Lavoratore;
 import progetto.Main;
 import progetto.data.RegexChecker;
 import progetto.database.PostDriver;
 import progetto.database.exception.JavaFXDataError;
+import progetto.database.exception.JavaFXError;
 import progetto.fx.components.NumberField;
 
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 
 public class AddLavController implements Initializable {
 
-    public DatePicker data_inizio,data_fine,data_nascita;
-    public Label email_invalida,tel_invalido;
     PostDriver postDriver = Main.getPostDriver();
 
-    public TextField nome,cognome,luogo_nascita,nazionalita
+    @FXML
+    private DatePicker data_inizio,data_fine,data_nascita;
+    @FXML
+    private Label email_invalida,tel_invalido,id_dipendente,nascita_invalida,data_in_invalida,data_fin_invalida;
+    @FXML
+    private TextField nome,cognome,luogo_nascita,nazionalita
             ,indirizzo,email
-            ,em_nome,em_cognome,em_telefono,em_email
-            ,lingua,id_dipendente,esperienza;
-
-    public NumberField telefono;
-    public ComboBox<String> comune;
-    public ChoiceBox<String> patente,automunito;
-    public AnchorPane agg_lavoratore;
+            ,em_nome,em_cognome,em_email;
+    @FXML
+    private NumberField telefono,em_telefono;
+    @FXML
+    private ChoiceBox<String> automunito;
+    @FXML
+    private AnchorPane agg_lavoratore;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            patente.getItems().addAll(postDriver.getAllPatenti().stream().toList());
-            comune.getEditor().setOnKeyReleased(this::comune_search);
-            email.focusedProperty().addListener(this::check_email);
-            if(Main.getDataRepo().getDipendente() != null)
-             id_dipendente.setText(String.valueOf(Main.getDataRepo().getDipendente().getId()));
-            id_dipendente.setEditable(false);
+        email.focusedProperty().addListener(this::check_email);
+        telefono.focusedProperty().addListener(this::check_number);
+        data_nascita.setOnAction(this::checkNascita);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(Main.getDataRepo().getDipendente() != null)
+         id_dipendente.setText(String.valueOf(Main.getDataRepo().getDipendente().getId()));
+
+    }
+
+
+    @FXML
+    private void checkNascita(ActionEvent event) {
+        if(data_nascita.getValue() != null)
+            nascita_invalida.setVisible(Date.valueOf(data_nascita.getValue()).after(Date.valueOf(LocalDate.now())));
+    }
+
+    @FXML
+    private void checkDate(ActionEvent event){
+
+        if(data_inizio.getValue() == null || data_fine.getValue() == null){
+            nascita_invalida.setVisible(false);
+            return;
         }
+        data_fin_invalida.setVisible(Date.valueOf(data_inizio.getValue()).after(Date.valueOf(data_fine.getValue())));
+        data_in_invalida.setVisible(Date.valueOf(data_inizio.getValue()).after(Date.valueOf(data_fine.getValue())));
     }
 
 
 
+    private void check_number(Observable observable){
+        if(telefono.isFocused())return;
+        if(telefono.getText().isEmpty()) {
+            tel_invalido.setVisible(false);
+            return;
+        }
+        tel_invalido.setVisible(!RegexChecker.TEL_NUMBER.validate(telefono.getText()));
+    }
     private void check_email(Observable observable) {
         if(email.isFocused())return;
         if(email.getText().isEmpty()) {
@@ -64,30 +89,23 @@ public class AddLavController implements Initializable {
         email_invalida.setVisible(!RegexChecker.EMAIL.validate(email.getText()));
     }
 
-
-    public void agg_patente(ActionEvent event) {
-
+    private boolean checkData(DatePicker date){
+        try {
+            date.getValue();
+        }catch (DateTimeParseException e){
+            return true;
+        }
+        return date.getValue() == null;
     }
 
-    public void agg_esperienza(ActionEvent event) {
-    }
-
-    public void agg_comune(ActionEvent event) {
-
-
-    }
-
-    public void agg_lingua(ActionEvent event) {
-    }
-
-    public void inserimento_lavoratore(ActionEvent event)  {
-
+    @FXML
+    private void inserimento_lavoratore(ActionEvent event)  {
         try {
             Lavoratore lavoratore = new Lavoratore();
             lavoratore.setNome(nome.getText());
             lavoratore.setCognome(cognome.getText());
             lavoratore.setLuogo_nascita(luogo_nascita.getText());
-            if (data_nascita.getValue() == null) {
+            if (checkData(data_nascita)) {
                 throw new JavaFXDataError("Data di nascita non valida");
             }
             lavoratore.setData_nascita(Date.valueOf(data_nascita.getValue()));
@@ -99,11 +117,11 @@ public class AddLavController implements Initializable {
             lavoratore.setTelefono(telefono.getValue());
             lavoratore.setEmail(email.getText());
             lavoratore.setAutomunito(automunito.getValue());
-            if (data_inizio.getValue() == null) {
+            if (checkData(data_inizio)) {
                 throw new JavaFXDataError("Data inizio non valida");
             }
             lavoratore.setInizio_disponibile(Date.valueOf(data_inizio.getValue()));
-            if (data_fine.getValue() == null) {
+            if (checkData(data_fine)) {
                 throw new JavaFXDataError("Data fine non valida");
             }
             lavoratore.setFine_disponibile(Date.valueOf(data_inizio.getValue()));
@@ -115,9 +133,8 @@ public class AddLavController implements Initializable {
             lavoratore.setTelefono_emergenze(telefono.getValue());
             lavoratore.setEmail_emergenze(em_email.getText());
             if (!lavoratore.validate()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("ERRORE");
-                alert.setHeaderText("Campo vuoto o errore nell'inserimento di un dato");
+                JavaFXError.fxErrorMSG("Campo vuoto o errore nell'inserimento di un dato");
+                return;
             }
             try {
                 Main.getDataRepo().setLavoratore_id(postDriver.addLavoratore(lavoratore));
@@ -128,15 +145,10 @@ public class AddLavController implements Initializable {
         }catch (JavaFXDataError e){
             e.printFX();
         }
-
-
-
-    }
-    public void generatore_id_lav(ActionEvent event) {
-
     }
 
-    public void back(ActionEvent event) {
+    @FXML
+    private void back(ActionEvent event) {
         Main.getLoader().loadView("MENU");
     }
 
@@ -145,22 +157,7 @@ public class AddLavController implements Initializable {
 
 
 
-    public void comune_search(KeyEvent event) {
-        //Todo fix error clear when pressed space
-        if(event.getCode().equals(KeyCode.ENTER)){
-            List<Comune> comuni;
-            try {
-                comuni = postDriver.getComuneILike(comune.getEditor().getText(),20);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            comune.getItems().clear();
-            comune.getItems().addAll(comuni.stream()
-                    .map(Comune::getNome_comune)
-                    .toList());
-            comune.show();
-        }
-    }
+
 
 
 

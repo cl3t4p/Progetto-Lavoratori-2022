@@ -16,9 +16,14 @@ public interface CheckData {
             if(ignore)
                 continue;
             try {
-                if(field.get(this) == null)
+                Object obj = field.get(this);
+                if(obj == null)
                     return false;
-            } catch (IllegalAccessException e) {
+                if(obj instanceof String)
+                    if(((String) obj).isEmpty())
+                        return false;
+
+            } catch (IllegalAccessException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
