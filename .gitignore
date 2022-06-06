@@ -176,4 +176,5 @@ local.properties
 out
 gen
 
-
+db.properties
+target/
