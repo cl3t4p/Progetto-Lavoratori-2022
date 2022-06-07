@@ -5,8 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import com.cl3t4p.progetto.Lavoratori2022.fx.components.NumberField?>
-<AnchorPane id="AnchorPane" prefHeight="528.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.Lavoratori2022.fx.controllers.AddLavController">
+
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
+<AnchorPane id="AnchorPane" prefHeight="528.0" prefWidth="907.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.AddLavController">
    <children>
    <TextField fx:id="nome" layoutX="119.0" layoutY="32.0" prefHeight="26.0" prefWidth="150.0" />
    <TextField fx:id="cognome" layoutX="119.0" layoutY="64.0" prefHeight="26.0" prefWidth="150.0" />
