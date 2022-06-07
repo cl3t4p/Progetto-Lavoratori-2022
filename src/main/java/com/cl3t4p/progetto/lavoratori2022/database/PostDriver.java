@@ -1,9 +1,10 @@
 package com.cl3t4p.progetto.lavoratori2022.database;
 
 
-import com.cl3t4p.progetto.lavoratori2022.Dipendente;
-import com.cl3t4p.progetto.lavoratori2022.Lavoratore;
-import com.cl3t4p.progetto.lavoratori2022.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
 
 import java.sql.*;
 import java.util.*;
@@ -373,6 +374,9 @@ public class PostDriver {
     }
 
 
+    public void addEmergenza(Emergenza emergenza) throws SQLException {
+        String sql = "INSERT INTO emergenza (nome,cognome,telefono,email) VALUES (?,?,?,?) WHERE NOT EXISTS (SELECT id FROM emergenza WHERE nome=? AND cognome=? AND telefono=? AND email=?) returning id";
+    }
 }
 
 

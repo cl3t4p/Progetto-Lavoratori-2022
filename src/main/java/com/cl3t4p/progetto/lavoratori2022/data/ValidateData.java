@@ -3,7 +3,7 @@ package com.cl3t4p.progetto.lavoratori2022.data;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-public interface CheckData {
+public interface ValidateData {
     default boolean validate() {
         for (Field field : getClass().getDeclaredFields()) {
             field.setAccessible(true);

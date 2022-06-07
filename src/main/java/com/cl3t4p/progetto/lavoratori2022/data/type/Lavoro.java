@@ -1,7 +1,8 @@
-package com.cl3t4p.progetto.lavoratori2022;
+package com.cl3t4p.progetto.lavoratori2022.data.type;
 
 
-import com.cl3t4p.progetto.lavoratori2022.data.CheckData;
+import com.cl3t4p.progetto.lavoratori2022.Main;
+import com.cl3t4p.progetto.lavoratori2022.data.ValidateData;
 import com.cl3t4p.progetto.lavoratori2022.data.FieldChecker;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.util.Date;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Lavoro implements CheckData {
+public class Lavoro implements ValidateData {
 
     int id;
     Date inizio_periodo;
@@ -29,7 +30,7 @@ public class Lavoro implements CheckData {
 
 
     public boolean validate() {
-        if(!CheckData.super.validate())
+        if(!ValidateData.super.validate())
             return false;
         try {
             if(Main.getPostDriver().getComuniByName(luogo) == null)

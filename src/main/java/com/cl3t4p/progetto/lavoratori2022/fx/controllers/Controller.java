@@ -12,8 +12,8 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.cl3t4p.progetto.lavoratori2022.Lavoratore;
-import com.cl3t4p.progetto.lavoratori2022.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

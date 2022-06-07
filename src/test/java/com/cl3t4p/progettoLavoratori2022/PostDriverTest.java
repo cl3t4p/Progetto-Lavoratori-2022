@@ -1,7 +1,7 @@
 package com.cl3t4p.progettoLavoratori2022;
 
-import com.cl3t4p.progetto.lavoratori2022.Dipendente;
-import com.cl3t4p.progetto.lavoratori2022.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -35,10 +35,6 @@ class PostDriverTest {
         lavoratore.setAutomunito("NO");
         lavoratore.setInizio_disponibile(Date.valueOf(LocalDate.now()));
         lavoratore.setFine_disponibile(Date.valueOf(LocalDate.now()));
-        lavoratore.setNome_emergenze("TE");
-        lavoratore.setCognome_emergenze("BU");
-        lavoratore.setTelefono_emergenze(4445866977L);
-        lavoratore.setEmail_emergenze("test@bug.com");
         lavoratore.setId_dipendente(1);
     }
 

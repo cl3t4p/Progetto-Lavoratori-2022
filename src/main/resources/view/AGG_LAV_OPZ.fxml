@@ -35,7 +35,7 @@
       <Button layoutX="91.0" layoutY="209.0" mnemonicParsing="false" onAction="#addLingua" prefHeight="25.0" prefWidth="25.0" text="+" />
       <TextField fx:id="esperienze" layoutX="120.0" layoutY="17.0" prefHeight="25.0" prefWidth="360.0" />
       <TextField fx:id="lingue" layoutX="120.0" layoutY="209.0" prefHeight="25.0" prefWidth="360.0" />
-      <Button layoutX="14.0" layoutY="346.0" mnemonicParsing="false" onAction="#back" prefHeight="38.0" prefWidth="62.0" text="OK" />
+      <Button layoutX="14.0" layoutY="346.0" mnemonicParsing="false" onAction="#back" prefHeight="38.0" prefWidth="62.0" text="Back" />
       <TableView fx:id="comuni_view" layoutX="485.0" layoutY="45.0" prefHeight="339.0" prefWidth="215.0">
          <columns>
             <TableColumn fx:id="comuni_col" prefWidth="75.0" text="COMUNI" />

@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.data;
 
-import com.cl3t4p.progetto.lavoratori2022.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Dipendente;
 
 public class DataRepo {
 
@@ -13,7 +13,7 @@ public class DataRepo {
 
 
     public Integer getLavoratore_id() {
-        return 58;
+        return 120;
     }
 
     public void setLavoratore_id(Integer lavoratore_id) {

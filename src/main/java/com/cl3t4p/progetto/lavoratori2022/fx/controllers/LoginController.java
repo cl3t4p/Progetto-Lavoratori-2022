@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import com.cl3t4p.progetto.lavoratori2022.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.Main;
 
 import java.sql.SQLException;

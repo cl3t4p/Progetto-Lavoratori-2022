@@ -1,6 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
-import com.cl3t4p.progetto.lavoratori2022.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -10,7 +11,6 @@ import javafx.scene.control.*;
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 
 import java.net.URL;
@@ -56,6 +56,12 @@ public class AddLavController implements Initializable {
         if(Main.getDataRepo().getLavoratore_id() != null){
             id_lavoratore.setText(id_lavoratore.getText()+Main.getDataRepo().getLavoratore_id());
             id_lavoratore.setVisible(true);
+
+            em_nome.setVisible(false);
+            em_cognome.setVisible(false);
+            em_email.setVisible(false);
+            em_telefono.setVisible(false);
+
             main_button.setText("MODIFICA LAVORATORE");
             main_button.setOnAction(this::modifica_lavoratore);
             try {
@@ -148,8 +154,11 @@ public class AddLavController implements Initializable {
     private void inserimento_lavoratore(ActionEvent event)  {
         try {
             Lavoratore lavoratore = getLavoratore();
+            Emergenza emergenza = getEmergenza();
             try {
-                Main.getDataRepo().setLavoratore_id(postDriver.addLavoratore(lavoratore));
+                int id = postDriver.addLavoratore(lavoratore);
+                Main.getDataRepo().setLavoratore_id(id);
+                postDriver.addEmergenza(emergenza,id);
                 Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
@@ -159,6 +168,20 @@ public class AddLavController implements Initializable {
         }
     }
 
+    private Emergenza getEmergenza() throws JavaFXDataError {
+        Emergenza emergenza = new Emergenza();
+        emergenza.setNome(em_nome.getText());
+        emergenza.setCognome(em_cognome.getText());
+        emergenza.setEmail(em_email.getText());
+        emergenza.setTelefono(em_telefono.getValue());
+        if(em_telefono.getValue() == null){
+            throw new JavaFXDataError("Telefono emergenza non valido!");
+        }
+        if(!emergenza.validate()){
+            throw new JavaFXDataError("Campi emergenza non compilati o errati");
+        }
+        return emergenza;
+    }
     private Lavoratore getLavoratore() throws JavaFXDataError {
         Lavoratore lavoratore = new Lavoratore();
         lavoratore.setNome(nome.getText());

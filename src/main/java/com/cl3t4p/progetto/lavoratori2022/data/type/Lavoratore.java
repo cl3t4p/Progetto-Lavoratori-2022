@@ -1,7 +1,7 @@
-package com.cl3t4p.progetto.lavoratori2022;
+package com.cl3t4p.progetto.lavoratori2022.data.type;
 
 
-import com.cl3t4p.progetto.lavoratori2022.data.CheckData;
+import com.cl3t4p.progetto.lavoratori2022.data.ValidateData;
 import com.cl3t4p.progetto.lavoratori2022.data.FieldChecker;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.sql.Date;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Lavoratore implements CheckData {
+public class Lavoratore implements ValidateData {
 
     @FieldChecker
     int id,id_dipendente;
@@ -30,14 +30,10 @@ public class Lavoratore implements CheckData {
     Date inizio_disponibile;
     @SQLDInfo(sql_name = "fine_periodo_disp")
     Date fine_disponibile;
-/*    String nome_emergenze;
-    String cognome_emergenze;
-    String email_emergenze;
-    long telefono_emergenze;*/
 
 
     public boolean validate() {
-        if(!CheckData.super.validate()){
+        if(!ValidateData.super.validate()){
             return false;
         }
         if(!RegexChecker.EMAIL.validate(email)){
