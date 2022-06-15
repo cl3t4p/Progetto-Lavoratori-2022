@@ -11,7 +11,7 @@ public class MenuController {
     }
     @FXML
     private void aggiungi_lavoratore(ActionEvent event) {
-        Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
+        Main.getLoader().loadView("MENU_LAVORATORE");
     }
     @FXML
     private void modifica_anagrafica(ActionEvent event) {

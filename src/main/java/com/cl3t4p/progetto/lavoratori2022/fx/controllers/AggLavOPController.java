@@ -71,20 +71,20 @@ public class AggLavOPController implements Initializable {
 
 
 
-    private void setupCol(TableColumn<String, String> column, TableView<String> tableView, ButtonColumn.DB_Exec exec) {
+    private void setupCol(TableColumn<String, String> column, TableView<String> tableView, ButtonColumn.DB_Exec<Integer,String> exec) {
         column.setEditable(false);
         column.setResizable(false);
         column.setReorderable(false);
         column.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue()));
-        ButtonColumn buttonColumn = new ButtonColumn("",lavoratore_id,exec);
+        ButtonColumn<Integer,String> buttonColumn = new ButtonColumn<>("", lavoratore_id, exec);
         column.prefWidthProperty().bind(tableView.widthProperty().subtract(buttonColumn.widthProperty()).subtract(2));
-        tableView.getColumns().add(buttonColumn.clone());
+        tableView.getColumns().add(buttonColumn);
     }
 
     //Comuni
 
     public void setupComune(){
-        ButtonColumn.DB_Exec exec = ((lav_id, key) -> {
+        ButtonColumn.DB_Exec<Integer,String> exec = ((lav_id, key) -> {
             postDriver.delComunebyID(lav_id,key);
             refreshPatenteList();
         });
@@ -140,7 +140,7 @@ public class AggLavOPController implements Initializable {
     //Lingue
 
     private void setupLingue() {
-        ButtonColumn.DB_Exec exec = ((lav_id, key) -> {
+        ButtonColumn.DB_Exec<Integer,String> exec = ((lav_id, key) -> {
             postDriver.delLinguaByID(lav_id,key);
             refreshPatenteList();
         });
@@ -175,7 +175,7 @@ public class AggLavOPController implements Initializable {
     //Esperienze
 
     private void setupEsp() {
-        ButtonColumn.DB_Exec exec = ((lav_id, key) -> {
+        ButtonColumn.DB_Exec<Integer,String> exec = ((lav_id, key) -> {
             postDriver.delEspByID(lav_id,key);
             refreshPatenteList();
         });
@@ -210,7 +210,7 @@ public class AggLavOPController implements Initializable {
     //Patenti
 
     private void setupPatenti(){
-        ButtonColumn.DB_Exec exec = (lav_id, key) -> {
+        ButtonColumn.DB_Exec<Integer,String>  exec = (lav_id, key) -> {
             postDriver.delPatenteByID(lav_id,key);
             refreshPatenteList();
         };
@@ -252,6 +252,6 @@ public class AggLavOPController implements Initializable {
 
 
     public void back(ActionEvent event) {
-        Main.getLoader().loadView("MENU");
+        Main.getLoader().loadView("MENU_LAVORATORE");
     }
 }

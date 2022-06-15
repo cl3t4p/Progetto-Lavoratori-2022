@@ -1,5 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
+import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
@@ -9,9 +10,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.RegexChecker;
+import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.sql.Date;
@@ -26,7 +28,10 @@ public class AddLavController implements Initializable {
 
 
     PostDriver postDriver = Main.getPostDriver();
+    DataRepo dataRepo = Main.getDataRepo();
 
+    @FXML
+    public GridPane eme_pane;
     @FXML
     private Button main_button;
     @FXML
@@ -49,21 +54,19 @@ public class AddLavController implements Initializable {
         telefono.focusedProperty().addListener(this::check_number);
         data_nascita.setOnAction(this::checkNascita);
 
-        if(Main.getDataRepo().getDipendente() != null) {
-            id_dipendente.setText(String.valueOf(Main.getDataRepo().getDipendente().getId()));
+        if(dataRepo.getDipendente() != null) {
+            id_dipendente.setText(String.valueOf(dataRepo.getDipendente().getId()));
             id_label.setVisible(true);
         }
-        if(Main.getDataRepo().getLavoratore_id() != null){
-            id_lavoratore.setText(id_lavoratore.getText()+Main.getDataRepo().getLavoratore_id());
+        if(dataRepo.getLavoratore_id() != null){
+            id_lavoratore.setText(id_lavoratore.getText()+dataRepo.getLavoratore_id());
             id_lavoratore.setVisible(true);
 
-            em_nome.setVisible(false);
-            em_cognome.setVisible(false);
-            em_email.setVisible(false);
-            em_telefono.setVisible(false);
+            eme_pane.setVisible(false);
 
             main_button.setText("MODIFICA LAVORATORE");
             main_button.setOnAction(this::modifica_lavoratore);
+
             try {
                 setupLavoratore();
             } catch (SQLException e) {
@@ -72,8 +75,9 @@ public class AddLavController implements Initializable {
         }
     }
 
+    //Insert default values of the lavoratore
     private void setupLavoratore() throws SQLException {
-        Lavoratore lavoratore = postDriver.getLavoratoreByID(Main.getDataRepo().getLavoratore_id());
+        Lavoratore lavoratore = postDriver.getLavoratoreByID(dataRepo.getLavoratore_id());
         nome.setText(lavoratore.getNome());
         cognome.setText(lavoratore.getCognome());
         luogo_nascita.setText(lavoratore.getLuogo_nascita());
@@ -136,10 +140,9 @@ public class AddLavController implements Initializable {
     private void modifica_lavoratore(ActionEvent event){
         try {
             Lavoratore lavoratore = getLavoratore();
-            System.out.println("test");
-            lavoratore.setId(Main.getDataRepo().getLavoratore_id());
+            lavoratore.setId(dataRepo.getLavoratore_id());
             try {
-                Main.getDataRepo().setLavoratore_id(postDriver.updateLavoratore(lavoratore));
+                dataRepo.setLavoratore_id(postDriver.updateLavoratore(lavoratore));
                 Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
 
             } catch (SQLException e) {
@@ -157,7 +160,7 @@ public class AddLavController implements Initializable {
             Emergenza emergenza = getEmergenza();
             try {
                 int id = postDriver.addLavoratore(lavoratore);
-                Main.getDataRepo().setLavoratore_id(id);
+                dataRepo.setLavoratore_id(id);
                 postDriver.addEmergenza(emergenza,id);
                 Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
             } catch (SQLException e) {
@@ -218,8 +221,17 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void back(ActionEvent event) {
-        Main.getDataRepo().setLavoratore_id(null);
+        dataRepo.setLavoratore_id(null);
         Main.getLoader().loadView("MENU");
+    }
+
+    @FXML
+    private void extraMenu(ActionEvent event){
+        Main.getLoader().loadView("AGG_LAV_OPZ");
+    }
+    @FXML
+    private void emergenzeMenu(ActionEvent event){
+        Main.getLoader().loadView("MENU_EMERGENZE");
     }
 
 

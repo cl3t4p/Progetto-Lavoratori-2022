@@ -18,7 +18,8 @@
       <Label fx:id="label_id" layoutX="35.0" layoutY="20.0" prefHeight="17.0" prefWidth="48.0" underline="true">
          <font>
             <Font size="13.0" />
-         </font></Label>
+         </font>
+      </Label>
       <Button layoutX="706.0" layoutY="17.0" mnemonicParsing="false" onAction="#addPatente" prefHeight="25.0" prefWidth="25.0" text="+" />
       <ChoiceBox fx:id="patente" layoutX="734.0" layoutY="17.0" prefHeight="25.0" prefWidth="74.0" />
       <TableView fx:id="esp_view" layoutX="120.0" layoutY="45.0" prefHeight="147.0" prefWidth="360.0">

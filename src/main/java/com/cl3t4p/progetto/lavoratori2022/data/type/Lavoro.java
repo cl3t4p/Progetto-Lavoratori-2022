@@ -2,8 +2,8 @@ package com.cl3t4p.progetto.lavoratori2022.data.type;
 
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.ValidateData;
-import com.cl3t4p.progetto.lavoratori2022.data.FieldChecker;
+import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;
+import com.cl3t4p.progetto.lavoratori2022.data.checks.FieldChecker;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;

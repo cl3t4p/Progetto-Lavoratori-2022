@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022;
 
 
-import com.cl3t4p.progetto.lavoratori2022.data.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.io.ViewLoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -50,7 +50,7 @@ public class Main extends Application {
         }
 
         //End Testing
-        loader.loadView("AGG_LAV_OPZ");
+        loader.loadView("MENU_EMERGENZE");
         //loader.loadView("LOGIN");
     }
 

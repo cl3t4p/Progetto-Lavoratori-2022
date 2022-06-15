@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.data;
+package com.cl3t4p.progetto.lavoratori2022.data.checks;
 
 public enum RegexChecker {
     EMAIL("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
