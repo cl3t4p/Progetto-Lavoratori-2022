@@ -15,14 +15,14 @@ public interface ValidateData {
                     ignore = true;
                     break;
                 }
-            if(ignore)
+            if (ignore)
                 continue;
             try {
                 Object obj = field.get(this);
-                if(obj == null)
+                if (obj == null)
                     return false;
-                if(obj instanceof String)
-                    if(((String) obj).isEmpty())
+                if (obj instanceof String)
+                    if (((String) obj).isEmpty())
                         return false;
 
             } catch (IllegalAccessException | IllegalArgumentException e) {

@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package fx.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,10 +9,12 @@ public class MenuController {
     private void ricerca_lav(ActionEvent event) {
         Main.getLoader().loadView("RICERCA_LAVORATORE");
     }
+
     @FXML
     private void aggiungi_lavoratore(ActionEvent event) {
         Main.getLoader().loadView("MENU_LAVORATORE");
     }
+
     @FXML
     private void modifica_anagrafica(ActionEvent event) {
         Main.getLoader().loadView("MODIFICA_ANAGRAFICA");

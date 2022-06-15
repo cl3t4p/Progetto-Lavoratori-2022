@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
@@ -6,8 +6,8 @@ import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
+import fx.components.ButtonColumn;
+import fx.components.NumberField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,8 +41,6 @@ public class AggEmeOPController implements Initializable {
     @FXML
     private NumberField em_telefono;
     private int lavoratore_id;
-
-
 
 
     @Override
@@ -106,7 +104,7 @@ public class AggEmeOPController implements Initializable {
         Emergenza emergenza = new Emergenza();
         emergenza.setNome(em_nome.getText());
         emergenza.setCognome(em_cognome.getText());
-        if(!RegexChecker.EMAIL.validate(em_email.getText())){
+        if (!RegexChecker.EMAIL.validate(em_email.getText())) {
             throw new JavaFXDataError("Email emergenza non valida!");
         }
         emergenza.setEmail(em_email.getText());

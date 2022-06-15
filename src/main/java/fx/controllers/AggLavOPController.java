@@ -1,9 +1,9 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
+import fx.components.ButtonColumn;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +23,6 @@ import java.util.Set;
 public class AggLavOPController implements Initializable {
 
 
-
     private final ObservableList<String> patenti_list = FXCollections.observableArrayList();
     private final ObservableList<String> lingue_list = FXCollections.observableArrayList();
     private final ObservableList<String> esp_list = FXCollections.observableArrayList();
@@ -34,23 +33,22 @@ public class AggLavOPController implements Initializable {
     private int lavoratore_id;
 
 
-
     public Label label_id;
 
     public TableView<String> comuni_view;
-    public TableColumn<String,String> comuni_col;
+    public TableColumn<String, String> comuni_col;
     public ComboBox<String> comune;
 
     public TableView<String> patenti_view;
-    public TableColumn<String,String> patente_colum;
+    public TableColumn<String, String> patente_colum;
     public ChoiceBox<String> patente;
 
 
     public TableView<String> esp_view;
-    public TableColumn<String,String> esp_col;
+    public TableColumn<String, String> esp_col;
     public TextField esperienze;
 
-    public TableColumn<String,String> lig_col;
+    public TableColumn<String, String> lig_col;
     public TableView<String> lig_view;
     public TextField lingue;
 
@@ -64,31 +62,31 @@ public class AggLavOPController implements Initializable {
         setupEsp();
         setupComune();
     }
-    private void setupLabel(){
-        if(lavoratore_id != 0)
+
+    private void setupLabel() {
+        if (lavoratore_id != 0)
             label_id.setText(String.valueOf(lavoratore_id));
     }
 
 
-
-    private void setupCol(TableColumn<String, String> column, TableView<String> tableView, ButtonColumn.DB_Exec<Integer,String> exec) {
+    private void setupCol(TableColumn<String, String> column, TableView<String> tableView, ButtonColumn.DB_Exec<Integer, String> exec) {
         column.setEditable(false);
         column.setResizable(false);
         column.setReorderable(false);
         column.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue()));
-        ButtonColumn<Integer,String> buttonColumn = new ButtonColumn<>("", lavoratore_id, exec);
+        ButtonColumn<Integer, String> buttonColumn = new ButtonColumn<>("", lavoratore_id, exec);
         column.prefWidthProperty().bind(tableView.widthProperty().subtract(buttonColumn.widthProperty()).subtract(2));
         tableView.getColumns().add(buttonColumn);
     }
 
     //Comuni
 
-    public void setupComune(){
-        ButtonColumn.DB_Exec<Integer,String> exec = ((lav_id, key) -> {
-            postDriver.delComunebyID(lav_id,key);
+    public void setupComune() {
+        ButtonColumn.DB_Exec<Integer, String> exec = ((lav_id, key) -> {
+            postDriver.delComunebyID(lav_id, key);
             refreshPatenteList();
         });
-        setupCol(comuni_col,comuni_view,exec);
+        setupCol(comuni_col, comuni_view, exec);
         try {
             comuni_view.setItems(comune_list);
             refreshComuni();
@@ -105,10 +103,10 @@ public class AggLavOPController implements Initializable {
     }
 
     public void comune_search(KeyEvent event) {
-        if(event.getCode().equals(KeyCode.ENTER)){
+        if (event.getCode().equals(KeyCode.ENTER)) {
             List<String> comuni;
             try {
-                comuni = postDriver.getComuneILike(comune.getEditor().getText(),20);
+                comuni = postDriver.getComuneILike(comune.getEditor().getText(), 20);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -118,14 +116,14 @@ public class AggLavOPController implements Initializable {
         }
     }
 
-    public void addComune(ActionEvent event){
-        if(comune.getValue().isEmpty())return;
+    public void addComune(ActionEvent event) {
+        if (comune.getValue().isEmpty()) return;
         try {
-            if(postDriver.getComuniByName(comune.getValue()).isEmpty()) {
+            if (postDriver.getComuniByName(comune.getValue()).isEmpty()) {
                 JavaFXError.fxErrorMSG("Non esiste quel comune!");
                 return;
             }
-            postDriver.addComuneByID(comune.getValue(),lavoratore_id);
+            postDriver.addComuneByID(comune.getValue(), lavoratore_id);
             refreshComuni();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,16 +133,14 @@ public class AggLavOPController implements Initializable {
     }
 
 
-
-
     //Lingue
 
     private void setupLingue() {
-        ButtonColumn.DB_Exec<Integer,String> exec = ((lav_id, key) -> {
-            postDriver.delLinguaByID(lav_id,key);
+        ButtonColumn.DB_Exec<Integer, String> exec = ((lav_id, key) -> {
+            postDriver.delLinguaByID(lav_id, key);
             refreshPatenteList();
         });
-        setupCol(lig_col,lig_view,exec);
+        setupCol(lig_col, lig_view, exec);
         try {
             lig_view.setItems(lingue_list);
             refreshLingue();
@@ -154,16 +150,16 @@ public class AggLavOPController implements Initializable {
         }
     }
 
-    private void refreshLingue() throws SQLException{
+    private void refreshLingue() throws SQLException {
         List<String> full_list = postDriver.getLingueByID(lavoratore_id);
         lingue_list.clear();
         lingue_list.addAll(full_list);
     }
 
     public void addLingua(ActionEvent event) {
-        if(lingue.getText().isEmpty())return;
+        if (lingue.getText().isEmpty()) return;
         try {
-            postDriver.addLinguaByID(lavoratore_id,lingue.getText());
+            postDriver.addLinguaByID(lavoratore_id, lingue.getText());
             refreshLingue();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -175,11 +171,11 @@ public class AggLavOPController implements Initializable {
     //Esperienze
 
     private void setupEsp() {
-        ButtonColumn.DB_Exec<Integer,String> exec = ((lav_id, key) -> {
-            postDriver.delEspByID(lav_id,key);
+        ButtonColumn.DB_Exec<Integer, String> exec = ((lav_id, key) -> {
+            postDriver.delEspByID(lav_id, key);
             refreshPatenteList();
         });
-        setupCol(esp_col,esp_view,exec);
+        setupCol(esp_col, esp_view, exec);
         try {
             esp_view.setItems(esp_list);
             refreshEsp();
@@ -190,9 +186,9 @@ public class AggLavOPController implements Initializable {
     }
 
     public void addEsp(ActionEvent event) {
-        if(esperienze.getText().isEmpty())return;
+        if (esperienze.getText().isEmpty()) return;
         try {
-            postDriver.addEspByID(lavoratore_id,esperienze.getText());
+            postDriver.addEspByID(lavoratore_id, esperienze.getText());
             refreshEsp();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,12 +205,12 @@ public class AggLavOPController implements Initializable {
 
     //Patenti
 
-    private void setupPatenti(){
-        ButtonColumn.DB_Exec<Integer,String>  exec = (lav_id, key) -> {
-            postDriver.delPatenteByID(lav_id,key);
+    private void setupPatenti() {
+        ButtonColumn.DB_Exec<Integer, String> exec = (lav_id, key) -> {
+            postDriver.delPatenteByID(lav_id, key);
             refreshPatenteList();
         };
-       setupCol(patente_colum,patenti_view,exec);
+        setupCol(patente_colum, patenti_view, exec);
         try {
             refreshPatenteList();
             patenti_view.setItems(patenti_list);
@@ -238,17 +234,15 @@ public class AggLavOPController implements Initializable {
     }
 
     public void addPatente(ActionEvent event) {
-        if(patente.getValue() == null)return;
+        if (patente.getValue() == null) return;
         try {
-            postDriver.addPatenteByID(lavoratore_id,patente.getValue());
+            postDriver.addPatenteByID(lavoratore_id, patente.getValue());
             refreshPatenteList();
         } catch (SQLException e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.fxMSG();
         }
     }
-
-
 
 
     public void back(ActionEvent event) {

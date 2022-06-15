@@ -17,12 +17,12 @@ public class Emergenza implements ValidateData {
     String email;
 
 
-    public Map<String,String> toMap(){
-        HashMap<String,String> map = new HashMap<>();
-        map.put("nome",nome);
-        map.put("cognome",cognome);
-        map.put("telefono",String.valueOf(telefono));
-        map.put("email",email);
+    public Map<String, String> toMap() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("nome", nome);
+        map.put("cognome", cognome);
+        map.put("telefono", String.valueOf(telefono));
+        map.put("email", email);
         return map;
     }
 }

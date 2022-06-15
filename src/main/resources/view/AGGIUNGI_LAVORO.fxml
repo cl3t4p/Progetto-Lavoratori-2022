@@ -3,23 +3,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.Controller">
-   <TextArea fx:id="txArea" layoutX="28.0" layoutY="64.0" prefHeight="234.0" prefWidth="719.0" />
-   <TextField fx:id="tx20" layoutX="49.0" layoutY="390.0" />
-   <Button layoutX="615.0" layoutY="444.0" mnemonicParsing="false" onAction="#aggiungi_lavoro" prefHeight="74.0" prefWidth="137.0" text="AGGIUNGI LAVORO" />
-   <TextField fx:id="tx21" layoutX="244.0" layoutY="390.0" />
-   <TextField fx:id="tx22" layoutX="423.0" layoutY="390.0" />
-   <TextField fx:id="tx23" layoutX="603.0" layoutY="390.0" />
-   <TextField fx:id="tx24" layoutX="49.0" layoutY="475.0" />
-   <DatePicker fx:id="dp1" layoutX="231.0" layoutY="475.0" />
-   <DatePicker fx:id="dp2" layoutX="423.0" layoutY="475.0" />
-   <Label layoutX="79.0" layoutY="362.0" text="ID LAVORATORE" />
-   <Label layoutX="275.0" layoutY="362.0" text="NOME AZIENDA" />
-   <Label layoutX="443.0" layoutY="362.0" text="MANSIONE SVOLTA" />
-   <Label layoutX="631.0" layoutY="362.0" text="LUOGO DI LAVORO" />
-   <Label layoutX="14.0" layoutY="439.0" prefHeight="26.0" prefWidth="218.0" text="RETRIBUZIONE LORDA GIORNALIERA(€)" />
-   <Label layoutX="285.0" layoutY="444.0" text="DATA INIZIO" />
-   <Label layoutX="482.0" layoutY="444.0" text="DATA FINE" />
-   <Button layoutX="29.0" layoutY="518.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0" prefWidth="82.0" text="BACK" />
-   <Button layoutX="29.0" layoutY="14.0" mnemonicParsing="false" onAction="#carica_lav" prefHeight="38.0" prefWidth="138.0" text="CARICA LAVORATORI" />
+<AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controllers.Controller">
+    <TextArea fx:id="txArea" layoutX="28.0" layoutY="64.0" prefHeight="234.0" prefWidth="719.0"/>
+    <TextField fx:id="tx20" layoutX="49.0" layoutY="390.0"/>
+    <Button layoutX="615.0" layoutY="444.0" mnemonicParsing="false" onAction="#aggiungi_lavoro" prefHeight="74.0"
+            prefWidth="137.0" text="AGGIUNGI LAVORO"/>
+    <TextField fx:id="tx21" layoutX="244.0" layoutY="390.0"/>
+    <TextField fx:id="tx22" layoutX="423.0" layoutY="390.0"/>
+    <TextField fx:id="tx23" layoutX="603.0" layoutY="390.0"/>
+    <TextField fx:id="tx24" layoutX="49.0" layoutY="475.0"/>
+    <DatePicker fx:id="dp1" layoutX="231.0" layoutY="475.0"/>
+    <DatePicker fx:id="dp2" layoutX="423.0" layoutY="475.0"/>
+    <Label layoutX="79.0" layoutY="362.0" text="ID LAVORATORE"/>
+    <Label layoutX="275.0" layoutY="362.0" text="NOME AZIENDA"/>
+    <Label layoutX="443.0" layoutY="362.0" text="MANSIONE SVOLTA"/>
+    <Label layoutX="631.0" layoutY="362.0" text="LUOGO DI LAVORO"/>
+    <Label layoutX="14.0" layoutY="439.0" prefHeight="26.0" prefWidth="218.0" text="RETRIBUZIONE LORDA GIORNALIERA(€)"/>
+    <Label layoutX="285.0" layoutY="444.0" text="DATA INIZIO"/>
+    <Label layoutX="482.0" layoutY="444.0" text="DATA FINE"/>
+    <Button layoutX="29.0" layoutY="518.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0" prefWidth="82.0"
+            text="BACK"/>
+    <Button layoutX="29.0" layoutY="14.0" mnemonicParsing="false" onAction="#carica_lav" prefHeight="38.0"
+            prefWidth="138.0" text="CARICA LAVORATORI"/>
 </AnchorPane>

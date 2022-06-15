@@ -16,18 +16,20 @@ public class ViewLoader {
 
     private String extension = ".fxml";
     final String base_path;
+
     public ViewLoader(String base_path) {
         this.base_path = base_path;
     }
-    public ViewLoader(String base_path,String extension) {
+
+    public ViewLoader(String base_path, String extension) {
         this.base_path = base_path;
         this.extension = extension;
     }
 
-    private Parent loadParent(String file_name){
+    private Parent loadParent(String file_name) {
         Parent parent;
         try {
-            parent = FXMLLoader.load(getClass().getResource(base_path+file_name+extension));
+            parent = FXMLLoader.load(getClass().getResource(base_path + file_name + extension));
             parent.getStylesheets().add("css/global.css");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -36,9 +38,9 @@ public class ViewLoader {
     }
 
 
-    public void loadView(String name){
-        Parent root= loadParent(name);
-        Scene scene=new Scene(root);
+    public void loadView(String name) {
+        Parent root = loadParent(name);
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

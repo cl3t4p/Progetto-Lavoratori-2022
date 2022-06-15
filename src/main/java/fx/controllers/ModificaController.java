@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import javafx.event.ActionEvent;
@@ -19,10 +19,12 @@ public class ModificaController implements Initializable {
     private void ricerca_lav(ActionEvent event) {
         Main.getLoader().loadView("RICERCA_LAVORATORE");
     }
+
     @FXML
     private void aggiungi_lavoratore(ActionEvent event) {
         Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
     }
+
     @FXML
     private void modifica_anagrafica(ActionEvent event) {
         Main.getLoader().loadView("MODIFICA_ANAGRAFICA");

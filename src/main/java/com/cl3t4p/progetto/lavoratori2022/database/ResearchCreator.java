@@ -18,52 +18,57 @@ public class ResearchCreator {
     List<ResearchField> fields = new ArrayList<>();
     boolean isFirst = true;
 
-    public void addFilter(String name,String value,TypeVar type,Logic logic){
+    public void addFilter(String name, String value, TypeVar type, Logic logic) {
         ResearchField field;
-        if(isFirst){
+        if (isFirst) {
             isFirst = false;
-             field = new ResearchField(name,type,true);
-        }else
-            field = new ResearchField(name,type,logic);
+            field = new ResearchField(name, type, true);
+        } else
+            field = new ResearchField(name, type, logic);
         field.value = value;
         fields.add(field);
     }
 
-    public String getSQLString(){
+    public String getSQLString() {
         return sql;
     }
+
     protected PreparedStatement getSQLStatment(Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
         return null;
     }
 
-    public void addStatment(PreparedStatement statement, Field field){
+    public void addStatment(PreparedStatement statement, Field field) {
 
     }
 
 
-    private static class ResearchField{
+    private static class ResearchField {
         String name;
         boolean isFirst = false;
         TypeVar typeVar;
         Logic logic;
 
         String value;
-        public ResearchField(String name,TypeVar typeVar, boolean isFirst) {
+
+        public ResearchField(String name, TypeVar typeVar, boolean isFirst) {
             this.name = name;
             this.isFirst = isFirst;
             this.logic = null;
         }
-        public ResearchField(String name,TypeVar typeVar, Logic logic) {
+
+        public ResearchField(String name, TypeVar typeVar, Logic logic) {
             this.name = name;
             this.logic = logic;
         }
     }
-    public enum Logic{
+
+    public enum Logic {
         AND,
         OR
     }
-    public enum TypeVar{
+
+    public enum TypeVar {
         INT,
         STRING,
         DATE,

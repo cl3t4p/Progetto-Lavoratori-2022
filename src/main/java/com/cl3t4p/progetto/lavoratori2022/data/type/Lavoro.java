@@ -30,10 +30,10 @@ public class Lavoro implements ValidateData {
 
 
     public boolean validate() {
-        if(!ValidateData.super.validate())
+        if (!ValidateData.super.validate())
             return false;
         try {
-            if(Main.getPostDriver().getComuniByName(luogo) == null)
+            if (Main.getPostDriver().getComuniByName(luogo) == null)
                 return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);

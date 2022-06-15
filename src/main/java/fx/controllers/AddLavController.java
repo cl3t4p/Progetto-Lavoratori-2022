@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
+import fx.components.NumberField;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
@@ -26,7 +26,6 @@ import java.util.ResourceBundle;
 public class AddLavController implements Initializable {
 
 
-
     PostDriver postDriver = Main.getPostDriver();
     DataRepo dataRepo = Main.getDataRepo();
 
@@ -35,15 +34,13 @@ public class AddLavController implements Initializable {
     @FXML
     private Button main_button;
     @FXML
-    private DatePicker data_inizio,data_fine,data_nascita;
+    private DatePicker data_inizio, data_fine, data_nascita;
     @FXML
-    private Label email_invalida,tel_invalido,id_dipendente,nascita_invalida,data_in_invalida,data_fin_invalida,id_label,id_lavoratore;
+    private Label email_invalida, tel_invalido, id_dipendente, nascita_invalida, data_in_invalida, data_fin_invalida, id_label, id_lavoratore;
     @FXML
-    private TextField nome,cognome,luogo_nascita,nazionalita
-            ,indirizzo,email
-            ,em_nome,em_cognome,em_email;
+    private TextField nome, cognome, luogo_nascita, nazionalita, indirizzo, email, em_nome, em_cognome, em_email;
     @FXML
-    private NumberField telefono,em_telefono;
+    private NumberField telefono, em_telefono;
     @FXML
     private ChoiceBox<String> automunito;
 
@@ -54,12 +51,12 @@ public class AddLavController implements Initializable {
         telefono.focusedProperty().addListener(this::check_number);
         data_nascita.setOnAction(this::checkNascita);
 
-        if(dataRepo.getDipendente() != null) {
+        if (dataRepo.getDipendente() != null) {
             id_dipendente.setText(String.valueOf(dataRepo.getDipendente().getId()));
             id_label.setVisible(true);
         }
-        if(dataRepo.getLavoratore_id() != null){
-            id_lavoratore.setText(id_lavoratore.getText()+dataRepo.getLavoratore_id());
+        if (dataRepo.getLavoratore_id() != null) {
+            id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
             id_lavoratore.setVisible(true);
 
             eme_pane.setVisible(false);
@@ -94,13 +91,13 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void checkNascita(ActionEvent event) {
-        if(data_nascita.getValue() != null)
+        if (data_nascita.getValue() != null)
             nascita_invalida.setVisible(Date.valueOf(data_nascita.getValue()).after(Date.valueOf(LocalDate.now())));
     }
 
     @FXML
-    private void checkDate(ActionEvent event){
-        if(data_inizio.getValue() == null || data_fine.getValue() == null){
+    private void checkDate(ActionEvent event) {
+        if (data_inizio.getValue() == null || data_fine.getValue() == null) {
             nascita_invalida.setVisible(false);
             return;
         }
@@ -109,35 +106,35 @@ public class AddLavController implements Initializable {
     }
 
 
-
-    private void check_number(Observable observable){
-        if(telefono.isFocused())return;
-        if(telefono.getText().isEmpty()) {
+    private void check_number(Observable observable) {
+        if (telefono.isFocused()) return;
+        if (telefono.getText().isEmpty()) {
             tel_invalido.setVisible(false);
             return;
         }
         tel_invalido.setVisible(!RegexChecker.TEL_NUMBER.validate(telefono.getText()));
     }
+
     private void check_email(Observable observable) {
-        if(email.isFocused())return;
-        if(email.getText().isEmpty()) {
+        if (email.isFocused()) return;
+        if (email.getText().isEmpty()) {
             email_invalida.setVisible(false);
             return;
         }
         email_invalida.setVisible(!RegexChecker.EMAIL.validate(email.getText()));
     }
 
-    private boolean checkData(DatePicker date){
+    private boolean checkData(DatePicker date) {
         try {
             date.getValue();
-        }catch (DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             return true;
         }
         return date.getValue() == null;
     }
 
 
-    private void modifica_lavoratore(ActionEvent event){
+    private void modifica_lavoratore(ActionEvent event) {
         try {
             Lavoratore lavoratore = getLavoratore();
             lavoratore.setId(dataRepo.getLavoratore_id());
@@ -148,25 +145,25 @@ public class AddLavController implements Initializable {
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
             }
-        }catch (JavaFXDataError e){
+        } catch (JavaFXDataError e) {
             e.printFX();
         }
     }
 
     @FXML
-    private void inserimento_lavoratore(ActionEvent event)  {
+    private void inserimento_lavoratore(ActionEvent event) {
         try {
             Lavoratore lavoratore = getLavoratore();
             Emergenza emergenza = getEmergenza();
             try {
                 int id = postDriver.addLavoratore(lavoratore);
                 dataRepo.setLavoratore_id(id);
-                postDriver.addEmergenza(emergenza,id);
+                postDriver.addEmergenza(emergenza, id);
                 Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
             }
-        }catch (JavaFXDataError e){
+        } catch (JavaFXDataError e) {
             e.printFX();
         }
     }
@@ -177,14 +174,15 @@ public class AddLavController implements Initializable {
         emergenza.setCognome(em_cognome.getText());
         emergenza.setEmail(em_email.getText());
         emergenza.setTelefono(em_telefono.getValue());
-        if(em_telefono.getValue() == null){
+        if (em_telefono.getValue() == null) {
             throw new JavaFXDataError("Telefono emergenza non valido!");
         }
-        if(!emergenza.validate()){
+        if (!emergenza.validate()) {
             throw new JavaFXDataError("Campi emergenza non compilati o errati");
         }
         return emergenza;
     }
+
     private Lavoratore getLavoratore() throws JavaFXDataError {
         Lavoratore lavoratore = new Lavoratore();
         lavoratore.setNome(nome.getText());
@@ -226,21 +224,14 @@ public class AddLavController implements Initializable {
     }
 
     @FXML
-    private void extraMenu(ActionEvent event){
+    private void extraMenu(ActionEvent event) {
         Main.getLoader().loadView("AGG_LAV_OPZ");
     }
+
     @FXML
-    private void emergenzeMenu(ActionEvent event){
+    private void emergenzeMenu(ActionEvent event) {
         Main.getLoader().loadView("MENU_EMERGENZE");
     }
-
-
-
-
-
-
-
-
 
 
 }

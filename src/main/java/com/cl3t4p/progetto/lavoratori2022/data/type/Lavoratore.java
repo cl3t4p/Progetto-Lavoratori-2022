@@ -17,7 +17,7 @@ import java.sql.Date;
 public class Lavoratore implements ValidateData {
 
     @FieldChecker
-    int id,id_dipendente;
+    int id, id_dipendente;
     String nome, cognome, luogo_nascita;
     Date data_nascita;
     String nazionalita, indirizzo;
@@ -33,10 +33,10 @@ public class Lavoratore implements ValidateData {
 
 
     public boolean validate() {
-        if(!ValidateData.super.validate()){
+        if (!ValidateData.super.validate()) {
             return false;
         }
-        if(!RegexChecker.EMAIL.validate(email)){
+        if (!RegexChecker.EMAIL.validate(email)) {
             return false;
         }
         return RegexChecker.TEL_NUMBER.validate(String.valueOf(telefono));

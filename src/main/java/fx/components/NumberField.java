@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.components;
+package fx.components;
 
 
 import javafx.scene.control.TextField;
@@ -13,10 +13,10 @@ public class NumberField extends TextField {
     }
 
 
-    public Long getValue(){
+    public Long getValue() {
         try {
             return Long.parseLong(getText());
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return null;
         }
 

@@ -14,9 +14,10 @@ public enum RegexChecker {
     }
 
     final String regex;
-    public boolean validate(String input){
-        if(input == null)return false;
-        if(input.isBlank())return false;
+
+    public boolean validate(String input) {
+        if (input == null) return false;
+        if (input.isBlank()) return false;
         return input.matches(regex);
     }
 }

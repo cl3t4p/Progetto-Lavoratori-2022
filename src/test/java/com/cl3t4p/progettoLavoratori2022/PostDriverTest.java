@@ -22,7 +22,7 @@ class PostDriverTest {
 
     @BeforeAll
     static void setup() {
-        postDriver = new PostDriver("postgres","example","postgres","localhost",5432);
+        postDriver = new PostDriver("postgres", "example", "postgres", "localhost", 5432);
         lavoratore = new Lavoratore();
         lavoratore.setNome("Testing");
         lavoratore.setCognome("Tester");
@@ -51,10 +51,10 @@ class PostDriverTest {
         String comune = "aceRn";
         try {
             assertEquals(postDriver.getComuneILike(comune)
-                    .get(0)
-                    ,"ACERNO","Can get names from the database");
+                            .get(0)
+                    , "ACERNO", "Can get names from the database");
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             fail("SQLException error");
         }
     }
@@ -65,34 +65,35 @@ class PostDriverTest {
         String comune = "acerno";
         try {
             String com = postDriver.getComuniByName(comune);
-            if(com == null){
+            if (com == null) {
                 fail("There is no comune with that name");
             }
             assertEquals(com
-                    ,"ACERNO","Can get names from the database");
-        }catch (SQLException e){
+                    , "ACERNO", "Can get names from the database");
+        } catch (SQLException e) {
             fail("SQLException error");
         }
     }
+
     @DisplayName("Get comune by a wrong full name")
     @Test
     void getComuneByNameWrong() {
         String comune = "ACERNI";
         try {
             assertNull(postDriver.getComuniByName(comune));
-        }catch (SQLException e){
+        } catch (SQLException e) {
             fail("SQLException error");
         }
     }
 
     @Test
-    void getDipendenteByUserAndPassword(){
+    void getDipendenteByUserAndPassword() {
         String user = "marco01";
         String pass = "12345";
         try {
-            Dipendente dipendente = postDriver.getDipendenteByUserAndPassword(user,pass);
-            assertEquals(dipendente.getNome(),"Marco");
-        }catch (SQLException e){
+            Dipendente dipendente = postDriver.getDipendenteByUserAndPassword(user, pass);
+            assertEquals(dipendente.getNome(), "Marco");
+        } catch (SQLException e) {
             fail("SQLException error");
         }
     }
@@ -101,8 +102,8 @@ class PostDriverTest {
     void getLavoratore() {
         try {
             Lavoratore lavoratore = postDriver.getLavoratoreByID(1);
-            assertEquals(lavoratore.getNome(),"Marco");
-        }catch (SQLException e){
+            assertEquals(lavoratore.getNome(), "Marco");
+        } catch (SQLException e) {
             fail("SQLException error");
         }
     }
@@ -110,20 +111,21 @@ class PostDriverTest {
 
     @Test
     @Order(1)
-    void addLavoratore(){
+    void addLavoratore() {
         try {
             lavoratore.setId(postDriver.addLavoratore(lavoratore));
-        }catch (SQLException e){
+        } catch (SQLException e) {
             fail("SQLException error");
         }
     }
+
     @Test
     @Order(2)
-    void delLavoratore(){
+    void delLavoratore() {
         try {
             postDriver.removeLavoratore(lavoratore.getId());
             System.out.println(lavoratore.getId());
-        }catch (SQLException e){
+        } catch (SQLException e) {
             fail("SQLException error");
         }
     }

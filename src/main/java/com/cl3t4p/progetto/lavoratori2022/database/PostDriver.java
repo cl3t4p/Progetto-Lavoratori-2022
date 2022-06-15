@@ -80,8 +80,8 @@ public class PostDriver {
                 ",id_dipendente)" +
                 " VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING id;";
         List<String> fields = List.of("nome", "cognome", "luogo_nascita", "data_nascita"
-                , "nazionalita", "indirizzo", "telefono", "email","automunito",
-                "inizio_disponibile","fine_disponibile","id_dipendente");
+                , "nazionalita", "indirizzo", "telefono", "email", "automunito",
+                "inizio_disponibile", "fine_disponibile", "id_dipendente");
         PreparedStatement statement = getConnection().prepareStatement(sql);
         try {
             SQLMapper.serializeSQL(statement, lavoratore, fields);
@@ -97,8 +97,8 @@ public class PostDriver {
         String sql = "UPDATE lavoratore SET " +
                 "nome=?, cognome=?, luogo_nascita=?, data_nascita=?, nazionalita=?, indirizzo=?, telefono=?, email=?, automunito=?, inizio_periodo_disp=?, fine_periodo_disp=? WHERE id=?";
         List<String> fields = List.of("nome", "cognome", "luogo_nascita", "data_nascita"
-                , "nazionalita", "indirizzo", "telefono", "email","automunito",
-                "inizio_disponibile","fine_disponibile");
+                , "nazionalita", "indirizzo", "telefono", "email", "automunito",
+                "inizio_disponibile", "fine_disponibile");
         PreparedStatement statement = getConnection().prepareStatement(sql);
         try {
             SQLMapper.serializeSQL(statement, lavoratore, fields);
@@ -110,18 +110,17 @@ public class PostDriver {
     }
 
     public void removeLavoratore(int id) throws SQLException {
-        String sql="DELETE FROM lavoratore WHERE id=?";
+        String sql = "DELETE FROM lavoratore WHERE id=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1,id);
+        statement.setInt(1, id);
         statement.executeUpdate();
     }
-
 
 
     public Set<Lavoratore> getAllLavoratori(int limit) throws SQLException {
         String sql = "SELECT * from lavoratore LIMIT ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1,limit);
+        statement.setInt(1, limit);
         ResultSet resultSet = statement.executeQuery();
         return getAllLavoratori(resultSet);
     }
@@ -135,9 +134,9 @@ public class PostDriver {
 
     private Set<Lavoratore> getAllLavoratori(ResultSet resultSet) throws SQLException {
         Set<Lavoratore> lavoratori = new HashSet<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             try {
-                lavoratori.add(SQLMapper.deserializeSQL(resultSet,Lavoratore.class));
+                lavoratori.add(SQLMapper.deserializeSQL(resultSet, Lavoratore.class));
             } catch (IllegalAccessException | InstantiationException e) {
                 throw new RuntimeException(e);
             }
@@ -148,25 +147,27 @@ public class PostDriver {
     public Set<String> getPatentiByID(int id) throws SQLException {
         String sql = "SELECT pat_lav.nome_patente FROM lavoratore INNER JOIN pat_lav ON(lavoratore.id=pat_lav.id_lavoratore) WHERE lavoratore.id=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1,id);
+        statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
         Set<String> patenti = new HashSet<>();
         while (resultSet.next())
             patenti.add(resultSet.getString(1));
         return patenti;
     }
+
     public void addPatenteByID(int id, String patente) throws SQLException {
         String sql = "INSERT INTO pat_lav (id_lavoratore, nome_patente) VALUES (?, ?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1,id);
-        statement.setString(2,patente);
+        statement.setInt(1, id);
+        statement.setString(2, patente);
         statement.executeUpdate();
     }
+
     public void delPatenteByID(int id, String patente) throws SQLException {
         String sql = "DELETE FROM pat_lav WHERE ( id_lavoratore = ? AND nome_patente = ?);";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1,id);
-        statement.setString(2,patente);
+        statement.setInt(1, id);
+        statement.setString(2, patente);
         statement.executeUpdate();
     }
 
@@ -175,10 +176,10 @@ public class PostDriver {
         String sql = "INSERT INTO lavoro_svolto " +
                 "(id,inizio_periodo,fine_periodo,nome_azienda,mansione_svolta,luogo_lavoro,retribuzione_lorda_giornaliera ,id_lavoratore) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
-        List<String> fields = List.of("id","inizio_periodo","fine_periodo","nome_azienda","mansione","luogo","retribuzione" ,"id_lavoratore");
+        List<String> fields = List.of("id", "inizio_periodo", "fine_periodo", "nome_azienda", "mansione", "luogo", "retribuzione", "id_lavoratore");
         PreparedStatement statement = getConnection().prepareStatement(sql);
         try {
-            SQLMapper.serializeSQL(statement,lavoro,fields);
+            SQLMapper.serializeSQL(statement, lavoro, fields);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -189,9 +190,9 @@ public class PostDriver {
     public String getComuniByName(String name) throws SQLException {
         String sql = "SELECT DISTINCT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,name.toUpperCase(Locale.ROOT));
+        statement.setString(1, name.toUpperCase(Locale.ROOT));
         ResultSet resultSet = statement.executeQuery();
-        if(!resultSet.next())
+        if (!resultSet.next())
             return "";
         return resultSet.getString(1);
     }
@@ -211,33 +212,34 @@ public class PostDriver {
     public Dipendente getDipendenteByUserAndPassword(String user, String pass) throws SQLException {
         String sql = "SELECT * FROM dipendente WHERE username=? and password=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,user);
-        statement.setString(2,pass);
+        statement.setString(1, user);
+        statement.setString(2, pass);
         ResultSet resultSet = statement.executeQuery();
-        if(resultSet.next())
+        if (resultSet.next())
             try {
-                return (SQLMapper.deserializeSQL(resultSet,Dipendente.class));
+                return (SQLMapper.deserializeSQL(resultSet, Dipendente.class));
             } catch (IllegalAccessException | InstantiationException e) {
                 throw new RuntimeException(e);
             }
         return null;
     }
 
-   public String getLinguaLike(String name) throws SQLException {;
+    public String getLinguaLike(String name) throws SQLException {
+        ;
         String sql = "SELECT DISTINCT nome_lingua FROM lingua WHERE nome_lingua ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,name);
+        statement.setString(1, name);
         ResultSet resultSet = statement.executeQuery();
-        if(!resultSet.next())
+        if (!resultSet.next())
             return "";
         return resultSet.getString(1);
-   }
+    }
 
 
     private void addLingua(String lingua) throws SQLException {
         String sql = "INSERT INTO lingua (nome_lingua) VALUES (?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,lingua);
+        statement.setString(1, lingua);
         statement.executeUpdate();
     }
 
@@ -247,14 +249,14 @@ public class PostDriver {
         String key = getLinguaLike(lingua);
         System.out.println("Test");
         System.out.println(key);
-        if(key.isEmpty()){
-            key = lingua.substring(0,1).toUpperCase()+lingua.substring(1);
+        if (key.isEmpty()) {
+            key = lingua.substring(0, 1).toUpperCase() + lingua.substring(1);
             addLingua(key);
         }
         String sql = "INSERT INTO lingua_lav(nome_lingua,id_lavoratore) VALUES(?,?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,key);
-        statement.setInt(2,id_lavoratore);
+        statement.setString(1, key);
+        statement.setInt(2, id_lavoratore);
         statement.executeUpdate();
     }
 
@@ -262,8 +264,8 @@ public class PostDriver {
     public void delLinguaByID(int lav_id, String key) throws SQLException {
         String sql = "DELETE FROM lingua_lav WHERE ( id_lavoratore = ? AND nome_lingua = ?);";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1,lav_id);
-        statement.setString(2,key);
+        statement.setInt(1, lav_id);
+        statement.setString(2, key);
         statement.executeUpdate();
     }
 
@@ -273,26 +275,28 @@ public class PostDriver {
     }
 
 
-    public String getEspLike(String name) throws SQLException {;
+    public String getEspLike(String name) throws SQLException {
+        ;
         String sql = "SELECT DISTINCT nome_esperienza FROM esperienza WHERE nome_esperienza ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,name);
+        statement.setString(1, name);
         ResultSet resultSet = statement.executeQuery();
-        if(!resultSet.next())
+        if (!resultSet.next())
             return "";
         return resultSet.getString(1);
     }
+
     private void addEsp(String esp) throws SQLException {
         String sql = "INSERT INTO esperienza (nome_esperienza) VALUES (?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,esp);
+        statement.setString(1, esp);
         statement.executeUpdate();
     }
 
 
     public void addEspByID(int id_lavoratore, String esperienza) throws SQLException {
         String key = getEspLike(esperienza);
-        if(key.isEmpty()){
+        if (key.isEmpty()) {
             key = esperienza;
             addEsp(key);
         }
@@ -341,11 +345,12 @@ public class PostDriver {
         String sql = "SELECT lav_comune.comune FROM lavoratore INNER JOIN lav_comune ON(lavoratore.id=lav_comune.id_lavoratore) WHERE lavoratore.id=?";
         return getListString(lavoratore_id, sql);
     }
+
     private List<String> getListString(int lavoratore_id, String sql) throws SQLException {
         ResultSet resultSet;
         PreparedStatement statement = getConnection().prepareStatement(sql);
-            statement.setInt(1, lavoratore_id);
-            resultSet = statement.executeQuery();
+        statement.setInt(1, lavoratore_id);
+        resultSet = statement.executeQuery();
         List<String> list = new ArrayList<>();
         while (resultSet.next())
             list.add(resultSet.getString(1));
@@ -353,19 +358,19 @@ public class PostDriver {
     }
 
     public List<String> getComuneILike(String name) throws SQLException {
-        name = "%"+name+"%";
+        name = "%" + name + "%";
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,name.toUpperCase(Locale.ROOT));
+        statement.setString(1, name.toUpperCase(Locale.ROOT));
         return getAllComuni(statement);
     }
 
     public List<String> getComuneILike(String name, int limit) throws SQLException {
-        name = "%"+name+"%";
+        name = "%" + name + "%";
         String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ? LIMIT ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1,name.toUpperCase(Locale.ROOT));
-        statement.setInt(2,limit);
+        statement.setString(1, name.toUpperCase(Locale.ROOT));
+        statement.setInt(2, limit);
         return getAllComuni(statement);
     }
 
@@ -378,9 +383,9 @@ public class PostDriver {
         return list.stream().sorted().toList();
     }
 
-    private int addEmergenza(Emergenza emergenza) throws SQLException{
+    private int addEmergenza(Emergenza emergenza) throws SQLException {
         int id = getEmergenzeIDByValues(emergenza.toMap());
-        if(id == -1) {
+        if (id == -1) {
             String sql = "INSERT INTO emergenza (nome,cognome,telefono,email) VALUES (?,?,?,?)RETURNING id;";
             PreparedStatement statement = getConnection().prepareStatement(sql);
             statement.setString(1, emergenza.getNome());
@@ -388,13 +393,13 @@ public class PostDriver {
             statement.setLong(3, emergenza.getTelefono());
             statement.setString(4, emergenza.getEmail());
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next())
                 id = resultSet.getInt(1);
         }
         return id;
     }
 
-    private int getEmergenzeIDByValues(Map<String,String> emergenza) throws SQLException {
+    private int getEmergenzeIDByValues(Map<String, String> emergenza) throws SQLException {
         String sql = "SELECT id FROM emergenza WHERE nome=? AND cognome=? AND telefono=? AND email=?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1, emergenza.get("nome"));
@@ -409,10 +414,10 @@ public class PostDriver {
     }
 
 
-    public boolean addEmergenza(Emergenza emergenza,Integer id) throws SQLException {
+    public boolean addEmergenza(Emergenza emergenza, Integer id) throws SQLException {
         int em_id = addEmergenza(emergenza);
 
-        if(checkIfEmergenzaIsLinked(em_id, id))
+        if (checkIfEmergenzaIsLinked(em_id, id))
             return false;
 
         String sql = "INSERT INTO emergenza_lav (id_emergenza,id_lavoratore) VALUES (?,?)";
@@ -440,16 +445,16 @@ public class PostDriver {
             List<Emergenza> emergenze = new ArrayList<>();
             while (resultSet.next()) {
                 try {
-                    emergenze.add(SQLMapper.deserializeSQL(resultSet,Emergenza.class));
+                    emergenze.add(SQLMapper.deserializeSQL(resultSet, Emergenza.class));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             return emergenze;
+        }
     }
-}
 
-    public void delEmergenzeByID(int lav_id, Map<String,String> emergenza) throws SQLException {
+    public void delEmergenzeByID(int lav_id, Map<String, String> emergenza) throws SQLException {
         int eme_id = getEmergenzeIDByValues(emergenza);
         String sql = "DELETE FROM emergenza_lav WHERE id_lavoratore=? AND id_emergenza=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {

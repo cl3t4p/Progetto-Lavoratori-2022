@@ -7,5 +7,6 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 public @interface SQLDInfo {
     String sql_name() default "";
+
     boolean ignore() default false;
 }

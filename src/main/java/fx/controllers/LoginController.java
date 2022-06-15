@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
 import javafx.event.ActionEvent;
@@ -15,18 +15,19 @@ public class LoginController {
     private TextField txuser;
     @FXML
     private PasswordField txpass;
+
     @FXML
     private void login(ActionEvent event) {
         String username = txuser.getText();
         String password = txpass.getText();
         try {
-            Dipendente dipendente = Main.getPostDriver().getDipendenteByUserAndPassword(username,password);
-            if(dipendente != null){
+            Dipendente dipendente = Main.getPostDriver().getDipendenteByUserAndPassword(username, password);
+            if (dipendente != null) {
                 Main.getDataRepo().setDipendente(dipendente);
                 Main.getLoader().loadView("MENU");
-            }else
+            } else
                 throw new JavaFXDataError("Wrong Username or Password");
-        }catch (JavaFXDataError e ){
+        } catch (JavaFXDataError e) {
             e.printFX();
         } catch (SQLException e) {
             new JavaFXDataError("Database error").printFX();

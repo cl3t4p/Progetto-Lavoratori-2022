@@ -30,12 +30,10 @@ public class Main extends Application {
         } catch (IOException e) {
             JavaFXError.fxErrorMSG("Database config does not exists!");
         }
-        if(!postDriver.testConnection()){
+        if (!postDriver.testConnection()) {
             JavaFXError.fxErrorMSG("Database connection error!");
             return;
         }
-
-
 
 
         stage.setResizable(false);
@@ -44,7 +42,7 @@ public class Main extends Application {
         //TODO Replace AGG_LAV_OPZ with LOGIN
         //Testing
         try {
-            dataRepo.setDipendente(postDriver.getDipendenteByUserAndPassword("marco01","12345"));
+            dataRepo.setDipendente(postDriver.getDipendenteByUserAndPassword("marco01", "12345"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,10 +57,10 @@ public class Main extends Application {
     }
 
     private void loadDBConfig() throws IOException {
-        FileReader reader=new FileReader(getClass().getResource("/db.properties").getPath());
-        Properties p=new Properties();
+        FileReader reader = new FileReader(getClass().getResource("/db.properties").getPath());
+        Properties p = new Properties();
         p.load(reader);
-        postDriver = new PostDriver(p.getProperty("username"),p.getProperty("password"),p.getProperty("db_name"),p.getProperty("host"), Integer.parseInt(p.getProperty("port")));
+        postDriver = new PostDriver(p.getProperty("username"), p.getProperty("password"), p.getProperty("db_name"), p.getProperty("host"), Integer.parseInt(p.getProperty("port")));
     }
 
 

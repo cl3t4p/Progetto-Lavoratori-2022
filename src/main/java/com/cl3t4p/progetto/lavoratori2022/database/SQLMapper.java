@@ -69,6 +69,7 @@ public class SQLMapper {
             }
         }
     }
+
     public static <A> A deserializeSQL(ResultSet result, Class<A> clazz) throws IllegalAccessException, InstantiationException, SQLException {
         //Create a empty instance of A class
         A a = clazz.newInstance();
@@ -79,23 +80,23 @@ public class SQLMapper {
             boolean ignore = false;
             //Check if there is a SQLDInfo annotation and it's parameters
             for (Annotation annotation : field.getAnnotations())
-                if(annotation instanceof SQLDInfo){
+                if (annotation instanceof SQLDInfo) {
                     SQLDInfo info = (SQLDInfo) annotation;
                     name = info.sql_name().isEmpty() ? name : info.sql_name();
                     ignore = info.ignore();
                     break;
                 }
-            if(ignore)
+            if (ignore)
                 continue;
 
             //This will make us possibile to modify private fields in the class
             field.setAccessible(true);
-            switch (field.getType().getSimpleName()){
+            switch (field.getType().getSimpleName()) {
                 case "String":
-                    field.set(a,result.getString(name));
+                    field.set(a, result.getString(name));
                     break;
                 case "int":
-                    field.set(a,result.getInt(name));
+                    field.set(a, result.getInt(name));
                     break;
                 case "double":
                     field.set(a, result.getDouble(name));
@@ -104,10 +105,10 @@ public class SQLMapper {
                     field.set(a, result.getLong(name));
                     break;
                 case "Date":
-                    field.set(a,result.getDate(name));
+                    field.set(a, result.getDate(name));
                     break;
                 case "LocalDate":
-                    field.set(a,result.getDate(name).toLocalDate());
+                    field.set(a, result.getDate(name).toLocalDate());
                     break;
             }
         }
