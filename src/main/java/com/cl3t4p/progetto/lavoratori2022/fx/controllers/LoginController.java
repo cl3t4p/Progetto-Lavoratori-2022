@@ -1,4 +1,4 @@
-package fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
 import javafx.event.ActionEvent;

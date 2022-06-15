@@ -1,9 +1,9 @@
-package fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
-import fx.components.ButtonColumn;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

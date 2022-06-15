@@ -1,4 +1,4 @@
-package fx.components;
+package com.cl3t4p.progetto.lavoratori2022.fx.components;
 
 
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;

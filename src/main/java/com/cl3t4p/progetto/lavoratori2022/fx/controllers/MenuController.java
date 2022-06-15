@@ -1,4 +1,4 @@
-package fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -5,9 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import fx.components.NumberField?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
 <AnchorPane id="AnchorPane" prefHeight="528.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controllers.AddLavController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.AddLavController">
     <children>
         <Button fx:id="main_button" layoutX="737.0" layoutY="456.0" mnemonicParsing="false"
                 onAction="#inserimento_lavoratore" prefHeight="50.0" prefWidth="158.0" text="AGGIUNGI LAVORATORE"

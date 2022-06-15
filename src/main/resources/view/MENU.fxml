@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="404.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controllers.MenuController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.MenuController">
     <children>
         <Button layoutX="42.0" layoutY="151.0" mnemonicParsing="false" onAction="#ricerca_lav" prefHeight="59.0"
                 prefWidth="143.0" text="RICERCA LAVORATORE"/>

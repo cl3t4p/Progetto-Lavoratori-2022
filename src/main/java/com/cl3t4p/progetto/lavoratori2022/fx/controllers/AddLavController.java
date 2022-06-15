@@ -1,4 +1,4 @@
-package fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import fx.components.NumberField;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
