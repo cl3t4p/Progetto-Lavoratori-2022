@@ -52,7 +52,8 @@ public class AggEmeOPController implements Initializable {
         ButtonColumn<Integer, Map<String, String>> buttonColumn = new ButtonColumn<>("", lavoratore_id, ((lav_id, key) -> {
             postDriver.delEmergenzeByID(lav_id, key);
             refreshEmergenze();
-        }), "Deve esistere almeno un contatto di emergenza");
+        }));
+        buttonColumn.setMsgError("Deve esistere almeno un contatto di emergenza");
 
         setupColumn(col_nome, "nome", buttonColumn);
         setupColumn(col_cognome, "cognome", buttonColumn);

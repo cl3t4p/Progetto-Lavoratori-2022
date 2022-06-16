@@ -1,6 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.data.type;
 
 
+import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.FieldChecker;
 import lombok.AccessLevel;
@@ -14,7 +15,7 @@ import java.sql.Date;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Lavoratore implements ValidateData {
+public class Lavoratore implements ValidateData, Mappable {
 
     @FieldChecker
     int id, id_dipendente;

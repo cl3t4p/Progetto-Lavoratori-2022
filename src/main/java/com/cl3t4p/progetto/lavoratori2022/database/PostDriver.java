@@ -463,6 +463,11 @@ public class PostDriver {
             statement.executeUpdate();
         }
     }
+
+    public Set<Lavoratore> researchLavoratore(ResearchCreator creator) throws SQLException {
+        PreparedStatement statement= creator.getSQLStatment(getConnection());
+        return getAllLavoratori(statement.executeQuery());
+    }
 }
 
 

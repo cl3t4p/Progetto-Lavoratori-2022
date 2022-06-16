@@ -36,7 +36,7 @@ public class AddLavController implements Initializable {
     @FXML
     private DatePicker data_inizio, data_fine, data_nascita;
     @FXML
-    private Label email_invalida, tel_invalido, id_dipendente, nascita_invalida, data_in_invalida, data_fin_invalida, id_label, id_lavoratore;
+    private Label email_invalida, tel_invalido, id_dipendente, nascita_invalida, data_in_invalida, data_fin_invalida, id_lavoratore;
     @FXML
     private TextField nome, cognome, luogo_nascita, nazionalita, indirizzo, email, em_nome, em_cognome, em_email;
     @FXML
@@ -52,8 +52,8 @@ public class AddLavController implements Initializable {
         data_nascita.setOnAction(this::checkNascita);
 
         if (dataRepo.getDipendente() != null) {
-            id_dipendente.setText(String.valueOf(dataRepo.getDipendente().getId()));
-            id_label.setVisible(true);
+            id_dipendente.setText(id_dipendente.getText() + dataRepo.getDipendente().getId());
+            id_dipendente.setVisible(true);
         }
         if (dataRepo.getLavoratore_id() != null) {
             id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());

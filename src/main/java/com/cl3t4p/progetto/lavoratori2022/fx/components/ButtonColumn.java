@@ -7,27 +7,32 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
+import lombok.Setter;
 
 import java.sql.SQLException;
 
 
-public class ButtonColumn<K, V> extends TableColumn<V, Void> implements Cloneable {
+public class ButtonColumn<K, V> extends TableColumn<V, Void>  {
     final DB_Exec<K, V> db_exec;
     final K id;
-    private final String msgError;
+
+
+    @Setter
+    private String msgError = "";
+
+    @Setter
+    private String buttonText = "-";
 
     /**
-     * Create a ButtonColumn that will give an error if the user try to delete the last item
+     * Create a ButtonColumn
      *
      * @param text     Text that will apear on top of the column
      * @param id       ID of the lavoratore
      * @param db_exec  Executable for the database data
-     * @param msgError Message that will appear if the user try to eliminate the last element
      */
-    public ButtonColumn(String text, K id, DB_Exec<K, V> db_exec, String msgError) {
+    public ButtonColumn(String text, K id, DB_Exec<K, V> db_exec) {
         super(text);
         this.db_exec = db_exec;
-        this.msgError = msgError;
         this.id = id;
         setCellFactory(getButtonFactory());
         setEditable(false);
@@ -36,17 +41,7 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void> implements Cloneabl
         setPrefWidth(30);
     }
 
-    public ButtonColumn(String text, K id, DB_Exec<K, V> db_exec) {
-        super(text);
-        this.db_exec = db_exec;
-        this.msgError = "";
-        this.id = id;
-        setCellFactory(getButtonFactory());
-        setEditable(false);
-        setResizable(false);
-        setReorderable(false);
-        setPrefWidth(30);
-    }
+
 
 
     private Callback<TableColumn<V, Void>, TableCell<V, Void>> getButtonFactory() {
@@ -54,8 +49,7 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void> implements Cloneabl
             @Override
             public TableCell<V, Void> call(final TableColumn<V, Void> param) {
                 return new TableCell<>() {
-                    private final Button btn = new Button("-");
-
+                    private final Button btn = new Button(buttonText);
                     {
                         btn.setOnAction(e -> {
                             try {
@@ -72,7 +66,6 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void> implements Cloneabl
                             }
                         });
                     }
-
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -87,17 +80,7 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void> implements Cloneabl
         };
     }
 
-    @Override
-    public ButtonColumn<K, V> clone() {
-        try {
-            return (ButtonColumn<K, V>) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
-
-
-    public static interface DB_Exec<K, V> {
+    public interface DB_Exec<K, V> {
         void databaseExec(K lav_id, V key) throws SQLException;
     }
 }

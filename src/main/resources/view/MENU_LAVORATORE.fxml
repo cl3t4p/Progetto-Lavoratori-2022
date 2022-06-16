@@ -14,7 +14,7 @@
                 textAlignment="CENTER" wrapText="true"/>
         <Button layoutX="21.0" layoutY="463.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0"
                 prefWidth="82.0" text="BACK"/>
-        <Label fx:id="id_label" layoutX="405.0" layoutY="23.0" text="ID DIPENDENTE : " visible="false"/>
+        <Label fx:id="id_dipendente" layoutX="405.0" layoutY="23.0" text="ID DIPENDENTE : " visible="false"/>
         <Label fx:id="email_invalida" layoutX="286.0" layoutY="284.0" text="Email invalida" textFill="RED"
                underline="true" visible="false"/>
         <Label fx:id="tel_invalido" layoutX="277.0" layoutY="251.0" text="Telefono invalido" textFill="RED"
@@ -25,7 +25,6 @@
                underline="true" visible="false"/>
         <Label fx:id="data_fin_invalida" layoutX="287.0" layoutY="384.0" text="Data invalida" textFill="RED"
                underline="true" visible="false"/>
-        <Label fx:id="id_dipendente" layoutX="517.0" layoutY="22.0" prefHeight="17.0" prefWidth="34.0" visible="false"/>
         <Label fx:id="id_lavoratore" layoutX="137.0" layoutY="6.0" text="ID LAVORATORE :  " visible="false"/>
         <Button layoutX="737.0" layoutY="393.0" mnemonicParsing="false" onAction="#extraMenu" prefHeight="50.0"
                 prefWidth="158.0" text="INSERISCI EXTRA" textAlignment="CENTER" visible="${id_lavoratore.visible}"

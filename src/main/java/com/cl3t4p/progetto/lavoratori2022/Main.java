@@ -48,7 +48,7 @@ public class Main extends Application {
         }
 
         //End Testing
-        loader.loadView("MENU_EMERGENZE");
+        loader.loadView("MENU_LAVORATORE");
         //loader.loadView("LOGIN");
     }
 
