@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
 
+
+
 public class ResearchCreator {
 
     final String sql = "SELECT DISTINCT lavoratore.id, lavoratore.nome, lavoratore.cognome " +
@@ -17,6 +19,7 @@ public class ResearchCreator {
             "INNER JOIN esp_lav ON (lavoratore.id=esp_lav.id_lavoratore) WHERE ";
 
     final List<ResearchField> fields = new ArrayList<>();
+
 
 
     public void addFilter(String name, String value, TypeVar type, Logic logic,boolean isSimilar) {

@@ -9,7 +9,6 @@ import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import lombok.Setter;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 

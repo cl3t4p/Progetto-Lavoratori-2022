@@ -2,6 +2,9 @@ package com.cl3t4p.progetto.lavoratori2022.database.exception;
 
 import javafx.scene.control.Alert;
 
+/***
+ * This enum is used to print an error message in a JavaFX window.
+ */
 public enum JavaFXError {
     DB_ERROR("Errore DB");
 
