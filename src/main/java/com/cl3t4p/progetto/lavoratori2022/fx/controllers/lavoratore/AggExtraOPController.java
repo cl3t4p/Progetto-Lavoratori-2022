@@ -23,6 +23,7 @@ import java.util.Set;
 public class AggExtraOPController implements Initializable {
 
 
+
     private final ObservableList<String> patenti_list = FXCollections.observableArrayList();
     private final ObservableList<String> lingue_list = FXCollections.observableArrayList();
     private final ObservableList<String> esp_list = FXCollections.observableArrayList();
@@ -92,7 +93,7 @@ public class AggExtraOPController implements Initializable {
             refreshComuni();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
     }
 
@@ -120,14 +121,14 @@ public class AggExtraOPController implements Initializable {
         if (comune.getValue().isEmpty()) return;
         try {
             if (postDriver.getComuniByName(comune.getValue()).isEmpty()) {
-                JavaFXError.showError("Non esiste quel comune!");
+                JavaFXError.show("Non esiste quel comune!");
                 return;
             }
             postDriver.addComuneByID(comune.getValue(), lavoratore_id);
             refreshComuni();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
         comune.setValue("");
     }
@@ -146,7 +147,7 @@ public class AggExtraOPController implements Initializable {
             refreshLingue();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
     }
 
@@ -163,7 +164,7 @@ public class AggExtraOPController implements Initializable {
             refreshLingue();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
         lingue.setText("");
     }
@@ -181,7 +182,7 @@ public class AggExtraOPController implements Initializable {
             refreshEsp();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
     }
 
@@ -192,7 +193,7 @@ public class AggExtraOPController implements Initializable {
             refreshEsp();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
         esperienze.setText("");
     }
@@ -216,7 +217,7 @@ public class AggExtraOPController implements Initializable {
             patenti_view.setItems(patenti_list);
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
     }
 
@@ -240,7 +241,7 @@ public class AggExtraOPController implements Initializable {
             refreshPatenteList();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
     }
 

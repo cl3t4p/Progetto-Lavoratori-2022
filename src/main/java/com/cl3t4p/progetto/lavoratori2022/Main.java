@@ -28,10 +28,10 @@ public class Main extends Application {
         try {
             loadDBConfig();
         } catch (IOException e) {
-            JavaFXError.showError("Database config does not exists!");
+            JavaFXError.show("Database config does not exists!");
         }
         if (!postDriver.testConnection()) {
-            JavaFXError.showError("Database connection error!");
+            JavaFXError.show("Database connection error!");
             return;
         }
 

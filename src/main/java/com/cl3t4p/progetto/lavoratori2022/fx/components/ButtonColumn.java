@@ -10,11 +10,11 @@ import javafx.util.Callback;
 import lombok.Setter;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 
-public class ButtonColumn<K, V> extends TableColumn<V, Void>  {
-    final DB_Exec<K, V> db_exec;
-    final K id;
+public class ButtonColumn extends TableColumn<Map<String,String>, Void>  {
+    private final Callback<Map<String,String>,Void> callback;
 
 
     @Setter
@@ -27,13 +27,10 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void>  {
      * Create a ButtonColumn
      *
      * @param text     Text that will apear on top of the column
-     * @param id       ID of the lavoratore
-     * @param db_exec  Executable for the database data
      */
-    public ButtonColumn(String text, K id, DB_Exec<K, V> db_exec) {
+    public ButtonColumn(String text, Callback<Map<String,String>,Void> callback) {
         super(text);
-        this.db_exec = db_exec;
-        this.id = id;
+        this.callback = callback;
         setCellFactory(getButtonFactory());
         setEditable(false);
         setResizable(false);
@@ -44,10 +41,10 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void>  {
 
 
 
-    private Callback<TableColumn<V, Void>, TableCell<V, Void>> getButtonFactory() {
+    private Callback<TableColumn<Map<String,String>, Void>, TableCell<Map<String,String>, Void>> getButtonFactory() {
         return new Callback<>() {
             @Override
-            public TableCell<V, Void> call(final TableColumn<V, Void> param) {
+            public TableCell<Map<String,String>, Void> call(final TableColumn<Map<String,String>, Void> param) {
                 return new TableCell<>() {
                     private final Button btn = new Button(buttonText);
                     {
@@ -55,12 +52,9 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void>  {
                             try {
                                 if (getTableView().getItems().size() == 1 && !msgError.isEmpty())
                                     throw new JavaFXDataError(msgError);
-                                V key = getTableView().getItems().get(getIndex());
+                                Map<String,String> key = getTableView().getItems().get(getIndex());
                                 getTableView().getItems().remove(getIndex());
-                                db_exec.databaseExec(id, key);
-                            } catch (SQLException ex) {
-                                ex.printStackTrace();
-                                JavaFXError.DB_ERROR.showError();
+                                callback.call(key);
                             } catch (JavaFXDataError error) {
                                 error.printFX();
                             }
@@ -80,8 +74,6 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void>  {
         };
     }
 
-    public interface DB_Exec<K, V> {
-        void databaseExec(K lav_id, V key) throws SQLException;
-    }
+
 }
 

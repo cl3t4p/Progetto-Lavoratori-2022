@@ -1,10 +1,12 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
+import com.cl3t4p.progetto.lavoratori2022.TableData;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 
@@ -26,7 +28,7 @@ public class MenuLavoratore implements Initializable {
 
     private final PostDriver postDriver = Main.getPostDriver();
     private final DataRepo dataRepo = Main.getDataRepo();
-    private final ObservableList<Map<String, String>> lavoro_list = FXCollections.observableArrayList();
+    private TableData tableData;
 
 
     @FXML
@@ -53,23 +55,29 @@ public class MenuLavoratore implements Initializable {
             lav_id.setText(lav_id.getText() + dataRepo.getLavoratore_id());
             lav_id.setVisible(true);
         }
-        setupLavoro();
+
+        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+            if(!postDriver.deleteLavoroByID(Integer.valueOf(key.get("id"))))
+                JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'lavoro");
+            tableData.refreshData();
+            return null;
+        });
+
+
+        tableData = new TableData(lav_view,buttonColumn,()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
+
+        tableData.setupColumn(col_nome, "nome");
+        tableData.setupColumn(col_mansione, "mansione");
+        tableData.setupColumn(col_luogo, "luogo");
+        tableData.setupColumn(col_retri, "retribuzione");
+        tableData.setupColumn(col_ini, "inizio");
+        tableData.setupColumn(col_fine, "fine");
+
+        tableData.refreshData();
 
     }
 
-    private void setupLavoro() {
-        try{
-            refreshLavoro();
-            lav_view.setItems(lavoro_list);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
 
-    private void refreshLavoro() throws SQLException {
-        lavoro_list.clear();
-        lavoro_list.addAll(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id()).stream().map(Lavoro::toMap).toList());
-    }
 
     public void back(ActionEvent event) {
         Main.getLoader().loadView("MENU_LAVORATORE");
@@ -83,7 +91,7 @@ public class MenuLavoratore implements Initializable {
         } catch (SQLException | JavaFXDataError e) {
             JavaFXError.DB_ERROR.printContent("Errore nell'inserimento del lavoro");
         }
-
+        tableData.refreshData();
     }
 
     private Lavoro getLavoro(){

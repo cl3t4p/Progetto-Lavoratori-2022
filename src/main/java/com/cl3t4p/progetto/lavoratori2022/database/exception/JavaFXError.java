@@ -12,20 +12,20 @@ public enum JavaFXError {
     }
 
 
-    public void showError() {
-        showError(error);
+    public void show() {
+        show(error);
     }
     public void printContent(String content){
-        showError(this.error,content);
+        show(this.error,content);
     }
 
-    public static void showError(String content) {
+    public static void show(String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Errore");
         alert.setHeaderText(content);
         alert.show();
     }
-    public static void showError(String title,String content){
+    public static void show(String title, String content){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(content);

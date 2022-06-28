@@ -9,9 +9,9 @@ import java.sql.*;
 import java.util.*;
 
 public class PostDriver {
-    private Connection connection;
     private final String user, pass, db_name, host;
     private final int port;
+    private Connection connection;
 
     public PostDriver(String user, String pass, String db_name, String host, int port) {
         this.user = user;
@@ -410,7 +410,7 @@ public class PostDriver {
         return resultSet.next();
     }
 
-    public List<Emergenza> getEmergenze(int lavoratore_id) throws SQLException {
+    public List<Emergenza> getEmergenze(int lavoratore_id) {
         String sql = "SELECT emergenza.id,emergenza.nome,emergenza.cognome,emergenza.telefono,emergenza.email FROM emergenza INNER JOIN emergenza_lav ON(emergenza.id=emergenza_lav.id_emergenza) WHERE emergenza_lav.id_lavoratore=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lavoratore_id);
@@ -424,16 +424,20 @@ public class PostDriver {
                 }
             }
             return emergenze;
+        } catch (SQLException e) {
+            return List.of();
         }
     }
 
-    public void delEmergenzeByID(int lav_id, Map<String, String> emergenza) throws SQLException {
-        int eme_id = getEmergenzeIDByValues(emergenza);
+    public boolean delEmergenzeByID(int lav_id, Map<String, String> emergenza) {
         String sql = "DELETE FROM emergenza_lav WHERE id_lavoratore=? AND id_emergenza=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            int eme_id = getEmergenzeIDByValues(emergenza);
             statement.setInt(1, lav_id);
             statement.setInt(2, eme_id);
-            statement.executeUpdate();
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
 
@@ -442,14 +446,7 @@ public class PostDriver {
         return getAllLavoratori(statement.executeQuery());
     }
 
-    public boolean checkIfLavoroIsLinked(int id_lavoratore, int id_lavoro) throws SQLException {
-        String sql = "SELECT * FROM lavoratore_lavoro WHERE id_lavoratore=? AND id_lavoro=?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1, id_lavoratore);
-        statement.setInt(2, id_lavoro);
-        ResultSet resultSet = statement.executeQuery();
-        return resultSet.next();
-    }
+
 
     public int addLavoro(Lavoro lavoro) throws SQLException {
         String sql = "INSERT INTO lavoro_svolto " +
@@ -470,12 +467,12 @@ public class PostDriver {
         return -1;
     }
 
-    public List<Lavoro> getLavoroByLavID(Integer lavoratore_id)  {
+    public List<Lavoro> getLavoroByLavID(Integer lavoratore_id) {
         String sql = "SELECT * FROM lavoro_svolto WHERE id_lavoratore=?";
-        PreparedStatement statement = getConnection().prepareStatement(sql)
-        statement.setInt(1, lavoratore_id);
-        ResultSet resultSet = statement.executeQuery();
-        List<Lavoro> lavori = new ArrayList<>();
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, lavoratore_id);
+            ResultSet resultSet = statement.executeQuery();
+            List<Lavoro> lavori = new ArrayList<>();
             while (resultSet.next()) {
                 try {
                     lavori.add(SQLMapper.deserializeSQL(resultSet, Lavoro.class));
@@ -483,6 +480,22 @@ public class PostDriver {
                     e.printStackTrace();
                 }
             }
-        return lavori;
+            return lavori;
+        } catch (SQLException e) {
+            return List.of();
+        }
+    }
+
+    public boolean deleteLavoroByID(Integer id)  {
+        String sql = "DELETE FROM lavoro_svolto WHERE id=?";
+        PreparedStatement statement = null;
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }
+
