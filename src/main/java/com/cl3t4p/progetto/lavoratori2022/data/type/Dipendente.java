@@ -10,6 +10,7 @@ import java.sql.Date;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Dipendente {
+
     int id;
     String nome;
     String cognome;

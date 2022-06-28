@@ -1,6 +1,5 @@
 package com.cl3t4p.progetto.lavoratori2022.database;
 
-
 import com.cl3t4p.progetto.lavoratori2022.data.type.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
@@ -34,7 +33,8 @@ public class PostDriver {
 
     private Connection getNewConnectino() throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
-        return DriverManager.getConnection(String.format("jdbc:postgresql://%s:%d/%s", host, port, db_name), user, pass);
+        return DriverManager.getConnection(String.format("jdbc:postgresql://%s:%d/%s", host, port, db_name), user,
+                pass);
     }
 
     public boolean testConnection() {
@@ -79,8 +79,8 @@ public class PostDriver {
                 ", telefono, email, automunito, inizio_periodo_disp, fine_periodo_disp" +
                 ",id_dipendente)" +
                 " VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING id;";
-        List<String> fields = List.of("nome", "cognome", "luogo_nascita", "data_nascita"
-                , "nazionalita", "indirizzo", "telefono", "email", "automunito",
+        List<String> fields = List.of("nome", "cognome", "luogo_nascita", "data_nascita", "nazionalita", "indirizzo",
+                "telefono", "email", "automunito",
                 "inizio_disponibile", "fine_disponibile", "id_dipendente");
         PreparedStatement statement = getConnection().prepareStatement(sql);
         try {
@@ -96,8 +96,8 @@ public class PostDriver {
     public Integer updateLavoratore(Lavoratore lavoratore) throws SQLException {
         String sql = "UPDATE lavoratore SET " +
                 "nome=?, cognome=?, luogo_nascita=?, data_nascita=?, nazionalita=?, indirizzo=?, telefono=?, email=?, automunito=?, inizio_periodo_disp=?, fine_periodo_disp=? WHERE id=?";
-        List<String> fields = List.of("nome", "cognome", "luogo_nascita", "data_nascita"
-                , "nazionalita", "indirizzo", "telefono", "email", "automunito",
+        List<String> fields = List.of("nome", "cognome", "luogo_nascita", "data_nascita", "nazionalita", "indirizzo",
+                "telefono", "email", "automunito",
                 "inizio_disponibile", "fine_disponibile");
         PreparedStatement statement = getConnection().prepareStatement(sql);
         try {
@@ -115,7 +115,6 @@ public class PostDriver {
         statement.setInt(1, id);
         statement.executeUpdate();
     }
-
 
     public Set<Lavoratore> getAllLavoratori(int limit) throws SQLException {
         String sql = "SELECT * from lavoratore LIMIT ?";
@@ -171,22 +170,6 @@ public class PostDriver {
         statement.executeUpdate();
     }
 
-
-    public int addLavoro(Lavoro lavoro) throws SQLException {
-        String sql = "INSERT INTO lavoro_svolto " +
-                "(id,inizio_periodo,fine_periodo,nome_azienda,mansione_svolta,luogo_lavoro,retribuzione_lorda_giornaliera ,id_lavoratore) " +
-                "VALUES (?,?,?,?,?,?,?,?)";
-        List<String> fields = List.of("id", "inizio_periodo", "fine_periodo", "nome_azienda", "mansione", "luogo", "retribuzione", "id_lavoratore");
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        try {
-            SQLMapper.serializeSQL(statement, lavoro, fields);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-        return statement.executeUpdate();
-    }
-
-
     public String getComuniByName(String name) throws SQLException {
         String sql = "SELECT DISTINCT * FROM comune WHERE nome_comune ILIKE ?";
         PreparedStatement statement = getConnection().prepareStatement(sql);
@@ -197,7 +180,6 @@ public class PostDriver {
         return resultSet.getString(1);
     }
 
-
     public List<String> getAllPatenti() throws SQLException {
         String sql = "SELECT * FROM patente";
         PreparedStatement statement = getConnection().prepareStatement(sql);
@@ -207,7 +189,6 @@ public class PostDriver {
             patenti.add(resultSet.getString(1));
         return patenti.stream().sorted().toList();
     }
-
 
     public Dipendente getDipendenteByUserAndPassword(String user, String pass) throws SQLException {
         String sql = "SELECT * FROM dipendente WHERE username=? and password=?";
@@ -235,14 +216,12 @@ public class PostDriver {
         return resultSet.getString(1);
     }
 
-
     private void addLingua(String lingua) throws SQLException {
         String sql = "INSERT INTO lingua (nome_lingua) VALUES (?)";
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setString(1, lingua);
         statement.executeUpdate();
     }
-
 
     public void addLinguaByID(int id_lavoratore, String lingua) throws SQLException {
         System.out.println(lingua);
@@ -260,7 +239,6 @@ public class PostDriver {
         statement.executeUpdate();
     }
 
-
     public void delLinguaByID(int lav_id, String key) throws SQLException {
         String sql = "DELETE FROM lingua_lav WHERE ( id_lavoratore = ? AND nome_lingua = ?);";
         PreparedStatement statement = getConnection().prepareStatement(sql);
@@ -273,7 +251,6 @@ public class PostDriver {
         String sql = "SELECT lingua_lav.nome_lingua FROM lavoratore INNER JOIN lingua_lav ON(lavoratore.id=lingua_lav.id_lavoratore) WHERE lavoratore.id=?";
         return getListString(id, sql);
     }
-
 
     public String getEspLike(String name) throws SQLException {
         ;
@@ -293,7 +270,6 @@ public class PostDriver {
         statement.executeUpdate();
     }
 
-
     public void addEspByID(int id_lavoratore, String esperienza) throws SQLException {
         String key = getEspLike(esperienza);
         if (key.isEmpty()) {
@@ -307,7 +283,6 @@ public class PostDriver {
             statement.executeUpdate();
         }
     }
-
 
     public void delEspByID(int lav_id, String key) throws SQLException {
         String sql = "DELETE FROM esp_lav WHERE ( id_lavoratore = ? AND esperienza = ?);";
@@ -374,7 +349,6 @@ public class PostDriver {
         return getAllComuni(statement);
     }
 
-
     private List<String> getAllComuni(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         List<String> list = new ArrayList<>();
@@ -412,7 +386,6 @@ public class PostDriver {
         }
         return -1;
     }
-
 
     public boolean addEmergenza(Emergenza emergenza, Integer id) throws SQLException {
         int em_id = addEmergenza(emergenza);
@@ -465,9 +438,51 @@ public class PostDriver {
     }
 
     public Set<Lavoratore> researchLavoratore(ResearchCreator creator) throws SQLException {
-        PreparedStatement statement= creator.getSQLStatment(getConnection());
+        PreparedStatement statement = creator.getSQLStatment(getConnection());
         return getAllLavoratori(statement.executeQuery());
     }
+
+    public boolean checkIfLavoroIsLinked(int id_lavoratore, int id_lavoro) throws SQLException {
+        String sql = "SELECT * FROM lavoratore_lavoro WHERE id_lavoratore=? AND id_lavoro=?";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, id_lavoratore);
+        statement.setInt(2, id_lavoro);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
+    }
+
+    public int addLavoro(Lavoro lavoro) throws SQLException {
+        String sql = "INSERT INTO lavoro_svolto " +
+                "(inizio_periodo,fine_periodo,nome_azienda,mansione_svolta,luogo_lavoro,retribuzione_lorda_giornaliera ,id_lavoratore) "
+                +
+                "VALUES (?,?,?,?,?,?,?)RETURNING id;";
+        List<String> fields = List.of("inizio_periodo", "fine_periodo", "nome_azienda", "mansione", "luogo",
+                "retribuzione", "id_lavoratore");
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        try {
+            SQLMapper.serializeSQL(statement, lavoro, fields);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next())
+            return resultSet.getInt(1);
+        return -1;
+    }
+
+    public List<Lavoro> getLavoroByLavID(Integer lavoratore_id)  {
+        String sql = "SELECT * FROM lavoro_svolto WHERE id_lavoratore=?";
+        PreparedStatement statement = getConnection().prepareStatement(sql)
+        statement.setInt(1, lavoratore_id);
+        ResultSet resultSet = statement.executeQuery();
+        List<Lavoro> lavori = new ArrayList<>();
+            while (resultSet.next()) {
+                try {
+                    lavori.add(SQLMapper.deserializeSQL(resultSet, Lavoro.class));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        return lavori;
+    }
 }
-
-

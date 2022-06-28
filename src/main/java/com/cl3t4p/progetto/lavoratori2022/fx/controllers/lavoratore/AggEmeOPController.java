@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
@@ -96,7 +96,7 @@ public class AggEmeOPController implements Initializable {
         } catch (JavaFXDataError e) {
             e.printFX();
         } catch (SQLException e) {
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
 
     }

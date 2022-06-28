@@ -60,7 +60,7 @@ public class ButtonColumn<K, V> extends TableColumn<V, Void>  {
                                 db_exec.databaseExec(id, key);
                             } catch (SQLException ex) {
                                 ex.printStackTrace();
-                                JavaFXError.DB_ERROR.fxMSG();
+                                JavaFXError.DB_ERROR.showError();
                             } catch (JavaFXDataError error) {
                                 error.printFX();
                             }

@@ -3,22 +3,32 @@ package com.cl3t4p.progetto.lavoratori2022.database.exception;
 import javafx.scene.control.Alert;
 
 public enum JavaFXError {
-    DB_ERROR("Database Error!");
+    DB_ERROR("Errore DB");
 
-    final String msg;
+    final String error;
 
     JavaFXError(String s) {
-        this.msg = s;
+        this.error = s;
     }
 
-    public void fxMSG() {
-        fxErrorMSG(msg);
+
+    public void showError() {
+        showError(error);
+    }
+    public void printContent(String content){
+        showError(this.error,content);
     }
 
-    public static void fxErrorMSG(String msg) {
+    public static void showError(String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Errore");
-        alert.setHeaderText(msg);
+        alert.setHeaderText(content);
+        alert.show();
+    }
+    public static void showError(String title,String content){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(content);
         alert.show();
     }
 

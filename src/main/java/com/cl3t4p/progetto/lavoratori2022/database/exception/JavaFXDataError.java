@@ -5,6 +5,9 @@ import javafx.scene.control.Alert;
 
 
 public class JavaFXDataError extends Exception {
+    public JavaFXDataError() {
+    }
+
     public JavaFXDataError(String s) {
         super(s);
     }

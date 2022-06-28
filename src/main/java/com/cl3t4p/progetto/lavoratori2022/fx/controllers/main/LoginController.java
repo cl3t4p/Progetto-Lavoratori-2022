@@ -1,6 +1,6 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
-import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
+import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -26,11 +26,9 @@ public class LoginController {
                 Main.getDataRepo().setDipendente(dipendente);
                 Main.getLoader().loadView("MENU");
             } else
-                throw new JavaFXDataError("Wrong Username or Password");
-        } catch (JavaFXDataError e) {
-            e.printFX();
+                JavaFXError.showError("Username o password errati!");
         } catch (SQLException e) {
-            new JavaFXDataError("Database error").printFX();
+            JavaFXError.DB_ERROR.showError();
         }
     }
 }

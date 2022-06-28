@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class AggLavOPController implements Initializable {
+public class AggExtraOPController implements Initializable {
 
 
     private final ObservableList<String> patenti_list = FXCollections.observableArrayList();
@@ -92,7 +92,7 @@ public class AggLavOPController implements Initializable {
             refreshComuni();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
     }
 
@@ -120,14 +120,14 @@ public class AggLavOPController implements Initializable {
         if (comune.getValue().isEmpty()) return;
         try {
             if (postDriver.getComuniByName(comune.getValue()).isEmpty()) {
-                JavaFXError.fxErrorMSG("Non esiste quel comune!");
+                JavaFXError.showError("Non esiste quel comune!");
                 return;
             }
             postDriver.addComuneByID(comune.getValue(), lavoratore_id);
             refreshComuni();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
         comune.setValue("");
     }
@@ -146,7 +146,7 @@ public class AggLavOPController implements Initializable {
             refreshLingue();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
     }
 
@@ -163,7 +163,7 @@ public class AggLavOPController implements Initializable {
             refreshLingue();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
         lingue.setText("");
     }
@@ -181,7 +181,7 @@ public class AggLavOPController implements Initializable {
             refreshEsp();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
     }
 
@@ -192,7 +192,7 @@ public class AggLavOPController implements Initializable {
             refreshEsp();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
         esperienze.setText("");
     }
@@ -216,7 +216,7 @@ public class AggLavOPController implements Initializable {
             patenti_view.setItems(patenti_list);
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
     }
 
@@ -240,7 +240,7 @@ public class AggLavOPController implements Initializable {
             refreshPatenteList();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.fxMSG();
+            JavaFXError.DB_ERROR.showError();
         }
     }
 

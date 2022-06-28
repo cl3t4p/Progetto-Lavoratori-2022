@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers.old;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -175,7 +175,7 @@ public class Controller {
     }
 
     public void aggiungi_lavoratore(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("view/MENU_LAVORATORE.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/MODIFICA_AGG_LAVORATORE.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

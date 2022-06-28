@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
