@@ -5,9 +5,6 @@ import com.cl3t4p.progetto.lavoratori2022.TableData;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,16 +20,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AggExtraOPController implements Initializable {
 
 
-    TableData patenti_data;
-    TableData esp_data;
-    TableData lingue_data;
-    TableData comune_data;
+
 
     final PostDriver postDriver = Main.getPostDriver();
 
@@ -44,9 +37,9 @@ public class AggExtraOPController implements Initializable {
 
 
 
-
     @FXML
-    TableView<Map<String, String>> patenti_view,comuni_view,esp_view,lig_view;
+    TableData patenti_view, esp_view, lig_view, comuni_view;
+
     @FXML
     TableColumn<Map,String> patente_colum,esp_col,lig_col,comuni_col;
     @FXML
@@ -61,6 +54,8 @@ public class AggExtraOPController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lavoratore_id = Main.getDataRepo().getLavoratore_id();
+
+
         setupLabel();
         setupPatenti();
         setupLingue();
@@ -83,12 +78,13 @@ public class AggExtraOPController implements Initializable {
         ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
             if(!postDriver.delComunebyID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile rimuovere il comune");
-            comune_data.refreshData();
+            comuni_view.refreshData();
             return null;
         });
-
-        comune_data = new TableData(comuni_view, buttonColumn,()-> TableData.toMap(name,postDriver.getComuniByID(lavoratore_id)));
-        comune_data.setupColumn(comuni_col, name);
+        //comune_data = new TableData(comuni_view, buttonColumn,()-> TableData.toMap(name,postDriver.getComuniByID(lavoratore_id)));
+        comuni_view.setSupplier(()-> TableData.toMap(name,postDriver.getComuniByID(lavoratore_id)));
+        comuni_view.setButtonColumn(buttonColumn);
+        comuni_view.setupColumn(comuni_col, name);
     }
 
     public void comune_search(KeyEvent event) {
@@ -113,7 +109,7 @@ public class AggExtraOPController implements Initializable {
                 return;
             }
             postDriver.addComuneByID(comune.getValue(), lavoratore_id);
-            comune_data.refreshData();
+            comuni_view.refreshData();
         } catch (SQLException e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.show();
@@ -129,12 +125,14 @@ public class AggExtraOPController implements Initializable {
         ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
             if(!postDriver.delLinguaByID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile rimuovere la lingua");
-            lingue_data.refreshData();
+            lig_view.refreshData();
             return null;
         });
 
-        lingue_data = new TableData(lig_view, buttonColumn,()-> TableData.toMap(name,postDriver.getLingueByID(lavoratore_id)));
-        lingue_data.setupColumn(lig_col, name);
+        //lingue_data = new TableData(lig_view, buttonColumn,()-> TableData.toMap(name,postDriver.getLingueByID(lavoratore_id)));
+        lig_view.setButtonColumn(buttonColumn);
+        lig_view.setSupplier(()-> TableData.toMap(name,postDriver.getLingueByID(lavoratore_id)));
+        lig_view.setupColumn(lig_col, name);
     }
 
 
@@ -143,7 +141,7 @@ public class AggExtraOPController implements Initializable {
         if (lingue.getText().isEmpty()) return;
         try {
             postDriver.addLinguaByID(lavoratore_id, lingue.getText());
-            lingue_data.refreshData();
+            lig_view.refreshData();
         } catch (SQLException e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.show();
@@ -158,19 +156,21 @@ public class AggExtraOPController implements Initializable {
         ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
             if(!postDriver.delEspByID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile rimuovere l'esperienza");
-            esp_data.refreshData();
+            esp_view.refreshData();
             return null;
         });
 
-        esp_data = new TableData(esp_view, buttonColumn,()-> TableData.toMap(name,postDriver.getEspByID(lavoratore_id)));
-        esp_data.setupColumn(esp_col, name);
+        //esp_data = new TableData(esp_view, buttonColumn,()-> TableData.toMap(name,postDriver.getEspByID(lavoratore_id)));
+        esp_view.setButtonColumn(buttonColumn);
+        esp_view.setSupplier(()-> TableData.toMap(name,postDriver.getEspByID(lavoratore_id)));
+        esp_view.setupColumn(esp_col, name);
     }
 
     public void addEsp(ActionEvent event) {
         if (esperienze.getText().isEmpty()) return;
         try {
             postDriver.addEspByID(lavoratore_id, esperienze.getText());
-            esp_data.refreshData();
+            esp_view.refreshData();
         } catch (SQLException e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.show();
@@ -181,33 +181,38 @@ public class AggExtraOPController implements Initializable {
     //Patenti
 
     private void setupPatenti() {
+        updatePatenteItems();
         String name = "patenti";
         ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
             if(!postDriver.delPatenteByID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile eliminare la patente");
-            patenti_data.refreshData();
+            patenti_view.refreshData();
             return null;
         });
 
-        patenti_data = new TableData(patenti_view, buttonColumn,()-> TableData.toMap(name,getPatenti()));
-        patenti_data.setupColumn(patente_colum, name);
+        //patenti_data = new TableData(patenti_view, buttonColumn,()-> TableData.toMap(name,getPatenti()));
+        patenti_view.setButtonColumn(buttonColumn);
+        patenti_view.setSupplier(()-> TableData.toMap(name,postDriver.getPatentiByID(lavoratore_id)));
+        patenti_view.setupColumn(patente_colum, name);
 
     }
 
-    private List<String> getPatenti()  {
+    private void updatePatenteItems()  {
         List<String> full_list = postDriver.getAllPatenti();
         List<String> lav_patenti = postDriver.getPatentiByID(lavoratore_id);
 
-        return full_list.stream()
+        patente.getItems().clear();
+        patente.getItems().addAll(full_list.stream()
                 .filter(s -> !lav_patenti.contains(s))
-                .toList();
+                .toList());
     }
 
     public void addPatente(ActionEvent event) {
         if (patente.getValue() == null) return;
         try {
             postDriver.addPatenteByID(lavoratore_id, patente.getValue());
-            patenti_data.refreshData();
+            patenti_view.refreshData();
+            updatePatenteItems();
         } catch (SQLException e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.show();
@@ -216,6 +221,6 @@ public class AggExtraOPController implements Initializable {
 
 
     public void back(ActionEvent event) {
-        Main.getLoader().loadView("MENU_LAVORATORE");
+        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
     }
 }

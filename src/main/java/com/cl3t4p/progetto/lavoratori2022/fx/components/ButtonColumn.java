@@ -34,7 +34,8 @@ public class ButtonColumn extends TableColumn<Map<String,String>, Void>  {
         setEditable(false);
         setResizable(false);
         setReorderable(false);
-        setPrefWidth(30);
+        setStyle("-fx-alignment: CENTER;");
+        setPrefWidth(25);
     }
 
 
@@ -47,6 +48,7 @@ public class ButtonColumn extends TableColumn<Map<String,String>, Void>  {
                 return new TableCell<>() {
                     private final Button btn = new Button(buttonText);
                     {
+                        btn.setPrefWidth(getWidth() - 2);
                         btn.setOnAction(e -> {
                             try {
                                 if (getTableView().getItems().size() == 1 && !msgError.isEmpty())

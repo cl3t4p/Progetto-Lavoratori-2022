@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -25,10 +24,10 @@ import java.util.ResourceBundle;
 public class AggEmeOPController implements Initializable {
 
 
-    private TableData tableData;
+
     private final PostDriver postDriver = Main.getPostDriver();
     @FXML
-    private TableView<Map<String, String>> eme_view;
+    private TableData eme_view;
     @FXML
     private Label lav_id;
     @FXML
@@ -49,18 +48,20 @@ public class AggEmeOPController implements Initializable {
         ButtonColumn buttonColumn = new ButtonColumn("", (key -> {
             if(!postDriver.delEmergenzeByID(lavoratore_id,key))
                 JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'emergenza");
-            tableData.refreshData();
+            eme_view.refreshData();
             return null;
         }));
         buttonColumn.setMsgError("Deve esistere almeno un contatto di emergenza");
 
-        tableData = new TableData(eme_view, buttonColumn,()-> TableData.toMap(postDriver.getEmergenze(lavoratore_id)));
+        //tableData = new TableData(eme_view, buttonColumn,()-> TableData.toMap(postDriver.getEmergenze(lavoratore_id)));
+        eme_view.setSupplier(()-> TableData.toMap(postDriver.getEmergenze(lavoratore_id)));
+        eme_view.setButtonColumn(buttonColumn);
 
-        tableData.setupColumn(col_nome, "nome");
-        tableData.setupColumn(col_cognome, "cognome");
-        tableData.setupColumn(col_telefono, "telefono");
-        tableData.setupColumn(col_email, "email");
-        tableData.refreshData();
+        eme_view.setupColumn(col_nome, "nome");
+        eme_view.setupColumn(col_cognome, "cognome");
+        eme_view.setupColumn(col_telefono, "telefono");
+        eme_view.setupColumn(col_email, "email");
+        eme_view.refreshData();
 
     }
 
@@ -70,7 +71,7 @@ public class AggEmeOPController implements Initializable {
         try {
             Emergenza emergenza = getEmergenza();
             if (!postDriver.addEmergenza(emergenza, lavoratore_id)) throw new JavaFXDataError("Il contatto esiste già");
-            tableData.refreshData();
+            eme_view.refreshData();
         } catch (JavaFXDataError e) {
             e.printFX();
         } catch (SQLException e) {
@@ -99,6 +100,6 @@ public class AggEmeOPController implements Initializable {
     }
 
     public void back(ActionEvent event) {
-        Main.getLoader().loadView("MENU_LAVORATORE");
+        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
     }
 }

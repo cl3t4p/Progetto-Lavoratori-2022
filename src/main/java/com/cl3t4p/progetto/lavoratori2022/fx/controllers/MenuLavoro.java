@@ -26,11 +26,11 @@ public class MenuLavoro implements Initializable {
 
     private final PostDriver postDriver = Main.getPostDriver();
     private final DataRepo dataRepo = Main.getDataRepo();
-    private TableData tableData;
+
 
 
     @FXML
-    private TableView<Map<String, String>> lav_view;
+    private TableData lav_view;
 
     @FXML
     private DatePicker ini_per,fine_per;
@@ -57,23 +57,23 @@ public class MenuLavoro implements Initializable {
         ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
             if(!postDriver.deleteLavoroByID(Integer.valueOf(key.get("id"))))
                 JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'lavoro");
-            tableData.refreshData();
+            lav_view.refreshData();
             return null;
         });
 
 
-        tableData = new TableData(lav_view,buttonColumn,()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
+        //tableData = new TableData(lav_view,buttonColumn,()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
 
-        tableData.setupColumn(col_id,"id",30);
-        tableData.setupColumn(col_nome, "nome_azienda");
-        tableData.setupColumn(col_mansione, "mansione");
-        tableData.setupColumn(col_luogo, "luogo");
-        tableData.setupColumn(col_retri, "retribuzione");
-        tableData.setupColumn(col_ini, "inizio_periodo");
-        tableData.setupColumn(col_fine, "fine_periodo");
+        lav_view.setSupplier(()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
+        lav_view.setButtonColumn(buttonColumn);
 
-        tableData.refreshData();
-
+        lav_view.setupColumn(col_id,"id",30);
+        lav_view.setupColumn(col_nome, "nome_azienda");
+        lav_view.setupColumn(col_mansione, "mansione");
+        lav_view.setupColumn(col_luogo, "luogo");
+        lav_view.setupColumn(col_retri, "retribuzione");
+        lav_view.setupColumn(col_ini, "inizio_periodo");
+        lav_view.setupColumn(col_fine, "fine_periodo");
     }
 
 
@@ -91,8 +91,10 @@ public class MenuLavoro implements Initializable {
             e.printStackTrace();
             JavaFXError.DB_ERROR.printContent("Errore nell'inserimento del lavoro");
         }
-        tableData.refreshData();
+        lav_view.refreshData();
     }
+
+
 
     private Lavoro getLavoro(){
         Lavoro lavoro = new Lavoro();
