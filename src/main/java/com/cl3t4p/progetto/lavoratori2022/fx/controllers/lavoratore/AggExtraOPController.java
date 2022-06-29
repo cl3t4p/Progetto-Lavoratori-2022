@@ -1,61 +1,61 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
+import com.cl3t4p.progetto.lavoratori2022.TableData;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AggExtraOPController implements Initializable {
 
 
-    private final ObservableList<String> patenti_list = FXCollections.observableArrayList();
-    private final ObservableList<String> lingue_list = FXCollections.observableArrayList();
-    private final ObservableList<String> esp_list = FXCollections.observableArrayList();
-    private final ObservableList<String> comune_list = FXCollections.observableArrayList();
-
-    private final PostDriver postDriver = Main.getPostDriver();
-
-    private int lavoratore_id;
 
 
-    public Label label_id;
+    final PostDriver postDriver = Main.getPostDriver();
 
-    public TableView<String> comuni_view;
-    public TableColumn<String, String> comuni_col;
-    public ComboBox<String> comune;
-
-    public TableView<String> patenti_view;
-    public TableColumn<String, String> patente_colum;
-    public ChoiceBox<String> patente;
+    int lavoratore_id;
 
 
-    public TableView<String> esp_view;
-    public TableColumn<String, String> esp_col;
-    public TextField esperienze;
+    @FXML
+    Label label_id;
 
-    public TableColumn<String, String> lig_col;
-    public TableView<String> lig_view;
-    public TextField lingue;
+
+
+    @FXML
+    TableData patenti_view, esp_view, lig_view, comuni_view;
+
+    @FXML
+    TableColumn<Map,String> patente_colum,esp_col,lig_col,comuni_col;
+    @FXML
+    ChoiceBox<String> patente;
+
+    @FXML
+    ComboBox<String> comune;
+    @FXML
+    TextField esperienze,lingue;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lavoratore_id = Main.getDataRepo().getLavoratore_id();
+
+
         setupLabel();
         setupPatenti();
         setupLingue();
@@ -69,37 +69,22 @@ public class AggExtraOPController implements Initializable {
     }
 
 
-    private void setupCol(TableColumn<String, String> column, TableView<String> tableView, ButtonColumn.DB_Exec<Integer, String> exec) {
-        column.setEditable(false);
-        column.setResizable(false);
-        column.setReorderable(false);
-        column.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue()));
-        ButtonColumn<Integer, String> buttonColumn = new ButtonColumn<>("", lavoratore_id, exec);
-        column.prefWidthProperty().bind(tableView.widthProperty().subtract(buttonColumn.widthProperty()).subtract(2));
-        tableView.getColumns().add(buttonColumn);
-    }
+
 
     //Comuni
 
     public void setupComune() {
-        ButtonColumn.DB_Exec<Integer, String> exec = ((lav_id, key) -> {
-            postDriver.delComunebyID(lav_id, key);
-            refreshPatenteList();
+        String name = "comune";
+        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+            if(!postDriver.delComunebyID(lavoratore_id, key.get(name)))
+                JavaFXError.DB_ERROR.printContent("Impossibile rimuovere il comune");
+            comuni_view.refreshData();
+            return null;
         });
-        setupCol(comuni_col, comuni_view, exec);
-        try {
-            comuni_view.setItems(comune_list);
-            refreshComuni();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
-        }
-    }
-
-    public void refreshComuni() throws SQLException {
-        List<String> full_list = postDriver.getComuniByID(lavoratore_id);
-        comune_list.clear();
-        comune_list.addAll(full_list);
+        //comune_data = new TableData(comuni_view, buttonColumn,()-> TableData.toMap(name,postDriver.getComuniByID(lavoratore_id)));
+        comuni_view.setSupplier(()-> TableData.toMap(name,postDriver.getComuniByID(lavoratore_id)));
+        comuni_view.setButtonColumn(buttonColumn);
+        comuni_view.setupColumn(comuni_col, name);
     }
 
     public void comune_search(KeyEvent event) {
@@ -120,14 +105,14 @@ public class AggExtraOPController implements Initializable {
         if (comune.getValue().isEmpty()) return;
         try {
             if (postDriver.getComuniByName(comune.getValue()).isEmpty()) {
-                JavaFXError.showError("Non esiste quel comune!");
+                JavaFXError.show("Non esiste quel comune!");
                 return;
             }
             postDriver.addComuneByID(comune.getValue(), lavoratore_id);
-            refreshComuni();
+            comuni_view.refreshData();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
         comune.setValue("");
     }
@@ -136,34 +121,30 @@ public class AggExtraOPController implements Initializable {
     //Lingue
 
     private void setupLingue() {
-        ButtonColumn.DB_Exec<Integer, String> exec = ((lav_id, key) -> {
-            postDriver.delLinguaByID(lav_id, key);
-            refreshPatenteList();
+        String name = "lingue";
+        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+            if(!postDriver.delLinguaByID(lavoratore_id, key.get(name)))
+                JavaFXError.DB_ERROR.printContent("Impossibile rimuovere la lingua");
+            lig_view.refreshData();
+            return null;
         });
-        setupCol(lig_col, lig_view, exec);
-        try {
-            lig_view.setItems(lingue_list);
-            refreshLingue();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
-        }
+
+        //lingue_data = new TableData(lig_view, buttonColumn,()-> TableData.toMap(name,postDriver.getLingueByID(lavoratore_id)));
+        lig_view.setButtonColumn(buttonColumn);
+        lig_view.setSupplier(()-> TableData.toMap(name,postDriver.getLingueByID(lavoratore_id)));
+        lig_view.setupColumn(lig_col, name);
     }
 
-    private void refreshLingue() throws SQLException {
-        List<String> full_list = postDriver.getLingueByID(lavoratore_id);
-        lingue_list.clear();
-        lingue_list.addAll(full_list);
-    }
+
 
     public void addLingua(ActionEvent event) {
         if (lingue.getText().isEmpty()) return;
         try {
             postDriver.addLinguaByID(lavoratore_id, lingue.getText());
-            refreshLingue();
+            lig_view.refreshData();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
         lingue.setText("");
     }
@@ -171,81 +152,75 @@ public class AggExtraOPController implements Initializable {
     //Esperienze
 
     private void setupEsp() {
-        ButtonColumn.DB_Exec<Integer, String> exec = ((lav_id, key) -> {
-            postDriver.delEspByID(lav_id, key);
-            refreshPatenteList();
+        String name = "esperienze";
+        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+            if(!postDriver.delEspByID(lavoratore_id, key.get(name)))
+                JavaFXError.DB_ERROR.printContent("Impossibile rimuovere l'esperienza");
+            esp_view.refreshData();
+            return null;
         });
-        setupCol(esp_col, esp_view, exec);
-        try {
-            esp_view.setItems(esp_list);
-            refreshEsp();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
-        }
+
+        //esp_data = new TableData(esp_view, buttonColumn,()-> TableData.toMap(name,postDriver.getEspByID(lavoratore_id)));
+        esp_view.setButtonColumn(buttonColumn);
+        esp_view.setSupplier(()-> TableData.toMap(name,postDriver.getEspByID(lavoratore_id)));
+        esp_view.setupColumn(esp_col, name);
     }
 
     public void addEsp(ActionEvent event) {
         if (esperienze.getText().isEmpty()) return;
         try {
             postDriver.addEspByID(lavoratore_id, esperienze.getText());
-            refreshEsp();
+            esp_view.refreshData();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
         esperienze.setText("");
-    }
-
-    private void refreshEsp() throws SQLException {
-        List<String> full_list = postDriver.getEspByID(lavoratore_id);
-        esp_list.clear();
-        esp_list.addAll(full_list);
     }
 
     //Patenti
 
     private void setupPatenti() {
-        ButtonColumn.DB_Exec<Integer, String> exec = (lav_id, key) -> {
-            postDriver.delPatenteByID(lav_id, key);
-            refreshPatenteList();
-        };
-        setupCol(patente_colum, patenti_view, exec);
-        try {
-            refreshPatenteList();
-            patenti_view.setItems(patenti_list);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
-        }
+        updatePatenteItems();
+        String name = "patenti";
+        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+            if(!postDriver.delPatenteByID(lavoratore_id, key.get(name)))
+                JavaFXError.DB_ERROR.printContent("Impossibile eliminare la patente");
+            patenti_view.refreshData();
+            return null;
+        });
+
+        //patenti_data = new TableData(patenti_view, buttonColumn,()-> TableData.toMap(name,getPatenti()));
+        patenti_view.setButtonColumn(buttonColumn);
+        patenti_view.setSupplier(()-> TableData.toMap(name,postDriver.getPatentiByID(lavoratore_id)));
+        patenti_view.setupColumn(patente_colum, name);
+
     }
 
-    private void refreshPatenteList() throws SQLException {
+    private void updatePatenteItems()  {
         List<String> full_list = postDriver.getAllPatenti();
-        Set<String> lav_patenti = postDriver.getPatentiByID(lavoratore_id);
+        List<String> lav_patenti = postDriver.getPatentiByID(lavoratore_id);
 
         patente.getItems().clear();
-        patente.getItems().addAll(
-                full_list.stream()
-                        .filter(s -> !lav_patenti.contains(s))
-                        .toList());
-        patenti_list.clear();
-        patenti_list.addAll(lav_patenti);
+        patente.getItems().addAll(full_list.stream()
+                .filter(s -> !lav_patenti.contains(s))
+                .toList());
     }
 
     public void addPatente(ActionEvent event) {
         if (patente.getValue() == null) return;
         try {
             postDriver.addPatenteByID(lavoratore_id, patente.getValue());
-            refreshPatenteList();
+            patenti_view.refreshData();
+            updatePatenteItems();
         } catch (SQLException e) {
             e.printStackTrace();
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
     }
 
 
     public void back(ActionEvent event) {
-        Main.getLoader().loadView("MENU_LAVORATORE");
+        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
     }
 }

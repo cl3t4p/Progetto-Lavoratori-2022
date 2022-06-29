@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.LavMenuController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.LavMenuController">
    <children>
-      <Label fx:id="id_lav" layoutX="239.0" layoutY="14.0" text="ID LAVORATORE : ">
+      <Label fx:id="id_lav" alignment="CENTER" contentDisplay="CENTER" layoutX="239.0" layoutY="14.0" text="ID LAVORATORE : " textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
@@ -14,17 +14,16 @@
       <GridPane alignment="CENTER" layoutY="107.0" prefHeight="144.0" prefWidth="600.0" vgap="10.0">
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#aggLavoro" prefHeight="85.0" prefWidth="146.0" text="AGGIUNGI LAVORI" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#aggLavoro" prefHeight="85.0" prefWidth="146.0" text="AGGIUNGI LAVORI" GridPane.columnIndex="2" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="437.0" layoutY="55.0" mnemonicParsing="false" onAction="#aggLavoro" prefHeight="85.0" prefWidth="146.0" text="VISUALIZZA LAVORATORE" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
             <Button mnemonicParsing="false" onAction="#modLav" prefHeight="85.0" prefWidth="146.0" text="MODIFICA DATI LAVORATORE" textAlignment="CENTER" wrapText="true" />
-            <Button mnemonicParsing="false" onAction="#modEme" prefHeight="85.0" prefWidth="151.0" text="MODIFICA EMERGENZE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="27.0" mnemonicParsing="false" onAction="#modOpz" prefHeight="85.0" prefWidth="146.0" text="MODIFICA DATI OPZIONALI" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Button layoutX="14.0" layoutY="289.0" mnemonicParsing="false" onAction="#back" prefHeight="55.0" prefWidth="74.0" text="BACK" textAlignment="CENTER" />

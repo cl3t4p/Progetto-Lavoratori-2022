@@ -9,9 +9,9 @@ import java.sql.*;
 import java.util.*;
 
 public class PostDriver {
-    private Connection connection;
     private final String user, pass, db_name, host;
     private final int port;
+    private Connection connection;
 
     public PostDriver(String user, String pass, String db_name, String host, int port) {
         this.user = user;
@@ -143,15 +143,19 @@ public class PostDriver {
         return lavoratori;
     }
 
-    public Set<String> getPatentiByID(int id) throws SQLException {
+    public List<String> getPatentiByID(int id) {
         String sql = "SELECT pat_lav.nome_patente FROM lavoratore INNER JOIN pat_lav ON(lavoratore.id=pat_lav.id_lavoratore) WHERE lavoratore.id=?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        Set<String> patenti = new HashSet<>();
-        while (resultSet.next())
-            patenti.add(resultSet.getString(1));
-        return patenti;
+        try (PreparedStatement statement = getConnection().prepareStatement(sql);){
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            List<String> patenti = new ArrayList<>();
+            while (resultSet.next())
+                patenti.add(resultSet.getString(1));
+            return patenti;
+        } catch (SQLException e) {
+            return List.of();
+        }
+
     }
 
     public void addPatenteByID(int id, String patente) throws SQLException {
@@ -162,12 +166,15 @@ public class PostDriver {
         statement.executeUpdate();
     }
 
-    public void delPatenteByID(int id, String patente) throws SQLException {
+    public boolean delPatenteByID(int id, String patente)  {
         String sql = "DELETE FROM pat_lav WHERE ( id_lavoratore = ? AND nome_patente = ?);";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1, id);
-        statement.setString(2, patente);
-        statement.executeUpdate();
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.setString(2, patente);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     public String getComuniByName(String name) throws SQLException {
@@ -180,14 +187,17 @@ public class PostDriver {
         return resultSet.getString(1);
     }
 
-    public List<String> getAllPatenti() throws SQLException {
+    public List<String> getAllPatenti() {
         String sql = "SELECT * FROM patente";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery();
-        List<String> patenti = new ArrayList<>();
-        while (resultSet.next())
-            patenti.add(resultSet.getString(1));
-        return patenti.stream().sorted().toList();
+        try(PreparedStatement statement = getConnection().prepareStatement(sql);) {
+            ResultSet resultSet = statement.executeQuery();
+            List<String> patenti = new ArrayList<>();
+            while (resultSet.next())
+                patenti.add(resultSet.getString(1));
+            return patenti.stream().sorted().toList();
+        } catch (SQLException ignored) {
+            return List.of();
+        }
     }
 
     public Dipendente getDipendenteByUserAndPassword(String user, String pass) throws SQLException {
@@ -239,15 +249,19 @@ public class PostDriver {
         statement.executeUpdate();
     }
 
-    public void delLinguaByID(int lav_id, String key) throws SQLException {
+    public boolean delLinguaByID(int lav_id, String key){
         String sql = "DELETE FROM lingua_lav WHERE ( id_lavoratore = ? AND nome_lingua = ?);";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1, lav_id);
-        statement.setString(2, key);
-        statement.executeUpdate();
+        try(PreparedStatement statement = getConnection().prepareStatement(sql);) {
+            statement.setInt(1, lav_id);
+            statement.setString(2, key);
+            return statement.executeUpdate() > 0;
+        }catch (SQLException e){
+            return false;
+        }
+
     }
 
-    public List<String> getLingueByID(int id) throws SQLException {
+    public List<String> getLingueByID(int id) {
         String sql = "SELECT lingua_lav.nome_lingua FROM lavoratore INNER JOIN lingua_lav ON(lavoratore.id=lingua_lav.id_lavoratore) WHERE lavoratore.id=?";
         return getListString(id, sql);
     }
@@ -284,26 +298,30 @@ public class PostDriver {
         }
     }
 
-    public void delEspByID(int lav_id, String key) throws SQLException {
+    public boolean delEspByID(int lav_id, String key) {
         String sql = "DELETE FROM esp_lav WHERE ( id_lavoratore = ? AND esperienza = ?);";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lav_id);
             statement.setString(2, key);
-            statement.executeUpdate();
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
 
-    public List<String> getEspByID(int id) throws SQLException {
+    public List<String> getEspByID(int id) {
         String sql = "SELECT esp_lav.esperienza FROM lavoratore INNER JOIN esp_lav ON(lavoratore.id=esp_lav.id_lavoratore) WHERE lavoratore.id=?";
         return getListString(id, sql);
     }
 
-    public void delComunebyID(int lav_id, String key) throws SQLException {
+    public boolean delComunebyID(int lav_id, String key) {
         String sql = "DELETE FROM lav_comune WHERE ( id_lavoratore = ? AND comune = ?);";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lav_id);
             statement.setString(2, key);
-            statement.executeUpdate();
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+           return false;
         }
     }
 
@@ -316,20 +334,24 @@ public class PostDriver {
         }
     }
 
-    public List<String> getComuniByID(int lavoratore_id) throws SQLException {
+    public List<String> getComuniByID(int lavoratore_id){
         String sql = "SELECT lav_comune.comune FROM lavoratore INNER JOIN lav_comune ON(lavoratore.id=lav_comune.id_lavoratore) WHERE lavoratore.id=?";
         return getListString(lavoratore_id, sql);
     }
 
-    private List<String> getListString(int lavoratore_id, String sql) throws SQLException {
+    private List<String> getListString(int lavoratore_id, String sql) {
         ResultSet resultSet;
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1, lavoratore_id);
-        resultSet = statement.executeQuery();
-        List<String> list = new ArrayList<>();
-        while (resultSet.next())
-            list.add(resultSet.getString(1));
-        return list.stream().sorted().toList();
+        try(PreparedStatement statement = getConnection().prepareStatement(sql);) {
+
+            statement.setInt(1, lavoratore_id);
+            resultSet = statement.executeQuery();
+            List<String> list = new ArrayList<>();
+            while (resultSet.next())
+                list.add(resultSet.getString(1));
+            return list.stream().sorted().toList();
+        } catch (SQLException e) {
+           return List.of();
+        }
     }
 
     public List<String> getComuneILike(String name) throws SQLException {
@@ -410,7 +432,7 @@ public class PostDriver {
         return resultSet.next();
     }
 
-    public List<Emergenza> getEmergenze(int lavoratore_id) throws SQLException {
+    public List<Emergenza> getEmergenze(int lavoratore_id) {
         String sql = "SELECT emergenza.id,emergenza.nome,emergenza.cognome,emergenza.telefono,emergenza.email FROM emergenza INNER JOIN emergenza_lav ON(emergenza.id=emergenza_lav.id_emergenza) WHERE emergenza_lav.id_lavoratore=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lavoratore_id);
@@ -424,16 +446,20 @@ public class PostDriver {
                 }
             }
             return emergenze;
+        } catch (SQLException e) {
+            return List.of();
         }
     }
 
-    public void delEmergenzeByID(int lav_id, Map<String, String> emergenza) throws SQLException {
-        int eme_id = getEmergenzeIDByValues(emergenza);
+    public boolean delEmergenzeByID(int lav_id, Map<String, String> emergenza) {
         String sql = "DELETE FROM emergenza_lav WHERE id_lavoratore=? AND id_emergenza=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            int eme_id = getEmergenzeIDByValues(emergenza);
             statement.setInt(1, lav_id);
             statement.setInt(2, eme_id);
-            statement.executeUpdate();
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
 
@@ -442,14 +468,7 @@ public class PostDriver {
         return getAllLavoratori(statement.executeQuery());
     }
 
-    public boolean checkIfLavoroIsLinked(int id_lavoratore, int id_lavoro) throws SQLException {
-        String sql = "SELECT * FROM lavoratore_lavoro WHERE id_lavoratore=? AND id_lavoro=?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1, id_lavoratore);
-        statement.setInt(2, id_lavoro);
-        ResultSet resultSet = statement.executeQuery();
-        return resultSet.next();
-    }
+
 
     public int addLavoro(Lavoro lavoro) throws SQLException {
         String sql = "INSERT INTO lavoro_svolto " +
@@ -470,12 +489,12 @@ public class PostDriver {
         return -1;
     }
 
-    public List<Lavoro> getLavoroByLavID(Integer lavoratore_id)  {
+    public List<Lavoro> getLavoroByLavID(Integer lavoratore_id) {
         String sql = "SELECT * FROM lavoro_svolto WHERE id_lavoratore=?";
-        PreparedStatement statement = getConnection().prepareStatement(sql)
-        statement.setInt(1, lavoratore_id);
-        ResultSet resultSet = statement.executeQuery();
-        List<Lavoro> lavori = new ArrayList<>();
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, lavoratore_id);
+            ResultSet resultSet = statement.executeQuery();
+            List<Lavoro> lavori = new ArrayList<>();
             while (resultSet.next()) {
                 try {
                     lavori.add(SQLMapper.deserializeSQL(resultSet, Lavoro.class));
@@ -483,6 +502,22 @@ public class PostDriver {
                     e.printStackTrace();
                 }
             }
-        return lavori;
+            return lavori;
+        } catch (SQLException e) {
+            return List.of();
+        }
+    }
+
+    public boolean deleteLavoroByID(Integer id)  {
+        String sql = "DELETE FROM lavoro_svolto WHERE id=?";
+        PreparedStatement statement = null;
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }
+

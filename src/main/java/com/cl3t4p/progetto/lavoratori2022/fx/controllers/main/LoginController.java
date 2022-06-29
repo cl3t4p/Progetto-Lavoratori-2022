@@ -26,9 +26,9 @@ public class LoginController {
                 Main.getDataRepo().setDipendente(dipendente);
                 Main.getLoader().loadView("MENU");
             } else
-                JavaFXError.showError("Username o password errati!");
+                JavaFXError.show("Username o password errati!");
         } catch (SQLException e) {
-            JavaFXError.DB_ERROR.showError();
+            JavaFXError.DB_ERROR.show();
         }
     }
 }

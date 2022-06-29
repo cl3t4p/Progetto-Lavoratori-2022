@@ -2,6 +2,9 @@ package com.cl3t4p.progetto.lavoratori2022.database.exception;
 
 import javafx.scene.control.Alert;
 
+/***
+ * This enum is used to print an error message in a JavaFX window.
+ */
 public enum JavaFXError {
     DB_ERROR("Errore DB");
 
@@ -12,20 +15,20 @@ public enum JavaFXError {
     }
 
 
-    public void showError() {
-        showError(error);
+    public void show() {
+        show(error);
     }
     public void printContent(String content){
-        showError(this.error,content);
+        show(this.error,content);
     }
 
-    public static void showError(String content) {
+    public static void show(String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Errore");
         alert.setHeaderText(content);
         alert.show();
     }
-    public static void showError(String title,String content){
+    public static void show(String title, String content){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(content);

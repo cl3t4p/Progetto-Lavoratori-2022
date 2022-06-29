@@ -3,7 +3,6 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import javafx.collections.FXCollections;

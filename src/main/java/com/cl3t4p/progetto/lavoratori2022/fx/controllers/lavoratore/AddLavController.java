@@ -219,8 +219,7 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void back(ActionEvent event) {
-        dataRepo.setLavoratore_id(null);
-        Main.getLoader().loadView("MENU");
+        Main.getLoader().loadView("MENU_LAVORATORE");
     }
 
     @FXML

@@ -5,6 +5,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 public interface ValidateData {
+
+    /***
+     * This method is used to check if the field is not null or if it's a string is not empty.
+     * @return True if every field is valid, false otherwise.
+     */
     default boolean validate() {
         for (Field field : getClass().getDeclaredFields()) {
             field.setAccessible(true);

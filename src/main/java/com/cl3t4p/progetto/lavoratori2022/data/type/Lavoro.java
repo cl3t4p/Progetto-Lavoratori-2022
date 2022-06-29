@@ -6,7 +6,6 @@ import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.FieldChecker;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import com.cl3t4p.progetto.lavoratori2022.database.annotation.SQLDInfo;
