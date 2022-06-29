@@ -4,13 +4,13 @@ import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 
@@ -19,10 +19,12 @@ import java.util.function.Supplier;
  */
 public class TableData {
     private final ObservableList<Map<String, String>> list = FXCollections.observableArrayList();
-
     private final TableView<Map<String, String>> view;
     private final ButtonColumn buttonColumn;
     private final Supplier<List<Map<String, String>>> supplier;
+
+    //TODO Fix gap
+    private final List<Double> customSize = new ArrayList<>();
 
     public TableData(TableView<Map<String, String>> view, ButtonColumn buttonColumn, Supplier<List<Map<String,String>>> supplier) {
         this.supplier = supplier;
@@ -30,6 +32,7 @@ public class TableData {
         this.view = view;
         view.getColumns().add(buttonColumn);
         view.setItems(list);
+        customSize.add(buttonColumn.getWidth());
     }
 
 
@@ -55,12 +58,26 @@ public class TableData {
      * @param key The key of the map to use as value for the column.
      */
     public void setupColumn(TableColumn<Map, String> column, String key) {
+        setupColumnOpt(column, key);
+        column.prefWidthProperty().bind(
+                view.widthProperty()
+                        .subtract(buttonColumn.widthProperty())
+                        .subtract(2)
+                        .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum())
+                        .divide(view.getColumns().size()-customSize.size()));
+    }
+    public void setupColumn(TableColumn<Map, String> column, String key,int size) {
+        setupColumnOpt(column, key);
+        if(size != -1)
+            column.setPrefWidth(size);
+        customSize.add(column.getWidth());
+    }
+
+    private void setupColumnOpt(TableColumn<Map, String> column, String key) {
         column.setEditable(false);
         column.setResizable(false);
         column.setReorderable(false);
         column.setCellValueFactory(new MapValueFactory<>(key));
-
-        column.prefWidthProperty().bind(view.widthProperty().subtract(buttonColumn.widthProperty()).subtract(2).divide(view.getColumns().size()-1));
         refreshData();
     }
 

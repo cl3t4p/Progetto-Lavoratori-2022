@@ -10,8 +10,6 @@ import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +21,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class MenuLavoratore implements Initializable {
+public class MenuLavoro implements Initializable {
 
 
     private final PostDriver postDriver = Main.getPostDriver();
@@ -38,7 +36,7 @@ public class MenuLavoratore implements Initializable {
     private DatePicker ini_per,fine_per;
 
     @FXML
-    private TableColumn<Map, String>  col_nome, col_mansione, col_luogo, col_retri,col_ini,col_fine;
+    private TableColumn<Map, String>  col_nome, col_mansione, col_luogo, col_retri,col_ini,col_fine,col_id;
 
     @FXML
     private Label lav_id;
@@ -66,12 +64,13 @@ public class MenuLavoratore implements Initializable {
 
         tableData = new TableData(lav_view,buttonColumn,()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
 
-        tableData.setupColumn(col_nome, "nome");
+        tableData.setupColumn(col_id,"id",30);
+        tableData.setupColumn(col_nome, "nome_azienda");
         tableData.setupColumn(col_mansione, "mansione");
         tableData.setupColumn(col_luogo, "luogo");
         tableData.setupColumn(col_retri, "retribuzione");
-        tableData.setupColumn(col_ini, "inizio");
-        tableData.setupColumn(col_fine, "fine");
+        tableData.setupColumn(col_ini, "inizio_periodo");
+        tableData.setupColumn(col_fine, "fine_periodo");
 
         tableData.refreshData();
 
@@ -89,6 +88,7 @@ public class MenuLavoratore implements Initializable {
                throw new JavaFXDataError();
             }
         } catch (SQLException | JavaFXDataError e) {
+            e.printStackTrace();
             JavaFXError.DB_ERROR.printContent("Errore nell'inserimento del lavoro");
         }
         tableData.refreshData();
@@ -98,6 +98,7 @@ public class MenuLavoratore implements Initializable {
         Lavoro lavoro = new Lavoro();
         lavoro.setLuogo(luogo.getText());
         lavoro.setMansione(mansione.getText());
+        lavoro.setNome_azienda(nome.getText());
         lavoro.setRetribuzione(retri.getValue().intValue());
         lavoro.setInizio_periodo(Date.valueOf(ini_per.getValue()));
         lavoro.setFine_periodo(Date.valueOf(fine_per.getValue()));
