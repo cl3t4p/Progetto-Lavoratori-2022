@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.database.annotation;
+package com.cl3t4p.progetto.lavoratori2022.annotation;
 
 import java.lang.annotation.*;
 

@@ -1,6 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.data.checks;
 
 
+import com.cl3t4p.progetto.lavoratori2022.annotation.FieldChecker;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 

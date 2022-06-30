@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.database;
 
-import com.cl3t4p.progetto.lavoratori2022.database.annotation.SQLDInfo;
+import com.cl3t4p.progetto.lavoratori2022.annotation.SQLDInfo;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -44,28 +44,18 @@ public class SQLMapper {
             //This will make us possibile to modify private fields in the class
             field.setAccessible(true);
             switch (field.getType().getSimpleName()) {
-                case "String":
-                    statement.setString(cursor, (String) field.get(a));
-                    break;
-                case "int":
-                    statement.setInt(cursor, (int) field.get(a));
-                    break;
-                case "double":
-                    statement.setDouble(cursor, (double) field.get(a));
-                    break;
-                case "long":
-                    statement.setLong(cursor, (Long) field.get(a));
-                    break;
-                case "Date":
-                    statement.setDate(cursor, new Date(((java.util.Date) field.get(a)).getTime()));
-                    break;
-                case "LocalDate":
+                case "String" -> statement.setString(cursor, (String) field.get(a));
+                case "int" -> statement.setInt(cursor, (int) field.get(a));
+                case "double" -> statement.setDouble(cursor, (double) field.get(a));
+                case "long" -> statement.setLong(cursor, (Long) field.get(a));
+                case "Date" -> statement.setDate(cursor, new Date(((java.util.Date) field.get(a)).getTime()));
+                case "LocalDate" -> {
                     LocalDate localDate = LocalDate.MIN;
                     statement.setDate(cursor,
                             new Date(java.util.Date.from(
                                     localDate.atStartOfDay(
                                             ZoneId.systemDefault()).toInstant()).getTime()));
-                    break;
+                }
             }
         }
     }
@@ -92,24 +82,12 @@ public class SQLMapper {
             //This will make us possibile to modify private fields in the class
             field.setAccessible(true);
             switch (field.getType().getSimpleName()) {
-                case "String":
-                    field.set(a, result.getString(name));
-                    break;
-                case "int":
-                    field.set(a, result.getInt(name));
-                    break;
-                case "double":
-                    field.set(a, result.getDouble(name));
-                    break;
-                case "long":
-                    field.set(a, result.getLong(name));
-                    break;
-                case "Date":
-                    field.set(a, result.getDate(name));
-                    break;
-                case "LocalDate":
-                    field.set(a, result.getDate(name).toLocalDate());
-                    break;
+                case "String" -> field.set(a, result.getString(name));
+                case "int" -> field.set(a, result.getInt(name));
+                case "double" -> field.set(a, result.getDouble(name));
+                case "long" -> field.set(a, result.getLong(name));
+                case "Date" -> field.set(a, result.getDate(name));
+                case "LocalDate" -> field.set(a, result.getDate(name).toLocalDate());
             }
         }
         return a;

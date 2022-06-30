@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
+<?import java.lang.String?>
 <AnchorPane id="AnchorPane" prefHeight="528.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.AddLavController">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.AddLavController">
     <children>
         <Button fx:id="main_button" layoutX="737.0" layoutY="456.0" mnemonicParsing="false"
                 onAction="#inserimento_lavoratore" prefHeight="50.0" prefWidth="158.0" text="AGGIUNGI LAVORATORE"

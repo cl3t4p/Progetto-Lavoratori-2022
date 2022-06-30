@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.database.exception;
+package com.cl3t4p.progetto.lavoratori2022.exception;
 
 
 import javafx.scene.control.Alert;

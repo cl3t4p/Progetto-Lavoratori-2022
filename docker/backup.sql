@@ -24,159 +24,181 @@ SET default_table_access_method = heap;
 -- Name: comune; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.comune (
+CREATE TABLE public.comune
+(
     nome_comune character varying(60) NOT NULL
 );
 
 
-ALTER TABLE public.comune OWNER TO postgres;
+ALTER TABLE public.comune
+    OWNER TO postgres;
 
 --
 -- Name: dipendente; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.dipendente (
-    id integer NOT NULL,
-    nome character varying(20) NOT NULL,
-    cognome character varying(20) NOT NULL,
+CREATE TABLE public.dipendente
+(
+    id            integer               NOT NULL,
+    nome          character varying(20) NOT NULL,
+    cognome       character varying(20) NOT NULL,
     luogo_nascita character varying(20) NOT NULL,
-    data_nascita date NOT NULL,
-    nazionalita character varying(20) NOT NULL,
-    indirizzo character varying(20) NOT NULL,
-    telefono integer NOT NULL,
-    email character varying(20) NOT NULL,
-    username character varying(20) NOT NULL,
-    password character varying(20) NOT NULL
+    data_nascita  date                  NOT NULL,
+    nazionalita   character varying(20) NOT NULL,
+    indirizzo     character varying(20) NOT NULL,
+    telefono      integer               NOT NULL,
+    email         character varying(20) NOT NULL,
+    username      character varying(20) NOT NULL,
+    password      character varying(20) NOT NULL
 );
 
 
-ALTER TABLE public.dipendente OWNER TO postgres;
+ALTER TABLE public.dipendente
+    OWNER TO postgres;
 
 --
 -- Name: esp_lav; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.esp_lav (
-    esperienza character varying(30) NOT NULL,
-    id_lavoratore integer NOT NULL
+CREATE TABLE public.esp_lav
+(
+    esperienza    character varying(30) NOT NULL,
+    id_lavoratore integer               NOT NULL
 );
 
 
-ALTER TABLE public.esp_lav OWNER TO postgres;
+ALTER TABLE public.esp_lav
+    OWNER TO postgres;
 
 --
 -- Name: esperienza; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.esperienza (
+CREATE TABLE public.esperienza
+(
     nome_esperienza character varying(30) NOT NULL
 );
 
 
-ALTER TABLE public.esperienza OWNER TO postgres;
+ALTER TABLE public.esperienza
+    OWNER TO postgres;
 
 --
 -- Name: lav_comune; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.lav_comune (
-    comune character varying(60) NOT NULL,
-    id_lavoratore integer NOT NULL
+CREATE TABLE public.lav_comune
+(
+    comune        character varying(60) NOT NULL,
+    id_lavoratore integer               NOT NULL
 );
 
 
-ALTER TABLE public.lav_comune OWNER TO postgres;
+ALTER TABLE public.lav_comune
+    OWNER TO postgres;
 
 --
 -- Name: lavoratore; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.lavoratore (
-    id integer NOT NULL,
-    nome character varying(20) NOT NULL,
-    cognome character varying(20) NOT NULL,
-    luogo_nascita character varying(20) NOT NULL,
-    data_nascita date NOT NULL,
-    nazionalita character varying(20) NOT NULL,
-    indirizzo character varying(20) NOT NULL,
-    telefono integer,
-    email character varying(20) NOT NULL,
-    automunito character varying(2) NOT NULL,
-    inizio_periodo_disp date NOT NULL,
-    fine_periodo_disp date NOT NULL,
-    nome_emergenze character varying(20) NOT NULL,
-    cognome_emergenze character varying(20) NOT NULL,
-    telefono_emergenze integer NOT NULL,
-    email_emergenze character varying(20) NOT NULL,
-    id_dipendente integer NOT NULL
+CREATE TABLE public.lavoratore
+(
+    id                  integer               NOT NULL,
+    nome                character varying(20) NOT NULL,
+    cognome             character varying(20) NOT NULL,
+    luogo_nascita       character varying(20) NOT NULL,
+    data_nascita        date                  NOT NULL,
+    nazionalita         character varying(20) NOT NULL,
+    indirizzo           character varying(20) NOT NULL,
+    telefono            integer,
+    email               character varying(20) NOT NULL,
+    automunito          character varying(2)  NOT NULL,
+    inizio_periodo_disp date                  NOT NULL,
+    fine_periodo_disp   date                  NOT NULL,
+    nome_emergenze      character varying(20) NOT NULL,
+    cognome_emergenze   character varying(20) NOT NULL,
+    telefono_emergenze  integer               NOT NULL,
+    email_emergenze     character varying(20) NOT NULL,
+    id_dipendente       integer               NOT NULL
 );
 
 
-ALTER TABLE public.lavoratore OWNER TO postgres;
+ALTER TABLE public.lavoratore
+    OWNER TO postgres;
 
 --
 -- Name: lavoro_svolto; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.lavoro_svolto (
-    id integer NOT NULL,
-    inizio_periodo date NOT NULL,
-    fine_periodo date NOT NULL,
-    nome_azienda character varying(20) NOT NULL,
-    mansione_svolta character varying(20) NOT NULL,
-    luogo_lavoro character varying(20) NOT NULL,
-    retribuzione_lorda_giornaliera integer NOT NULL,
-    id_lavoratore integer NOT NULL
+CREATE TABLE public.lavoro_svolto
+(
+    id                             integer               NOT NULL,
+    inizio_periodo                 date                  NOT NULL,
+    fine_periodo                   date                  NOT NULL,
+    nome_azienda                   character varying(20) NOT NULL,
+    mansione_svolta                character varying(20) NOT NULL,
+    luogo_lavoro                   character varying(20) NOT NULL,
+    retribuzione_lorda_giornaliera integer               NOT NULL,
+    id_lavoratore                  integer               NOT NULL
 );
 
 
-ALTER TABLE public.lavoro_svolto OWNER TO postgres;
+ALTER TABLE public.lavoro_svolto
+    OWNER TO postgres;
 
 --
 -- Name: lingua; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.lingua (
+CREATE TABLE public.lingua
+(
     nome_lingua character varying(20) NOT NULL
 );
 
 
-ALTER TABLE public.lingua OWNER TO postgres;
+ALTER TABLE public.lingua
+    OWNER TO postgres;
 
 --
 -- Name: lingua_lav; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.lingua_lav (
-    nome_lingua character varying(20) NOT NULL,
-    id_lavoratore integer NOT NULL
+CREATE TABLE public.lingua_lav
+(
+    nome_lingua   character varying(20) NOT NULL,
+    id_lavoratore integer               NOT NULL
 );
 
 
-ALTER TABLE public.lingua_lav OWNER TO postgres;
+ALTER TABLE public.lingua_lav
+    OWNER TO postgres;
 
 --
 -- Name: pat_lav; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.pat_lav (
-    nome_patente character varying(20) NOT NULL,
-    id_lavoratore integer NOT NULL
+CREATE TABLE public.pat_lav
+(
+    nome_patente  character varying(20) NOT NULL,
+    id_lavoratore integer               NOT NULL
 );
 
 
-ALTER TABLE public.pat_lav OWNER TO postgres;
+ALTER TABLE public.pat_lav
+    OWNER TO postgres;
 
 --
 -- Name: patente; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.patente (
+CREATE TABLE public.patente
+(
     tipo_patente character varying(5) NOT NULL
 );
 
 
-ALTER TABLE public.patente OWNER TO postgres;
+ALTER TABLE public.patente
+    OWNER TO postgres;
 
 --
 -- Data for Name: comune; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -8094,7 +8116,8 @@ ZUNGRI
 -- Data for Name: dipendente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.dipendente (id, nome, cognome, luogo_nascita, data_nascita, nazionalita, indirizzo, telefono, email, username, password) FROM stdin;
+COPY public.dipendente (id, nome, cognome, luogo_nascita, data_nascita, nazionalita, indirizzo, telefono, email,
+                        username, password) FROM stdin;
 \.
 
 
@@ -8126,7 +8149,9 @@ COPY public.lav_comune (comune, id_lavoratore) FROM stdin;
 -- Data for Name: lavoratore; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.lavoratore (id, nome, cognome, luogo_nascita, data_nascita, nazionalita, indirizzo, telefono, email, automunito, inizio_periodo_disp, fine_periodo_disp, nome_emergenze, cognome_emergenze, telefono_emergenze, email_emergenze, id_dipendente) FROM stdin;
+COPY public.lavoratore (id, nome, cognome, luogo_nascita, data_nascita, nazionalita, indirizzo, telefono, email,
+                        automunito, inizio_periodo_disp, fine_periodo_disp, nome_emergenze, cognome_emergenze,
+                        telefono_emergenze, email_emergenze, id_dipendente) FROM stdin;
 \.
 
 
@@ -8134,7 +8159,8 @@ COPY public.lavoratore (id, nome, cognome, luogo_nascita, data_nascita, nazional
 -- Data for Name: lavoro_svolto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.lavoro_svolto (id, inizio_periodo, fine_periodo, nome_azienda, mansione_svolta, luogo_lavoro, retribuzione_lorda_giornaliera, id_lavoratore) FROM stdin;
+COPY public.lavoro_svolto (id, inizio_periodo, fine_periodo, nome_azienda, mansione_svolta, luogo_lavoro,
+                           retribuzione_lorda_giornaliera, id_lavoratore) FROM stdin;
 \.
 
 

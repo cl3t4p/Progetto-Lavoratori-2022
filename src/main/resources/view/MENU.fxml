@@ -4,18 +4,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane prefHeight="404.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.main.MenuController">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.main.MenuController">
     <children>
         <Button layoutX="42.0" layoutY="151.0" mnemonicParsing="false" onAction="#ricerca_lav" prefHeight="59.0"
-                prefWidth="143.0" text="RICERCA LAVORATORE"/>
+                prefWidth="143.0" text="RICERCA LAVORATORE" wrapText="true" textAlignment="CENTER"/>
         <Button layoutX="218.0" layoutY="151.0" mnemonicParsing="false" onAction="#aggiungi_lavoratore"
                 prefHeight="59.0"
-                prefWidth="158.0" text="AGGIUNGI LAVORATORE"/>
+                prefWidth="158.0" text="AGGIUNGI LAVORATORE" wrapText="true"/>
         <Button layoutX="408.0" layoutY="151.0" mnemonicParsing="false" onAction="#modifica_anagrafica"
                 prefHeight="59.0"
-                prefWidth="171.0" text="MODIFICA ANAGRAFICA"/>
+                prefWidth="171.0" text="MODIFICA ANAGRAFICA" wrapText="true"/>
         <Label layoutX="172.0" layoutY="38.0" text="MENÙ PRINCIPALE">
             <font>
                 <Font size="30.0"/>

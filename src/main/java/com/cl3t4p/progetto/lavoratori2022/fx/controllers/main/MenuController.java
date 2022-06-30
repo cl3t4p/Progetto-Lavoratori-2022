@@ -1,8 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
+import com.cl3t4p.progetto.lavoratori2022.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import com.cl3t4p.progetto.lavoratori2022.Main;
 
 public class MenuController {
     @FXML
@@ -12,7 +12,7 @@ public class MenuController {
 
     @FXML
     private void aggiungi_lavoratore(ActionEvent event) {
-        Main.getLoader().loadView("MENU_LAVORATORE");
+        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
     }
 
     @FXML

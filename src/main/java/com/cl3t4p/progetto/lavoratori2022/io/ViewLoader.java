@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.Setter;
 
-
 import java.io.IOException;
 
 /**
@@ -32,7 +31,6 @@ public class ViewLoader {
 
 
     /**
-     *
      * @param base_path is the path of the FXML files.
      * @param extension is the extension of the FXML files.
      */
@@ -60,6 +58,7 @@ public class ViewLoader {
 
     /**
      * Load the FXML file and show it in a new window.
+     *
      * @param name is the name of the file / scene without the extension.
      */
     public void loadView(String name) {

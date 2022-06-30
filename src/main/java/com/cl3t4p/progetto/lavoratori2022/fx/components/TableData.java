@@ -1,15 +1,16 @@
-package com.cl3t4p.progetto.lavoratori2022;
+package com.cl3t4p.progetto.lavoratori2022.fx.components;
 
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 
@@ -22,6 +23,7 @@ public class TableData extends TableView<Map<String, String>> {
     private Supplier<List<Map<String, String>>> supplier;
 
 
+    // A list of columns that will have a custom width.
     private final List<Double> customSize = new ArrayList<>();
 
     public TableData() {
@@ -31,6 +33,7 @@ public class TableData extends TableView<Map<String, String>> {
     public void setSupplier(Supplier<List<Map<String, String>>> supplier) {
         this.supplier = supplier;
     }
+
     public void setButtonColumn(ButtonColumn buttonColumn) {
         getColumns().add(buttonColumn);
         customSize.add(buttonColumn.getWidth());
@@ -39,7 +42,7 @@ public class TableData extends TableView<Map<String, String>> {
     /**
      * Update the table view with the list of maps.
      */
-    public void refreshData(List<Map<String,String>> data) {
+    public void refreshData(List<Map<String, String>> data) {
         list.clear();
         list.addAll(data);
     }
@@ -47,15 +50,17 @@ public class TableData extends TableView<Map<String, String>> {
     /**
      * Update the table view with the list called by the supplier.
      */
-    public void refreshData(){
-        refreshData(supplier.get());
+    public void refreshData() {
+        if (supplier != null)
+            refreshData(supplier.get());
     }
 
 
     /**
      * Prepare a column for the table view.
+     *
      * @param column the column to prepare
-     * @param key The key of the map to use as value for the column.
+     * @param key    The key of the map to use as value for the column.
      */
     public void setupColumn(TableColumn<Map, String> column, String key) {
         setupColumnOpt(column, key);
@@ -63,11 +68,12 @@ public class TableData extends TableView<Map<String, String>> {
                 widthProperty()
                         .subtract(3)
                         .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum())
-                        .divide(getColumns().size()-customSize.size()));
+                        .divide(getColumns().size() - customSize.size()));
     }
-    public void setupColumn(TableColumn<Map, String> column, String key,int size) {
+
+    public void setupColumn(TableColumn<Map, String> column, String key, int size) {
         setupColumnOpt(column, key);
-        if(size != -1)
+        if (size != -1)
             column.setPrefWidth(size);
         customSize.add(column.getWidth());
     }
@@ -81,28 +87,25 @@ public class TableData extends TableView<Map<String, String>> {
     }
 
 
-    public void addSelectionListener(ChangeListener <? super Map<String, String>> listener) {
-        getSelectionModel().selectedItemProperty().addListener(listener);
-    }
-
-
     /**
      * Get the list of maps from a mappable objects.
+     *
      * @param mappables the list of mappable objects
      * @return the list of maps
      */
-    public static List<Map<String,String>> toMap(List<? extends Mappable> mappables){
+    public static List<Map<String, String>> toMap(List<? extends Mappable> mappables) {
         return mappables.stream().map(Mappable::toMap).toList();
     }
 
     /**
      * Return the list of maps with the same name of the columns.
+     *
      * @param name the name of the columns
      * @param list the list of mappable objects
      * @return the list of maps
      */
-    public static List<Map<String,String>> toMap(String name,List<String> list){
-       return list.stream().map(s -> Collections.singletonMap(name,s)).toList();
+    public static List<Map<String, String>> toMap(String name, List<String> list) {
+        return list.stream().map(s -> Collections.singletonMap(name, s)).toList();
     }
 
 
