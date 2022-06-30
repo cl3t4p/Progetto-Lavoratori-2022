@@ -98,6 +98,7 @@ public class ResearchCreator {
         private String toSQL(){
             return " " + logic.name() + toFirstSQL();
         }
+        //TODO Valori aggingi
 
         private String toFirstSQL(){
             if(isSimilar)
@@ -117,8 +118,6 @@ public class ResearchCreator {
         INT,
         STRING,
         DATE;
-
-
 
     }
 

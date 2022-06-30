@@ -12,7 +12,7 @@ public class MenuController {
 
     @FXML
     private void aggiungi_lavoratore(ActionEvent event) {
-        Main.getLoader().loadView("MENU_LAVORATORE");
+        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
     }
 
     @FXML

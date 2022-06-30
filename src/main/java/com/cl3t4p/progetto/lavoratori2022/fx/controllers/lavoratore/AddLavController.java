@@ -61,7 +61,7 @@ public class AddLavController implements Initializable {
 
             eme_pane.setVisible(false);
 
-            main_button.setText("MODIFICA LAVORATORE");
+            main_button.setText("CONFERMA MODIFICHE");
             main_button.setOnAction(this::modifica_lavoratore);
 
             try {
@@ -139,8 +139,8 @@ public class AddLavController implements Initializable {
             Lavoratore lavoratore = getLavoratore();
             lavoratore.setId(dataRepo.getLavoratore_id());
             try {
-                dataRepo.setLavoratore_id(postDriver.updateLavoratore(lavoratore));
-                Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
+                postDriver.updateLavoratore(lavoratore);
+                Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
 
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
@@ -219,7 +219,8 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void back(ActionEvent event) {
-        Main.getLoader().loadView("MENU_LAVORATORE");
+        Main.getDataRepo().setLavoratore_id(null);
+        Main.getLoader().loadView("MENU");
     }
 
     @FXML
@@ -233,4 +234,7 @@ public class AddLavController implements Initializable {
     }
 
 
+    public void extraLavoro(ActionEvent actionEvent) {
+        Main.getLoader().loadView("MENU_LAVORO");
+    }
 }

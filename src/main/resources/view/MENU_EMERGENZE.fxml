@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
-<?import com.cl3t4p.progetto.lavoratori2022.TableData?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData?>
 <AnchorPane prefHeight="400.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.AggEmeOPController">
     <children>

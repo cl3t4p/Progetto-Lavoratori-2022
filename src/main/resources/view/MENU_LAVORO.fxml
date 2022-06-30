@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
-<?import com.cl3t4p.progetto.lavoratori2022.TableData?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData?>
 <AnchorPane prefHeight="619.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.MenuLavoro">
     <children>
         <TableData fx:id="lav_view" layoutX="371.0" layoutY="9.0" prefHeight="606.0" prefWidth="660.0">

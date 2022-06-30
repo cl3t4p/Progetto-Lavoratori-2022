@@ -4,11 +4,12 @@ import com.cl3t4p.progetto.lavoratori2022.data.type.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.model.LavModel;
 
 import java.sql.*;
 import java.util.*;
 
-public class PostDriver {
+public class PostDriver implements LavModel {
     private final String user, pass, db_name, host;
     private final int port;
     private Connection connection;
@@ -47,20 +48,24 @@ public class PostDriver {
         }
     }
 
-    public Lavoratore getLavoratoreByID(int id) throws SQLException {
+    public Lavoratore getLavoratoreByID(int id) {
         String sql = "SELECT * FROM lavoratore WHERE id=?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        if (!resultSet.next())
+        try (PreparedStatement statement = getConnection().prepareStatement(sql);) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next())
+                return null;
+            Lavoratore lavoratore;
+            try {
+                lavoratore = SQLMapper.deserializeSQL(resultSet, Lavoratore.class);
+            } catch (IllegalAccessException | InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+            return lavoratore;
+        } catch (SQLException e) {
             return null;
-        Lavoratore lavoratore;
-        try {
-            lavoratore = SQLMapper.deserializeSQL(resultSet, Lavoratore.class);
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new RuntimeException(e);
         }
-        return lavoratore;
+
     }
 
     public int login(String username, String password) throws SQLException {

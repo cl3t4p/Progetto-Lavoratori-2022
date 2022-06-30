@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022;
+package com.cl3t4p.progetto.lavoratori2022.fx.components;
 
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;

@@ -2,7 +2,6 @@ package com.cl3t4p.progetto.lavoratori2022.fx.components;
 
 
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
-import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;

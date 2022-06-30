@@ -48,7 +48,7 @@ public class Main extends Application {
         }
 
         //End Testing
-        loader.loadView("AGG_LAV_OPZ");
+        loader.loadView("LOGIN");
         //loader.loadView("LOGIN");
     }
 

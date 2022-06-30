@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.TableData;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
@@ -26,9 +26,6 @@ public class MenuLavoro implements Initializable {
 
     private final PostDriver postDriver = Main.getPostDriver();
     private final DataRepo dataRepo = Main.getDataRepo();
-
-
-
     @FXML
     private TableData lav_view;
 
@@ -79,7 +76,8 @@ public class MenuLavoro implements Initializable {
 
 
     public void back(ActionEvent event) {
-        Main.getLoader().loadView("MENU_LAVORATORE");
+        Main.getDataRepo().setLavoratore_id(null);
+        Main.getLoader().loadView("MENU");
     }
 
     public void addLavoro(ActionEvent event) {
