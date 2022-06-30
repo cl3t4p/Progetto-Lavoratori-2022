@@ -13,10 +13,8 @@ public class DataRepo {
     Integer lavoratore_id;
 
 
-
     //TODO Remove
-
     public DataRepo() {
-       // this.lavoratore_id = 58;
+        this.lavoratore_id = 58;
     }
 }

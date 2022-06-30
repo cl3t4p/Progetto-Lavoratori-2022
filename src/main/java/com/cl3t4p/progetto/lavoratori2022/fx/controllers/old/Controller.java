@@ -1,17 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.old;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
 import javafx.event.ActionEvent;
@@ -20,14 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import com.cl3t4p.progetto.lavoratori2022.Main;
+
+import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author 1blan
@@ -64,7 +53,7 @@ public class Controller {
 
 
     private Connection connect() {
-        return Main.getPostDriver().getConnection();
+        return Main.getRepo().getConnection();
     }
 
     public void inserimento_lavoratore() throws Exception {
@@ -136,8 +125,8 @@ public class Controller {
             //pst.setInt( 8, l.getTelefono() );
             //pst.setString( 9, l.getMail() );
             pst.setString(10, l.getAutomunito());
-            pst.setDate(11, (Date) l.getInizio_disponibile());
-            pst.setDate(12, (Date) l.getFine_disponibile());
+            pst.setDate(11, l.getInizio_disponibile());
+            pst.setDate(12, l.getFine_disponibile());
             //pst.setString( 13, l.getNome_emergenza() );
             //pst.setString( 14, l.getCognome_emergenza() );
             //pst.setInt( 15, l.getTelefono_emergenza() );
@@ -264,7 +253,7 @@ public class Controller {
 
     }
 
-    //TODO Riprendere da qua per il driver aggiungere tabella
+
     public void agg_comune() throws SQLException {
         try {
             Connection conn = connect();
@@ -470,7 +459,7 @@ public class Controller {
             pst.setString(1, l.getNome());
             pst.setString(2, l.getCognome());
             pst.setString(3, l.getLuogo_nascita());
-            pst.setDate(4, (Date) l.getData_nascita());
+            pst.setDate(4, l.getData_nascita());
             pst.setInt(5, l.getId());
             pst.executeUpdate();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

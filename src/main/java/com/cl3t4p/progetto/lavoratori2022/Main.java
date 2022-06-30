@@ -1,23 +1,23 @@
 package com.cl3t4p.progetto.lavoratori2022;
 
 
-import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
+import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.io.ViewLoader;
+import com.cl3t4p.progetto.lavoratori2022.model.MainRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
 import lombok.Getter;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class Main extends Application {
 
     @Getter
-    static PostDriver postDriver;
+    static MainRepo repo;
     @Getter
     static ViewLoader loader = new ViewLoader("/view/");
     @Getter
@@ -30,7 +30,7 @@ public class Main extends Application {
         } catch (IOException e) {
             JavaFXError.show("Database config does not exists!");
         }
-        if (!postDriver.testConnection()) {
+        if (!repo.testConnection()) {
             JavaFXError.show("Database connection error!");
             return;
         }
@@ -41,14 +41,10 @@ public class Main extends Application {
 
         //TODO Replace AGG_LAV_OPZ with LOGIN
         //Testing
-        try {
-            dataRepo.setDipendente(postDriver.getDipendenteByUserAndPassword("marco01", "12345"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        dataRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01", "12345"));
 
         //End Testing
-        loader.loadView("LOGIN");
+        loader.loadView("RICERCA_LAVORATORE");
         //loader.loadView("LOGIN");
     }
 
@@ -57,10 +53,11 @@ public class Main extends Application {
     }
 
     private void loadDBConfig() throws IOException {
+        //TODO make the file originate from outside folder
         FileReader reader = new FileReader(getClass().getResource("/db.properties").getPath());
         Properties p = new Properties();
         p.load(reader);
-        postDriver = new PostDriver(p.getProperty("username"), p.getProperty("password"), p.getProperty("db_name"), p.getProperty("host"), Integer.parseInt(p.getProperty("port")));
+        repo = new PostDriver(p.getProperty("username"), p.getProperty("password"), p.getProperty("db_name"), p.getProperty("host"), Integer.parseInt(p.getProperty("port")));
     }
 
 

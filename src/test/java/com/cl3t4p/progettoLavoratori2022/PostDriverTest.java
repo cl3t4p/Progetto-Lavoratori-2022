@@ -90,22 +90,14 @@ class PostDriverTest {
     void getDipendenteByUserAndPassword() {
         String user = "marco01";
         String pass = "12345";
-        try {
-            Dipendente dipendente = postDriver.getDipendenteByUserAndPassword(user, pass);
-            assertEquals(dipendente.getNome(), "Marco");
-        } catch (SQLException e) {
-            fail("SQLException error");
-        }
+        Dipendente dipendente = postDriver.getDipendenteByUserAndPassword(user, pass);
+        assertEquals(dipendente.getNome(), "Marco");
     }
 
     @Test
     void getLavoratore() {
-        try {
-            Lavoratore lavoratore = postDriver.getLavoratoreByID(1);
-            assertEquals(lavoratore.getNome(), "Marco");
-        } catch (SQLException e) {
-            fail("SQLException error");
-        }
+        Lavoratore lavoratore = postDriver.getLavoratoreByID(1);
+        assertEquals(lavoratore.getNome(), "Marco");
     }
 
 
@@ -122,12 +114,8 @@ class PostDriverTest {
     @Test
     @Order(2)
     void delLavoratore() {
-        try {
-            postDriver.removeLavoratore(lavoratore.getId());
-            System.out.println(lavoratore.getId());
-        } catch (SQLException e) {
-            fail("SQLException error");
-        }
+        postDriver.delLavoratore(lavoratore.getId());
+        System.out.println(lavoratore.getId());
     }
 
 

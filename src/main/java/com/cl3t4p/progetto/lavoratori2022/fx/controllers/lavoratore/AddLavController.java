@@ -1,18 +1,20 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
-import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.Main;
+import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
-import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
+import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
+import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
+import com.cl3t4p.progetto.lavoratori2022.model.EmergenzaRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
@@ -26,7 +28,8 @@ import java.util.ResourceBundle;
 public class AddLavController implements Initializable {
 
 
-    PostDriver postDriver = Main.getPostDriver();
+    private final LavoratoreRepo lavRepo = Main.getRepo().getLavoratoreRepo();
+    private final EmergenzaRepo emeRepo = Main.getRepo().getEmergenzaRepo();
     DataRepo dataRepo = Main.getDataRepo();
 
     @FXML
@@ -55,6 +58,8 @@ public class AddLavController implements Initializable {
             id_dipendente.setText(id_dipendente.getText() + dataRepo.getDipendente().getId());
             id_dipendente.setVisible(true);
         }
+
+
         if (dataRepo.getLavoratore_id() != null) {
             id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
             id_lavoratore.setVisible(true);
@@ -74,7 +79,7 @@ public class AddLavController implements Initializable {
 
     //Insert default values of the lavoratore
     private void setupLavoratore() throws SQLException {
-        Lavoratore lavoratore = postDriver.getLavoratoreByID(dataRepo.getLavoratore_id());
+        Lavoratore lavoratore = lavRepo.getLavoratoreByID(dataRepo.getLavoratore_id());
         nome.setText(lavoratore.getNome());
         cognome.setText(lavoratore.getCognome());
         luogo_nascita.setText(lavoratore.getLuogo_nascita());
@@ -139,7 +144,7 @@ public class AddLavController implements Initializable {
             Lavoratore lavoratore = getLavoratore();
             lavoratore.setId(dataRepo.getLavoratore_id());
             try {
-                postDriver.updateLavoratore(lavoratore);
+                lavRepo.updateLavoratore(lavoratore);
                 Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
 
             } catch (SQLException e) {
@@ -156,9 +161,9 @@ public class AddLavController implements Initializable {
             Lavoratore lavoratore = getLavoratore();
             Emergenza emergenza = getEmergenza();
             try {
-                int id = postDriver.addLavoratore(lavoratore);
+                int id = lavRepo.addLavoratore(lavoratore);
                 dataRepo.setLavoratore_id(id);
-                postDriver.addEmergenza(emergenza, id);
+                emeRepo.addEmergenza(emergenza, id);
                 Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
@@ -188,32 +193,32 @@ public class AddLavController implements Initializable {
         lavoratore.setNome(nome.getText());
         lavoratore.setCognome(cognome.getText());
         lavoratore.setLuogo_nascita(luogo_nascita.getText());
-        if (checkData(data_nascita)) {
+        if (checkData(data_nascita))
             throw new JavaFXDataError("Data di nascita non valida");
-        }
+
         lavoratore.setData_nascita(Date.valueOf(data_nascita.getValue()));
         lavoratore.setNazionalita(nazionalita.getText());
         lavoratore.setIndirizzo(indirizzo.getText());
-        if (telefono.getValue() == null) {
+        if (telefono.getValue() == null)
             throw new JavaFXDataError("Telefono non valido");
-        }
+
         lavoratore.setTelefono(telefono.getValue());
         lavoratore.setEmail(email.getText());
         lavoratore.setAutomunito(automunito.getValue());
-        if (checkData(data_inizio)) {
+        if (checkData(data_inizio))
             throw new JavaFXDataError("Data inizio non valida");
-        }
+
         lavoratore.setInizio_disponibile(Date.valueOf(data_inizio.getValue()));
-        if (checkData(data_fine)) {
+        if (checkData(data_fine))
             throw new JavaFXDataError("Data fine non valida");
-        }
+
         lavoratore.setFine_disponibile(Date.valueOf(data_inizio.getValue()));
-        if (telefono.getValue() == null) {
+        if (telefono.getValue() == null)
             throw new JavaFXDataError("Telefono emergenze non valido");
-        }
-        if (!lavoratore.validate()) {
+
+        if (!lavoratore.validate())
             throw new JavaFXDataError("Campo vuoto o errore nell'inserimento di un dato");
-        }
+
         return lavoratore;
     }
 
@@ -233,8 +238,4 @@ public class AddLavController implements Initializable {
         Main.getLoader().loadView("MENU_EMERGENZE");
     }
 
-
-    public void extraLavoro(ActionEvent actionEvent) {
-        Main.getLoader().loadView("MENU_LAVORO");
-    }
 }

@@ -1,45 +1,50 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.controllers;
+package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
-import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXDataError;
-import com.cl3t4p.progetto.lavoratori2022.database.exception.JavaFXError;
+import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
+import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
+import com.cl3t4p.progetto.lavoratori2022.model.LavoroRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class MenuLavoro implements Initializable {
+public class MenuLavoroController implements Initializable {
 
 
-    private final PostDriver postDriver = Main.getPostDriver();
+    private final LavoroRepo lavoroRepo = Main.getRepo().getLavoroRepo();
+
     private final DataRepo dataRepo = Main.getDataRepo();
     @FXML
     private TableData lav_view;
 
     @FXML
-    private DatePicker ini_per,fine_per;
+    private DatePicker ini_per, fine_per;
 
     @FXML
-    private TableColumn<Map, String>  col_nome, col_mansione, col_luogo, col_retri,col_ini,col_fine,col_id;
+    private TableColumn<Map, String> col_nome, col_mansione, col_luogo, col_retri, col_ini, col_fine, col_id;
 
     @FXML
     private Label lav_id;
 
     @FXML
-    private TextField nome,luogo,mansione;
+    private TextField nome, luogo, mansione;
 
     @FXML
     private NumberField retri;
@@ -52,7 +57,7 @@ public class MenuLavoro implements Initializable {
         }
 
         ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
-            if(!postDriver.deleteLavoroByID(Integer.valueOf(key.get("id"))))
+            if (!lavoroRepo.deleteLavoroByID(Integer.valueOf(key.get("id"))))
                 JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'lavoro");
             lav_view.refreshData();
             return null;
@@ -61,10 +66,10 @@ public class MenuLavoro implements Initializable {
 
         //tableData = new TableData(lav_view,buttonColumn,()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
 
-        lav_view.setSupplier(()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
+        lav_view.setSupplier(() -> TableData.toMap(lavoroRepo.getLavoroByLavID(dataRepo.getLavoratore_id())));
         lav_view.setButtonColumn(buttonColumn);
 
-        lav_view.setupColumn(col_id,"id",30);
+        lav_view.setupColumn(col_id, "id", 30);
         lav_view.setupColumn(col_nome, "nome_azienda");
         lav_view.setupColumn(col_mansione, "mansione");
         lav_view.setupColumn(col_luogo, "luogo");
@@ -74,7 +79,6 @@ public class MenuLavoro implements Initializable {
     }
 
 
-
     public void back(ActionEvent event) {
         Main.getDataRepo().setLavoratore_id(null);
         Main.getLoader().loadView("MENU");
@@ -82,8 +86,15 @@ public class MenuLavoro implements Initializable {
 
     public void addLavoro(ActionEvent event) {
         try {
-            if(postDriver.addLavoro(getLavoro()) == -1){
-               throw new JavaFXDataError();
+            Lavoro lavoro = getLavoro();
+            LocalDate start = LocalDate.ofEpochDay(lavoro.getFine_periodo().getTime());
+            LocalDate now = LocalDate.now();
+            if (Period.between(start, now).getYears() > 5) {
+                JavaFXError.INVALID_DATE.printContent("La data di fine periodo deve essere inferiore ai 5 anni");
+                return;
+            }
+            if (lavoroRepo.addLavoro(getLavoro()) == -1) {
+                throw new JavaFXDataError();
             }
         } catch (SQLException | JavaFXDataError e) {
             e.printStackTrace();
@@ -93,8 +104,7 @@ public class MenuLavoro implements Initializable {
     }
 
 
-
-    private Lavoro getLavoro(){
+    private Lavoro getLavoro() {
         Lavoro lavoro = new Lavoro();
         lavoro.setLuogo(luogo.getText());
         lavoro.setMansione(mansione.getText());

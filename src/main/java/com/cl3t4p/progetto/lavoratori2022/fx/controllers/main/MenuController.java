@@ -1,8 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
+import com.cl3t4p.progetto.lavoratori2022.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import com.cl3t4p.progetto.lavoratori2022.Main;
 
 public class MenuController {
     @FXML

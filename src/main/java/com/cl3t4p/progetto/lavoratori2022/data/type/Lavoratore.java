@@ -1,14 +1,14 @@
 package com.cl3t4p.progetto.lavoratori2022.data.type;
 
 
+import com.cl3t4p.progetto.lavoratori2022.annotation.FieldChecker;
+import com.cl3t4p.progetto.lavoratori2022.annotation.SQLDInfo;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
+import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;
-import com.cl3t4p.progetto.lavoratori2022.data.checks.FieldChecker;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.database.annotation.SQLDInfo;
 
 import java.sql.Date;
 
