@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
-import com.cl3t4p.progetto.lavoratori2022.data.FilterCreator;
+import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.SQLMapper;
@@ -90,7 +90,7 @@ public class PostLavoratore extends APost implements LavoratoreRepo {
     }
 
     @Override
-    public List<Lavoratore> filterLavoratore(FilterCreator creator) {
+    public List<Lavoratore> filterLavoratore(FilterBuilder creator) {
         try (PreparedStatement statement = creator.getSQLStatment(getConnection())) {
             ResultSet resultSet = statement.executeQuery();
             List<Lavoratore> lavoratori = new ArrayList<>();

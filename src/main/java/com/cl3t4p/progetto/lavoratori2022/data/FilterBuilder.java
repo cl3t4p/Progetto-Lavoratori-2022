@@ -1,6 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.data;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Connection;
@@ -9,22 +11,22 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
-public class FilterCreator {
+public class FilterBuilder {
 
     @Setter
     private Logic defaultLogic = Logic.OR;
     @Setter
     private boolean defaultSimilar = true;
 
-    final String sql = "SELECT lavoratore.id, lavoratore.nome, lavoratore.cognome " +
-            "FROM lavoratore " +
-            "INNER JOIN pat_lav ON (lavoratore.id=pat_lav.id_lavoratore) " +
-            "INNER JOIN lingua_lav ON (lavoratore.id=lingua_lav.id_lavoratore) " +
-            "INNER JOIN lav_comune ON (lavoratore.id=lav_comune.id_lavoratore) " +
-            "INNER JOIN esp_lav ON (lavoratore.id=esp_lav.id_lavoratore) " +
+    final String sql = "SELECT DISTINCT * FROM lavoratore " +
+            "LEFT JOIN pat_lav ON (lavoratore.id=pat_lav.id_lavoratore) " +
+            "LEFT JOIN lingua_lav ON (lavoratore.id=lingua_lav.id_lavoratore) " +
+            "LEFT JOIN lav_comune ON (lavoratore.id=lav_comune.id_lavoratore) " +
+            "LEFT JOIN esp_lav ON (lavoratore.id=esp_lav.id_lavoratore) " +
             "WHERE ";
 
     final List<ResearchField> fields = new ArrayList<>();
@@ -39,26 +41,23 @@ public class FilterCreator {
             return;
         if (value.isEmpty() || value.isBlank())
             return;
-        ResearchField field;
-        Optional<ResearchField> opt_field = fields.stream()
-                .filter(f -> f.name.equals(name))
-                .findFirst();
-
-        if (opt_field.isPresent()) {
-            field = opt_field.get();
-            field.typeVar = type;
-            field.logic = logic;
-            field.isSimilar = isSimilar;
-        } else {
-            field = new ResearchField(name, type, logic, isSimilar);
-        }
+        ResearchField field = new ResearchField(name,type,logic,isSimilar);
         field.value = value;
+        if(fields.stream().anyMatch(field::equals))
+            return;
         fields.add(field);
     }
 
-    private String buildSQL() {
+    private List<ResearchField> getListClone(){
+        ArrayList<ResearchField> list = new ArrayList<>(fields.size());
+        for (ResearchField field : fields) {
+            list.add(field.clone());
+        }
+        return list;
+    }
+    public String buildSQL() {
         StringBuilder builder = new StringBuilder();
-        ArrayList<ResearchField> list = new ArrayList<>(fields);
+        List<ResearchField> list = getListClone();
         if (list.size() == 0)
             return "";
         builder.append(list.remove(0).toFirstSQL());
@@ -66,6 +65,25 @@ public class FilterCreator {
             builder.append(researchField.toSQL());
         }
         return builder.toString();
+    }
+
+    public String readableString(){
+        StringBuilder builder = new StringBuilder();
+        List<ResearchField> list = getListClone();
+        if (list.size() == 0)
+            return "";
+        return list.stream()
+                .map(ResearchField::getName)
+                .distinct()
+                .map(this::getReadableAttribute)
+                .collect(Collectors.joining(";"));
+    }
+    public String getReadableAttribute(String name){
+        String string = fields.stream()
+                .filter(f -> f.name.equals(name))
+                .map(ResearchField::toReadForm)
+                .collect(Collectors.joining(","));
+        return name +":("+string+")";
     }
 
 
@@ -87,7 +105,9 @@ public class FilterCreator {
     }
 
 
-    private static class ResearchField {
+    @Getter
+    @EqualsAndHashCode
+    private static class ResearchField implements Cloneable {
         String name;
         TypeVar typeVar;
         Logic logic;
@@ -108,15 +128,42 @@ public class FilterCreator {
 
         private String toFirstSQL() {
             if (isSimilar)
-                return " " + name + " LIKE ? ";
+                return " " + name + " ILIKE concat('%', ?, '%') ";
             return " " + name + " = ?";
         }
+
+        public String toReadForm() {
+            StringBuilder builder = new StringBuilder();
+            builder.append(logic.readChar);
+
+            if(isSimilar)
+                builder.append("%");
+            builder.append("'")
+                    .append(value)
+                    .append("'");
+            return builder.toString();
+        }
+
+        @Override
+        public ResearchField clone() {
+            try {
+                return (ResearchField) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
+
 
     }
 
     public enum Logic {
-        AND,
-        OR
+        AND('&'),
+        OR('|');
+
+        final char readChar;
+        Logic(char readChar) {
+            this.readChar = readChar;
+        }
     }
 
     public enum TypeVar {

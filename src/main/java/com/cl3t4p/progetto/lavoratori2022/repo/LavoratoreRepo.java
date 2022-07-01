@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.repo;
 
-import com.cl3t4p.progetto.lavoratori2022.data.FilterCreator;
+import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoratore;
 
 import java.sql.SQLException;
@@ -16,5 +16,5 @@ public interface LavoratoreRepo {
 
     boolean delLavoratore(int id);
 
-    List<Lavoratore> filterLavoratore(FilterCreator creator);
+    List<Lavoratore> filterLavoratore(FilterBuilder creator);
 }

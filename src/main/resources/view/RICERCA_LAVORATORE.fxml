@@ -13,7 +13,7 @@
                 prefWidth="82.0" text="BACK"/>
         <Button layoutX="639.0" layoutY="499.0" mnemonicParsing="false" onAction="#ricerca" prefHeight="38.0"
                 prefWidth="120.0" text="RICERCA"/>
-        <!--<TextArea fx:id="filters" editable="false" layoutX="7.0" layoutY="195.0" prefHeight="39.0" prefWidth="753.0" /> -->
+        <TextArea fx:id="filters" editable="false" layoutX="7.0" layoutY="195.0" prefHeight="39.0" prefWidth="753.0" />
         <GridPane alignment="CENTER" layoutX="18.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="175.0"
                   prefWidth="326.0">
             <columnConstraints>
@@ -31,19 +31,19 @@
             <children>
                 <Label text="NOME"/>
                 <TextField fx:id="nome" GridPane.columnIndex="1"/>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" fx:id="bt_nome"/>
                 <Label prefHeight="0.0" prefWidth="60.0" text="COGNOME" GridPane.rowIndex="1"/>
                 <TextField fx:id="cognome" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="1" fx:id="bt_cognome"/>
                 <Label text="LINGUA" GridPane.rowIndex="2"/>
                 <TextField fx:id="lingua" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="2" fx:id="bt_lingua"/>
                 <Label text="MANSIONE" GridPane.rowIndex="3"/>
-                <TextField fx:id="mansione" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                <TextField fx:id="esperienza" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="3" fx:id="bt_esperienza"/>
                 <Label text="LUOGO RESIDENZA" GridPane.rowIndex="4"/>
                 <TextField fx:id="residenza" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="4" fx:id="bt_residenza"/>
             </children>
         </GridPane>
         <GridPane layoutX="368.0" layoutY="14.0" prefHeight="175.0" prefWidth="392.0">
@@ -74,9 +74,9 @@
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="2" fx:id="bt_automunito"/>
                 <Label text="PATENTE" GridPane.rowIndex="3"/>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="3" fx:id="bt_patente"/>
                 <HBox alignment="CENTER_LEFT" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <children>
                         <RadioButton mnemonicParsing="false" selected="true" text="OR">
@@ -85,7 +85,7 @@
                             </toggleGroup>
                         </RadioButton>
                         <RadioButton fx:id="and" mnemonicParsing="false" text="AND" toggleGroup="$toggle"/>
-                        <CheckBox fx:id="similar" mnemonicParsing="false" text="Similar"/>
+                        <CheckBox fx:id="similar" selected="true" mnemonicParsing="false" text="Similar"/>
                     </children>
                 </HBox>
                 <ChoiceBox fx:id="patente" layoutX="154.0" layoutY="85.0" GridPane.columnIndex="1"

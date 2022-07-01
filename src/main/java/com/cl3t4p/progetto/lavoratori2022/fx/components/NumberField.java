@@ -4,6 +4,8 @@ package com.cl3t4p.progetto.lavoratori2022.fx.components;
 import javafx.scene.control.TextField;
 
 public class NumberField extends TextField {
+
+    //TODO Factory Pattern
     public NumberField() {
         textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {

@@ -1,8 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.FilterCreator;
-import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
+import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
@@ -12,25 +12,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SearchController implements Initializable {
 
-    private final PatenteRepo patRepo = Main.getRepo().getPatenteRepo();
-    private final LavoratoreRepo lavRepo = Main.getRepo().getLavoratoreRepo();
+    final PatenteRepo patRepo = Main.getRepo().getPatenteRepo();
+    final LavoratoreRepo lavRepo = Main.getRepo().getLavoratoreRepo();
 
+    FilterBuilder builder = new FilterBuilder();
 
+    @FXML
+    Button bt_nome,bt_cognome,bt_lingua,bt_residenza,bt_patente,bt_automunito,bt_esperienza;
     @FXML
     TableData lav_view;
 
@@ -50,7 +47,9 @@ public class SearchController implements Initializable {
     ChoiceBox<String> patente, automunito;
 
     @FXML
-    TextField nome, cognome, lingua, mansione, residenza;
+    TextArea filters;
+    @FXML
+    TextField nome, cognome, lingua, esperienza, residenza;
 
 
     @Override
@@ -68,60 +67,37 @@ public class SearchController implements Initializable {
         lav_view.setupColumn(col_nascita, "nascita");
         lav_view.setupColumn(col_residenza, "indirizzo");
 
-
+        bt_automunito.setOnAction((e)-> addFilter("automunito", FilterBuilder.TypeVar.STRING,automunito.getValue()));
+        bt_patente.setOnAction((e)->addFilter("nome_patente", FilterBuilder.TypeVar.STRING,patente.getValue()));
+        bt_nome.setOnAction((e)-> addFilter("nome", FilterBuilder.TypeVar.STRING,nome.getText()));
+        bt_cognome.setOnAction((e)-> addFilter("cognome", FilterBuilder.TypeVar.STRING,cognome.getText()));
+        bt_lingua.setOnAction((e)-> addFilter("nome_lingua", FilterBuilder.TypeVar.STRING,lingua.getText()));
+        bt_esperienza.setOnAction(e -> addFilter("esperienza", FilterBuilder.TypeVar.STRING,esperienza.getText()));
+        bt_residenza.setOnAction(e-> addFilter("nome_comune", FilterBuilder.TypeVar.STRING,residenza.getText()));
     }
+
+    private void addFilter(String nome, FilterBuilder.TypeVar type, String value) {
+        builder.addFilter(nome,value,type,and.isSelected() ? FilterBuilder.Logic.AND : FilterBuilder.Logic.OR,similar.isSelected());
+        filters.setText(builder.readableString());
+        search();
+    }
+
+    private void search(){
+        lav_view.refreshData(lavRepo.filterLavoratore(builder)
+                .stream()
+                .map(Mappable::toMap)
+                .toList());
+    }
+
+
+    public void ricerca(ActionEvent event) {
+        builder = new FilterBuilder();
+        filters.setText(builder.readableString());
+    }
+
 
     public void back(ActionEvent event) {
         Main.getLoader().loadView("MENU");
     }
 
-    public void ricerca(ActionEvent event) {
-        Search search = new Search();
-        search.setNome(nome.getText());
-        search.setCognome(cognome.getText());
-        search.setLingua(lingua.getText());
-        search.setMansione(mansione.getText());
-        search.setResidenza(residenza.getText());
-        search.setPatente(patente.getValue());
-        search.setAutomunito(automunito.getValue());
-        search.setInizio_dis(inizio_dis.getValue());
-        search.setFine_dis(fine_dis.getValue());
-        search.setAnd(and.isSelected());
-        search.setSimilar(similar.isSelected());
-        lav_view.refreshData(search
-                .search()
-                .stream()
-                .map(Lavoratore::toMap)
-                .toList());
-    }
-
-    @Setter
-    @Getter
-    private class Search {
-        private String nome, cognome, lingua, mansione, residenza, patente, automunito;
-        private LocalDate inizio_dis, fine_dis;
-        private boolean and, similar;
-
-        public List<Lavoratore> search() {
-            FilterCreator creator = new FilterCreator();
-            creator.setDefaultLogic(and ? FilterCreator.Logic.AND : FilterCreator.Logic.OR);
-            creator.setDefaultSimilar(similar);
-            creator.addFilter("nome", nome, FilterCreator.TypeVar.STRING);
-            creator.addFilter("cognome", cognome, FilterCreator.TypeVar.STRING);
-            creator.addFilter("lingua", lingua, FilterCreator.TypeVar.STRING);
-            creator.addFilter("esperienza", mansione, FilterCreator.TypeVar.STRING);
-            creator.addFilter("indirizzo", residenza, FilterCreator.TypeVar.STRING);
-            creator.addFilter("patente", patente, FilterCreator.TypeVar.STRING);
-            creator.addFilter("automunito", automunito, FilterCreator.TypeVar.STRING);
-            creator.addFilter("inizio_periodo_disp", convertLocalDate(inizio_dis), FilterCreator.TypeVar.DATE);
-            creator.addFilter("fine_periodo_disp", convertLocalDate(fine_dis), FilterCreator.TypeVar.DATE);
-            return lavRepo.filterLavoratore(creator);
-        }
-
-
-        private String convertLocalDate(LocalDate localDate) {
-            if (localDate == null) return null;
-            return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).toString();
-        }
-    }
 }
