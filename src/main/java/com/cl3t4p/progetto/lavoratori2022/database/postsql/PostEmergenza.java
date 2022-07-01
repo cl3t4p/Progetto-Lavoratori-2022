@@ -1,9 +1,9 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
-import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.data.model.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.SQLMapper;
-import com.cl3t4p.progetto.lavoratori2022.model.EmergenzaRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

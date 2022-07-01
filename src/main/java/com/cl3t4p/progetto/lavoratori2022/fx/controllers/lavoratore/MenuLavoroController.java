@@ -1,13 +1,13 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoro;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.model.LavoroRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.LavoroRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

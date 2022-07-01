@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.model.ComuneRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.ComuneRepo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -4,7 +4,7 @@ package com.cl3t4p.progetto.lavoratori2022;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.io.ViewLoader;
-import com.cl3t4p.progetto.lavoratori2022.model.MainRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.MainRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import javafx.application.Application;
 import javafx.stage.Stage;

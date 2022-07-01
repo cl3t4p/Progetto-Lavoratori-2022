@@ -1,6 +1,6 @@
-package com.cl3t4p.progetto.lavoratori2022.model;
+package com.cl3t4p.progetto.lavoratori2022.repo;
 
-import com.cl3t4p.progetto.lavoratori2022.data.type.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.data.model.Emergenza;
 
 import java.sql.SQLException;
 import java.util.List;

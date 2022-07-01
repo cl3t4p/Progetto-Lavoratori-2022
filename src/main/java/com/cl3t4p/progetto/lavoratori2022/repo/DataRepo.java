@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.repo;
 
-import com.cl3t4p.progetto.lavoratori2022.data.type.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.data.model.Dipendente;
 import lombok.Getter;
 import lombok.Setter;
 

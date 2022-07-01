@@ -1,8 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.old;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
-import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoro;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

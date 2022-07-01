@@ -2,12 +2,11 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.FilterCreator;
-import com.cl3t4p.progetto.lavoratori2022.data.type.Lavoratore;
-import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
+import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.model.LavoratoreRepo;
-import com.cl3t4p.progetto.lavoratori2022.model.PatenteRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.PatenteRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
