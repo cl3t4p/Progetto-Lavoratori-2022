@@ -1,9 +1,9 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
-import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.model.Lavoro;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.SQLMapper;
-import com.cl3t4p.progetto.lavoratori2022.repo.LavoroRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoroRepo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +44,7 @@ public class PostLavoro extends APost implements LavoroRepo {
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lavoratore_id);
             ResultSet resultSet = statement.executeQuery();
-            List<Lavoro> lavori = new ArrayList<Lavoro>();
+            List<Lavoro> lavori = new ArrayList<>();
             while (resultSet.next()) {
                 try {
                     lavori.add(SQLMapper.deserializeSQL(resultSet, Lavoro.class));

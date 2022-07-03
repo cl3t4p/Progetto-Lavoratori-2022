@@ -2,13 +2,13 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.data.model.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.model.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.EmergenzaRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,18 +45,16 @@ public class AggEmeOPController implements Initializable {
         lav_id.setText(lav_id.getText() + lavoratore_id);
 
 
-        ButtonColumn buttonColumn = new ButtonColumn("", (key -> {
+        ButtonColumnFactory factory = new ButtonColumnFactory(key -> {
             if (!emeRepo.delEmergenzeByID(lavoratore_id, key))
                 JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'emergenza");
             eme_view.refreshData();
             return null;
-        }));
-        buttonColumn.setMsgError("Deve esistere almeno un contatto di emergenza");
+        });
 
 
         eme_view.setSupplier(() -> TableData.toMap(emeRepo.getEmergenze(lavoratore_id)));
-        eme_view.setButtonColumn(buttonColumn);
-
+        eme_view.setButtonColumn(factory.getLastStandingColumn("Deve esistere almeno un contatto di emergenza"));
         eme_view.setupColumn(col_nome, "nome");
         eme_view.setupColumn(col_cognome, "cognome");
         eme_view.setupColumn(col_telefono, "telefono");
@@ -66,19 +64,24 @@ public class AggEmeOPController implements Initializable {
     }
 
 
-    public void addEmergenza(ActionEvent event) {
+    @FXML
+    private void addEmergenza(ActionEvent event) {
         try {
             Emergenza emergenza = getEmergenza();
             if (!emeRepo.addEmergenza(emergenza, lavoratore_id)) throw new JavaFXDataError("Il contatto esiste già");
             eme_view.refreshData();
         } catch (JavaFXDataError e) {
-            e.printFX();
+            e.show();
         } catch (SQLException e) {
             JavaFXError.DB_ERROR.show();
         }
 
     }
 
+    /***
+     * This method will return a Emergenza object with the data entered in the fields and it will check if the data is valid.
+     * @throws JavaFXDataError if the data is not valid.
+     */
     private Emergenza getEmergenza() throws JavaFXDataError {
         Emergenza emergenza = new Emergenza();
         emergenza.setNome(em_nome.getText());

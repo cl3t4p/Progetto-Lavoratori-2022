@@ -2,12 +2,12 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.repo.ComuneRepo;
-import com.cl3t4p.progetto.lavoratori2022.repo.EsperienzaRepo;
-import com.cl3t4p.progetto.lavoratori2022.repo.LinguaRepo;
-import com.cl3t4p.progetto.lavoratori2022.repo.PatenteRepo;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.ComuneRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.EsperienzaRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.LinguaRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.PatenteRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -72,15 +72,14 @@ public class AggExtraOPController implements Initializable {
 
     public void setupComune() {
         String name = "comune";
-        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+        ButtonColumnFactory factory = new ButtonColumnFactory(key -> {
             if (!comuneRepo.delComunebyID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile rimuovere il comune");
             comuni_view.refreshData();
             return null;
         });
-        //comune_data = new TableData(comuni_view, buttonColumn,()-> TableData.toMap(name,postDriver.getComuniByID(lavoratore_id)));
         comuni_view.setSupplier(() -> TableData.toMap(name, comuneRepo.getComuniByID(lavoratore_id)));
-        comuni_view.setButtonColumn(buttonColumn);
+        comuni_view.setButtonColumn(factory.getRemoveColumn());
         comuni_view.setupColumn(comuni_col, name);
     }
 
@@ -119,14 +118,14 @@ public class AggExtraOPController implements Initializable {
 
     private void setupLingue() {
         String name = "lingue";
-        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+        ButtonColumnFactory factory = new ButtonColumnFactory(key -> {
             if (!ligRepo.delLinguaByID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile rimuovere la lingua");
             lig_view.refreshData();
             return null;
         });
 
-        lig_view.setButtonColumn(buttonColumn);
+        lig_view.setButtonColumn(factory.getRemoveColumn());
         lig_view.setSupplier(() -> TableData.toMap(name, ligRepo.getLingueByID(lavoratore_id)));
         lig_view.setupColumn(lig_col, name);
     }
@@ -148,14 +147,14 @@ public class AggExtraOPController implements Initializable {
 
     private void setupEsp() {
         String name = "esperienze";
-        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+        ButtonColumnFactory factory = new ButtonColumnFactory(key -> {
             if (!espRepo.delEspByID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile rimuovere l'esperienza");
             esp_view.refreshData();
             return null;
         });
 
-        esp_view.setButtonColumn(buttonColumn);
+        esp_view.setButtonColumn(factory.getRemoveColumn());
         esp_view.setSupplier(() -> TableData.toMap(name, espRepo.getEspByID(lavoratore_id)));
         esp_view.setupColumn(esp_col, name);
     }
@@ -177,14 +176,14 @@ public class AggExtraOPController implements Initializable {
     private void setupPatenti() {
         updatePatenteItems();
         String name = "patenti";
-        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+        ButtonColumnFactory buttonColumn = new ButtonColumnFactory(key -> {
             if (!patRepo.delPatenteByID(lavoratore_id, key.get(name)))
                 JavaFXError.DB_ERROR.printContent("Impossibile eliminare la patente");
             patenti_view.refreshData();
             return null;
         });
 
-        patenti_view.setButtonColumn(buttonColumn);
+        patenti_view.setButtonColumn(buttonColumn.getRemoveColumn());
         patenti_view.setSupplier(() -> TableData.toMap(name, patRepo.getPatentiByID(lavoratore_id)));
         patenti_view.setupColumn(patente_colum, name);
 

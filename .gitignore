@@ -177,4 +177,4 @@ out
 gen
 
 db.properties
-target/
+target/!/TODO.txt

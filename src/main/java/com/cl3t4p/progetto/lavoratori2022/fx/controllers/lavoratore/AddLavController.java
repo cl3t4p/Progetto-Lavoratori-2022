@@ -2,13 +2,13 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.data.model.Emergenza;
-import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.model.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.model.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
-import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
-import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
-import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.EmergenzaRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,7 +76,9 @@ public class AddLavController implements Initializable {
         }
     }
 
-    //Insert default values of the lavoratore
+    /**
+     * This method will fill the fields with the data of the lavoratore that is being edited.
+     */
     private void setupLavoratore() throws SQLException {
         Lavoratore lavoratore = lavRepo.getLavoratoreByID(dataRepo.getLavoratore_id());
         nome.setText(lavoratore.getNome());
@@ -91,6 +93,7 @@ public class AddLavController implements Initializable {
         data_fine.setValue(lavoratore.getFine_disponibile().toLocalDate());
         automunito.setValue(lavoratore.getAutomunito());
     }
+
 
 
     @FXML
@@ -150,7 +153,7 @@ public class AddLavController implements Initializable {
                 throw new JavaFXDataError("Database Error!");
             }
         } catch (JavaFXDataError e) {
-            e.printFX();
+            e.show();
         }
     }
 
@@ -168,10 +171,15 @@ public class AddLavController implements Initializable {
                 throw new JavaFXDataError("Database Error!");
             }
         } catch (JavaFXDataError e) {
-            e.printFX();
+            e.show();
         }
     }
 
+
+    /***
+     * This method will return a Emergenza object with the data entered in the fields and it will check if the data is valid.
+     * @throws JavaFXDataError if the data is not valid.
+     */
     private Emergenza getEmergenza() throws JavaFXDataError {
         Emergenza emergenza = new Emergenza();
         emergenza.setNome(em_nome.getText());
@@ -187,6 +195,10 @@ public class AddLavController implements Initializable {
         return emergenza;
     }
 
+    /***
+     * This method will return a Lavoratore object with the data entered in the fields and it will check if the data is valid.
+     * @throws JavaFXDataError if the data is not valid.
+     */
     private Lavoratore getLavoratore() throws JavaFXDataError {
         Lavoratore lavoratore = new Lavoratore();
         lavoratore.setNome(nome.getText());

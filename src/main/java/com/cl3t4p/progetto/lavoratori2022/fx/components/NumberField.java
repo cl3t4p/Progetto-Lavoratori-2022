@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 
 public class NumberField extends TextField {
 
-    //TODO Factory Pattern
+
     public NumberField() {
         textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {

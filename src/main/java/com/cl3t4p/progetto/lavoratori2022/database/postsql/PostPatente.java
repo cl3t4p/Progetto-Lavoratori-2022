@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.repo.PatenteRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.PatenteRepo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class PostPatente extends APost implements PatenteRepo {
     @Override
     public List<String> getPatentiByID(int id) {
         String sql = "SELECT pat_lav.nome_patente FROM lavoratore INNER JOIN pat_lav ON(lavoratore.id=pat_lav.id_lavoratore) WHERE lavoratore.id=?";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql);) {
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             List<String> patenti = new ArrayList<>();
@@ -56,7 +56,7 @@ public class PostPatente extends APost implements PatenteRepo {
     @Override
     public List<String> getAllPatenti() {
         String sql = "SELECT * FROM patente";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql);) {
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
             List<String> patenti = new ArrayList<>();
             while (resultSet.next())

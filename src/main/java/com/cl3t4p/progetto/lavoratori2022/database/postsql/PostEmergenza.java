@@ -1,9 +1,9 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
-import com.cl3t4p.progetto.lavoratori2022.data.model.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.model.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.SQLMapper;
-import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.EmergenzaRepo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,7 +81,7 @@ public class PostEmergenza extends APost implements EmergenzaRepo {
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lavoratore_id);
             ResultSet resultSet = statement.executeQuery();
-            List<Emergenza> emergenze = new ArrayList<Emergenza>();
+            List<Emergenza> emergenze = new ArrayList<>();
             while (resultSet.next()) {
                 try {
                     emergenze.add(SQLMapper.deserializeSQL(resultSet, Emergenza.class));

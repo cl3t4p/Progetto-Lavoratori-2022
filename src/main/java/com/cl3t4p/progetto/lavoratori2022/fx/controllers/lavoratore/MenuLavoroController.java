@@ -1,14 +1,14 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.model.Lavoro;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.repo.LavoroRepo;
-import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoroRepo;
+import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,7 +56,7 @@ public class MenuLavoroController implements Initializable {
             lav_id.setVisible(true);
         }
 
-        ButtonColumn buttonColumn = new ButtonColumn("", (key) -> {
+        ButtonColumnFactory factory = new ButtonColumnFactory(key -> {
             if (!lavoroRepo.deleteLavoroByID(Integer.valueOf(key.get("id"))))
                 JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'lavoro");
             lav_view.refreshData();
@@ -64,10 +64,10 @@ public class MenuLavoroController implements Initializable {
         });
 
 
-        //tableData = new TableData(lav_view,buttonColumn,()-> TableData.toMap(postDriver.getLavoroByLavID(dataRepo.getLavoratore_id())));
+
 
         lav_view.setSupplier(() -> TableData.toMap(lavoroRepo.getLavoroByLavID(dataRepo.getLavoratore_id())));
-        lav_view.setButtonColumn(buttonColumn);
+        lav_view.setButtonColumn(factory.getRemoveColumn());
 
         lav_view.setupColumn(col_id, "id", 30);
         lav_view.setupColumn(col_nome, "nome_azienda");

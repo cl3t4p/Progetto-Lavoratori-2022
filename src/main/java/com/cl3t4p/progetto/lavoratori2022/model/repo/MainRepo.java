@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.repo;
+package com.cl3t4p.progetto.lavoratori2022.model.repo;
 
 import java.sql.Connection;
 

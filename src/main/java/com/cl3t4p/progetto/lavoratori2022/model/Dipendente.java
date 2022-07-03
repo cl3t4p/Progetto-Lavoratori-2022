@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.data.model;
+package com.cl3t4p.progetto.lavoratori2022.model;
 
 import lombok.AccessLevel;
 import lombok.Data;

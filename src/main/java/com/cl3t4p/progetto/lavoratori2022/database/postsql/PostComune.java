@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
-import com.cl3t4p.progetto.lavoratori2022.repo.ComuneRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.ComuneRepo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -77,7 +77,7 @@ public class PostComune extends APost implements ComuneRepo {
     @Override
     public List<String> getAllComuni(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         while (resultSet.next())
             list.add(resultSet.getString(1));
         return list.stream().sorted().toList();

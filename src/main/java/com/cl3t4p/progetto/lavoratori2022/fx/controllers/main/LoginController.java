@@ -1,9 +1,9 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.model.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.model.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.repo.DipendenteRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.DipendenteRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

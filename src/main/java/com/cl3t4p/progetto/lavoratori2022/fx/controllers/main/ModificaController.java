@@ -2,11 +2,11 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.model.Lavoratore;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.model.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoratoreRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,12 +45,12 @@ public class ModificaController implements Initializable {
         //Disable Aggiungi Lavoratore Button if there are no rows in the table
         lav_bt.disableProperty().bind(lav_view.getSelectionModel().getTableView().getFocusModel().focusedIndexProperty().isEqualTo(-1));
 
-        ButtonColumn column = new ButtonColumn("Edit", (lav) -> {
+        ButtonColumnFactory factory = new ButtonColumnFactory((lav) -> {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(lav.get("id")));
             Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
             return null;
-        });
-        lav_view.setButtonColumn(column);
+        },"*");
+        lav_view.setButtonColumn(factory.getNothingColumn());
 
         //TODO modify supplier add name,surname,birthdate
         lav_view.setSupplier(() -> {

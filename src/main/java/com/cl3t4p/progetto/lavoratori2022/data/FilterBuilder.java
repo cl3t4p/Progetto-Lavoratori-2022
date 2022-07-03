@@ -1,9 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.data;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,13 +13,18 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
+/***
+ * This class is used to build create a SQL query from a list of filters.
+ */
+@NoArgsConstructor
+@AllArgsConstructor
 public class FilterBuilder {
 
-    @Setter
     private Logic defaultLogic = Logic.OR;
-    @Setter
     private boolean defaultSimilar = true;
 
+
+    //Base query
     final String sql = "SELECT DISTINCT * FROM lavoratore " +
             "LEFT JOIN pat_lav ON (lavoratore.id=pat_lav.id_lavoratore) " +
             "LEFT JOIN lingua_lav ON (lavoratore.id=lingua_lav.id_lavoratore) " +
@@ -31,11 +34,27 @@ public class FilterBuilder {
 
     final List<ResearchField> fields = new ArrayList<>();
 
+
+    /***
+     * This method is used to add a filter to the query with the default logic.
+     * @param name The name of the field.
+     * @param value The value of the field.
+     * @param type The type of the field (string, int, date, long).
+     */
     public void addFilter(String name, String value, TypeVar type) {
         addFilter(name, value, type, defaultLogic, defaultSimilar);
     }
 
 
+    /***
+     * This method is used to add a filter to the query.
+     * @param name The name of the field.
+     * @param value The value of the field.
+     * @param type The type of the field (string, int, date, long).
+     * @param logic The logic used to join the filters (AND, OR).
+     * @param isSimilar If it's true then it will return values that can contain the data of value
+     *                  , otherwise it will return values that are exactly, it's not case sensitive.
+     */
     public void addFilter(String name, String value, TypeVar type, Logic logic, boolean isSimilar) {
         if (value == null)
             return;
@@ -48,6 +67,10 @@ public class FilterBuilder {
         fields.add(field);
     }
 
+    /**
+     * This method will create a clone of the list of filters.
+     * @return  A clone of the list of filters.
+     */
     private List<ResearchField> getListClone(){
         ArrayList<ResearchField> list = new ArrayList<>(fields.size());
         for (ResearchField field : fields) {
@@ -55,6 +78,11 @@ public class FilterBuilder {
         }
         return list;
     }
+
+    /***
+     * This method is used to build the query.
+     * @return The query.
+     */
     public String buildSQL() {
         StringBuilder builder = new StringBuilder();
         List<ResearchField> list = getListClone();
@@ -67,6 +95,10 @@ public class FilterBuilder {
         return builder.toString();
     }
 
+
+    /***
+     * This method is used to build the readable query for the user.
+     */
     public String readableString(){
         StringBuilder builder = new StringBuilder();
         List<ResearchField> list = getListClone();
@@ -78,6 +110,8 @@ public class FilterBuilder {
                 .map(this::getReadableAttribute)
                 .collect(Collectors.joining(";"));
     }
+
+
     public String getReadableAttribute(String name){
         String string = fields.stream()
                 .filter(f -> f.name.equals(name))
@@ -129,7 +163,7 @@ public class FilterBuilder {
         private String toFirstSQL() {
             if (isSimilar)
                 return " " + name + " ILIKE concat('%', ?, '%') ";
-            return " " + name + " = ?";
+            return " " + name + " ILIKE ?";
         }
 
         public String toReadForm() {

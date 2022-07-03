@@ -1,9 +1,12 @@
-package com.cl3t4p.progetto.lavoratori2022.repo;
+package com.cl3t4p.progetto.lavoratori2022.database;
 
-import com.cl3t4p.progetto.lavoratori2022.data.model.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.model.Dipendente;
 import lombok.Getter;
 import lombok.Setter;
 
+/***
+ * Repo that contains temporary data for the application.
+ */
 @Getter
 @Setter
 public class DataRepo {

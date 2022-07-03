@@ -1,6 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.components;
 
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ATableColumn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -34,7 +35,7 @@ public class TableData extends TableView<Map<String, String>> {
         this.supplier = supplier;
     }
 
-    public void setButtonColumn(ButtonColumn buttonColumn) {
+    public void setButtonColumn(ATableColumn buttonColumn) {
         getColumns().add(buttonColumn);
         customSize.add(buttonColumn.getWidth());
     }

@@ -3,10 +3,10 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
-import com.cl3t4p.progetto.lavoratori2022.repo.PatenteRepo;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.model.repo.PatenteRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,12 +55,14 @@ public class SearchController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         patente.getItems().addAll(patRepo.getAllPatenti());
-        ButtonColumn column = new ButtonColumn("", (map) -> {
+        ButtonColumnFactory factory = new ButtonColumnFactory(map -> {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(map.get("id")));
             Main.getLoader().loadView("VIEWER");
             return null;
-        });
-        lav_view.setButtonColumn(column);
+        },"+");
+
+        //TODO add Dates to the filter
+        lav_view.setButtonColumn(factory.getNothingColumn());
         lav_view.setupColumn(col_id, "id", 30);
         lav_view.setupColumn(col_nome, "nome");
         lav_view.setupColumn(col_cognome, "cognome");
