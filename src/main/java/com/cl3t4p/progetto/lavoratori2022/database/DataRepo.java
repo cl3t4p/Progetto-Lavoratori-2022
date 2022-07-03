@@ -12,6 +12,7 @@ import lombok.Setter;
 public class DataRepo {
 
 
+    boolean isModified = true;
     Dipendente dipendente;
     Integer lavoratore_id;
 

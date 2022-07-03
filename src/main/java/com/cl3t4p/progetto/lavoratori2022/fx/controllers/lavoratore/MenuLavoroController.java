@@ -1,7 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.model.Lavoro;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
@@ -56,7 +57,7 @@ public class MenuLavoroController implements Initializable {
             lav_id.setVisible(true);
         }
 
-        ButtonColumnFactory factory = new ButtonColumnFactory(key -> {
+        CellButtonFactoryFactory factory = new CellButtonFactoryFactory(key -> {
             if (!lavoroRepo.deleteLavoroByID(Integer.valueOf(key.get("id"))))
                 JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'lavoro");
             lav_view.refreshData();
@@ -67,7 +68,7 @@ public class MenuLavoroController implements Initializable {
 
 
         lav_view.setSupplier(() -> TableData.toMap(lavoroRepo.getLavoroByLavID(dataRepo.getLavoratore_id())));
-        lav_view.setButtonColumn(factory.getRemoveColumn());
+        lav_view.setButtonColumn(factory.getCellFactory(ColumnAction.REMOVE));
 
         lav_view.setupColumn(col_id, "id", 30);
         lav_view.setupColumn(col_nome, "nome_azienda");

@@ -1,6 +1,5 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory;
 
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ATableColumn;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -8,8 +7,8 @@ import javafx.util.Callback;
 
 import java.util.Map;
 
-public class RemoveColumn extends ATableColumn {
-    public RemoveColumn(Callback<Map<String, String>, Void> callback, String text) {
+public class RemoveFactory extends ACellButtonFactory {
+    public RemoveFactory(Callback<Map<String, String>, Void> callback, String text) {
         super(callback, text);
     }
 

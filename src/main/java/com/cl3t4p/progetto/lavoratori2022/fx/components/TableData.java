@@ -1,9 +1,11 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.components;
 
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ATableColumn;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.DefaultColumn;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory.ICellButtonFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
@@ -35,9 +37,10 @@ public class TableData extends TableView<Map<String, String>> {
         this.supplier = supplier;
     }
 
-    public void setButtonColumn(ATableColumn buttonColumn) {
-        getColumns().add(buttonColumn);
-        customSize.add(buttonColumn.getWidth());
+    public void setButtonColumn(ICellButtonFactory buttonFactory) {
+        DefaultColumn column = new DefaultColumn(buttonFactory);
+        getColumns().add(column);
+        customSize.add(column.getWidth());
     }
 
     /**
@@ -67,8 +70,7 @@ public class TableData extends TableView<Map<String, String>> {
         setupColumnOpt(column, key);
         column.prefWidthProperty().bind(
                 widthProperty()
-                        .subtract(3)
-                        .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum())
+                        .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum()+15)
                         .divide(getColumns().size() - customSize.size()));
     }
 

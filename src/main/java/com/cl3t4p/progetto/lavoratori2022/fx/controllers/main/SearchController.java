@@ -3,8 +3,10 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
+import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoratoreRepo;
 import com.cl3t4p.progetto.lavoratori2022.model.repo.PatenteRepo;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -27,7 +30,7 @@ public class SearchController implements Initializable {
     FilterBuilder builder = new FilterBuilder();
 
     @FXML
-    Button bt_nome,bt_cognome,bt_lingua,bt_residenza,bt_patente,bt_automunito,bt_esperienza;
+    Button bt_nome,bt_cognome,bt_lingua,bt_residenza,bt_patente,bt_automunito,bt_esperienza,bt_data;
     @FXML
     TableData lav_view;
 
@@ -55,15 +58,15 @@ public class SearchController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         patente.getItems().addAll(patRepo.getAllPatenti());
-        ButtonColumnFactory factory = new ButtonColumnFactory(map -> {
+        CellButtonFactoryFactory factory = new CellButtonFactoryFactory(map -> {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(map.get("id")));
             Main.getLoader().loadView("VIEWER");
             return null;
         },"+");
 
-        //TODO add Dates to the filter
-        lav_view.setButtonColumn(factory.getNothingColumn());
-        lav_view.setupColumn(col_id, "id", 30);
+
+        lav_view.setButtonColumn(factory.getCellFactory(ColumnAction.NOTHING));
+        lav_view.setupColumn(col_id, "id", 50);
         lav_view.setupColumn(col_nome, "nome");
         lav_view.setupColumn(col_cognome, "cognome");
         lav_view.setupColumn(col_nascita, "nascita");
@@ -76,6 +79,24 @@ public class SearchController implements Initializable {
         bt_lingua.setOnAction((e)-> addFilter("nome_lingua", FilterBuilder.TypeVar.STRING,lingua.getText()));
         bt_esperienza.setOnAction(e -> addFilter("esperienza", FilterBuilder.TypeVar.STRING,esperienza.getText()));
         bt_residenza.setOnAction(e-> addFilter("nome_comune", FilterBuilder.TypeVar.STRING,residenza.getText()));
+        bt_data.setOnAction(this::addDataToFilter);
+
+
+    }
+
+    private void addDataToFilter(ActionEvent event) {
+        LocalDate inizio = inizio_dis.getValue();
+        LocalDate fine = fine_dis.getValue();
+        if(inizio != null && fine != null){
+            if(inizio.isAfter(fine)){
+                addFilter("inizio_periodo_disp ", FilterBuilder.TypeVar.DATE, String.valueOf(inizio));
+                builder.addFilter("fine_periodo_disp ", String.valueOf(fine), FilterBuilder.TypeVar.DATE, FilterBuilder.Logic.AND,false);
+                filters.setText(builder.readableString());
+                search();
+            }else
+                JavaFXError.INVALID_DATE.printContent("La data di inizio deve essere precedente a quella di fine");
+        }else
+            JavaFXError.INVALID_DATE.printContent("Inserisci delle date valide");
     }
 
     private void addFilter(String nome, FilterBuilder.TypeVar type, String value) {

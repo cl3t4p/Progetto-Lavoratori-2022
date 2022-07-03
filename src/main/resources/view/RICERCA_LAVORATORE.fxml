@@ -64,7 +64,7 @@
                 <DatePicker fx:id="inizio_dis" prefHeight="25.0" GridPane.columnIndex="1"/>
                 <Label text="FINE DISPONIBILITA'" GridPane.rowIndex="1"/>
                 <DatePicker fx:id="fine_dis" prefHeight="25.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2"/>
+                <Button mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" fx:id="bt_data"/>
                 <Label text="AUTOMUNITO" GridPane.rowIndex="2"/>
                 <ChoiceBox fx:id="automunito" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <items>

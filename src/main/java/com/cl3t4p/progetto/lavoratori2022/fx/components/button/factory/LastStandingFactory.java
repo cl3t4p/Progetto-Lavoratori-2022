@@ -1,7 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory;
 
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ATableColumn;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -9,13 +8,12 @@ import javafx.util.Callback;
 
 import java.util.Map;
 
-public class LastStandingColumn extends ATableColumn {
+public class LastStandingFactory extends ACellButtonFactory {
 
-    final String errorMsg;
+    final String errorMsg = "Non puoi rimuovere l'ultimo elemento!";
 
-    public LastStandingColumn(Callback<Map<String, String>, Void> callback, String text, String errorMsg) {
+    public LastStandingFactory(Callback<Map<String, String>, Void> callback, String text) {
         super(callback,text);
-        this.errorMsg = errorMsg;
     }
 
 

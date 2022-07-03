@@ -2,7 +2,8 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.ButtonColumnFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.model.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
@@ -45,7 +46,7 @@ public class AggEmeOPController implements Initializable {
         lav_id.setText(lav_id.getText() + lavoratore_id);
 
 
-        ButtonColumnFactory factory = new ButtonColumnFactory(key -> {
+        CellButtonFactoryFactory factory = new CellButtonFactoryFactory(key -> {
             if (!emeRepo.delEmergenzeByID(lavoratore_id, key))
                 JavaFXError.DB_ERROR.printContent("Errore nella cancellazione dell'emergenza");
             eme_view.refreshData();
@@ -54,7 +55,7 @@ public class AggEmeOPController implements Initializable {
 
 
         eme_view.setSupplier(() -> TableData.toMap(emeRepo.getEmergenze(lavoratore_id)));
-        eme_view.setButtonColumn(factory.getLastStandingColumn("Deve esistere almeno un contatto di emergenza"));
+        eme_view.setButtonColumn(factory.getCellFactory(ColumnAction.LAST_STANDING));
         eme_view.setupColumn(col_nome, "nome");
         eme_view.setupColumn(col_cognome, "cognome");
         eme_view.setupColumn(col_telefono, "telefono");

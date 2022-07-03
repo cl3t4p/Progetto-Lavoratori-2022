@@ -1,6 +1,5 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory;
 
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ATableColumn;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -8,9 +7,9 @@ import javafx.util.Callback;
 
 import java.util.Map;
 
-public class NothingColumn extends ATableColumn {
+public class NothingFactory extends ACellButtonFactory {
 
-    public NothingColumn(Callback<Map<String, String>, Void> callback, String text) {
+    public NothingFactory(Callback<Map<String, String>, Void> callback, String text) {
         super(callback,text);
     }
 

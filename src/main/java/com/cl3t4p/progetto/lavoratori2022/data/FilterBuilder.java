@@ -161,6 +161,9 @@ public class FilterBuilder {
 
 
         private String toFirstSQL() {
+            if(typeVar.equals(TypeVar.DATE)){
+                return " ? BETWEEN lavoratore.inizio_periodo_disp AND lavoratore.fine_periodo_disp";
+            }
             if (isSimilar)
                 return " " + name + " ILIKE concat('%', ?, '%') ";
             return " " + name + " ILIKE ?";
