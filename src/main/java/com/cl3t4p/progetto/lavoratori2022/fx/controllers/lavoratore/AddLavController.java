@@ -2,6 +2,7 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
+import com.cl3t4p.progetto.lavoratori2022.model.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.model.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.model.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
@@ -53,33 +54,42 @@ public class AddLavController implements Initializable {
         telefono.focusedProperty().addListener(this::check_number);
         data_nascita.setOnAction(this::checkNascita);
 
-        if (dataRepo.getDipendente() != null) {
-            id_dipendente.setText(id_dipendente.getText() + dataRepo.getDipendente().getId());
+        Dipendente dipendente = dataRepo.getDipendente();
+        if (dipendente != null) {
+            id_dipendente.setText(id_dipendente.getText() + dipendente.getId());
             id_dipendente.setVisible(true);
         }
 
 
-        if (dataRepo.getLavoratore_id() != null) {
-            id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
-            id_lavoratore.setVisible(true);
+        //TODO Add View Mode
+        if(dataRepo.isViewMode())
+            setupView();
+        else if (dataRepo.getLavoratore_id() != null)
+            setupModify();
+    }
 
-            eme_pane.setVisible(false);
+    private void setupView(){
+        id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
+        id_lavoratore.setVisible(true);
+        eme_pane.setVisible(false);
+        main_button.setVisible(false);
 
-            main_button.setText("CONFERMA MODIFICHE");
-            main_button.setOnAction(this::modifica_lavoratore);
+        setupLavoratore();
+    }
 
-            try {
-                setupLavoratore();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+    private void setupModify(){
+        id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
+        id_lavoratore.setVisible(true);
+        eme_pane.setVisible(false);
+        main_button.setText("CONFERMA MODIFICHE");
+        main_button.setOnAction(this::modifica_lavoratore);
+        setupLavoratore();
     }
 
     /**
      * This method will fill the fields with the data of the lavoratore that is being edited.
      */
-    private void setupLavoratore() throws SQLException {
+    private void setupLavoratore() {
         Lavoratore lavoratore = lavRepo.getLavoratoreByID(dataRepo.getLavoratore_id());
         nome.setText(lavoratore.getNome());
         cognome.setText(lavoratore.getCognome());
@@ -235,6 +245,7 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void back(ActionEvent event) {
+        Main.getDataRepo().setViewMode(false);
         Main.getDataRepo().setLavoratore_id(null);
         Main.getLoader().loadView("MENU");
     }

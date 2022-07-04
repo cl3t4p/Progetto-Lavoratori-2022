@@ -60,7 +60,9 @@ public class SearchController implements Initializable {
         patente.getItems().addAll(patRepo.getAllPatenti());
         CellButtonFactoryFactory factory = new CellButtonFactoryFactory(map -> {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(map.get("id")));
-            Main.getLoader().loadView("VIEWER");
+            Main.getDataRepo().setViewMode(true);
+            //Add View Mode to the fxml files
+            Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
             return null;
         },"+");
 

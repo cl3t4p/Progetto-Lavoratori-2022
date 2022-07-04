@@ -33,14 +33,14 @@ public class PostDriver implements MainRepo {
     public Connection getConnection() {
         if (connection == null)
             try {
-                connection = getNewConnectino();
+                connection = getNewConnection();
             } catch (ClassNotFoundException | SQLException e) {
                 throw new RuntimeException(e);
             }
         return connection;
     }
 
-    private Connection getNewConnectino() throws SQLException, ClassNotFoundException {
+    private Connection getNewConnection() throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(String.format("jdbc:postgresql://%s:%d/%s", host, port, db_name), user,
                 pass);
@@ -50,7 +50,7 @@ public class PostDriver implements MainRepo {
     @Override
     public boolean testConnection() {
         try {
-            getNewConnectino();
+            getNewConnection();
             return true;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

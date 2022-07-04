@@ -1,0 +1,21 @@
+@startuml AddLavController
+!theme vibrant
+hide footbox
+title Add Lavoratore
+actor Actor
+Actor -> AddLavController : Lavoratore Data
+activate AddLavController
+
+AddLavController -> Lavoratore : << create >> \nLavoratore Data
+
+AddLavController -> LavoratoreRepo : addLavoratore(Lavoratore)
+activate LavoratoreRepo
+LavoratoreRepo --> AddLavController : id_lav = ID Lavoratore
+deactivate LavoratoreRepo
+AddLavController -> EmergenzaRepo : addEmergenza(id_lav, Emergenza)
+AddLavController --> DataRepo : setLavoratoreID(id_lav)
+AddLavController -> ViewLoader : loadView(MODIFICA_LAVORATORE)
+activate ViewLoader
+ViewLoader --> Actor : View
+deactivate ViewLoader
+@enduml
