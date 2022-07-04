@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.database;
 
-import com.cl3t4p.progetto.lavoratori2022.model.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DataRepo {
-
 
     boolean isViewMode = false;
     Dipendente dipendente;

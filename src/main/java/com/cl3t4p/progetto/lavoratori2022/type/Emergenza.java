@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.model;
+package com.cl3t4p.progetto.lavoratori2022.type;
 
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;

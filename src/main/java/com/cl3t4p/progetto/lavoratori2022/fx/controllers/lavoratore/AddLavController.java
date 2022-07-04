@@ -2,13 +2,13 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.model.Dipendente;
-import com.cl3t4p.progetto.lavoratori2022.model.Emergenza;
-import com.cl3t4p.progetto.lavoratori2022.model.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.type.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
-import com.cl3t4p.progetto.lavoratori2022.model.repo.EmergenzaRepo;
-import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
 import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;

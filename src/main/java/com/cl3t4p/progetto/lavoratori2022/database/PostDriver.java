@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.database;
 
 import com.cl3t4p.progetto.lavoratori2022.database.postsql.*;
-import com.cl3t4p.progetto.lavoratori2022.model.repo.*;
+import com.cl3t4p.progetto.lavoratori2022.repo.*;
 
 import java.sql.*;
 

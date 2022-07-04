@@ -1,7 +1,7 @@
 package com.cl3t4p.progettoLavoratori2022;
 
-import com.cl3t4p.progetto.lavoratori2022.model.Dipendente;
-import com.cl3t4p.progetto.lavoratori2022.model.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

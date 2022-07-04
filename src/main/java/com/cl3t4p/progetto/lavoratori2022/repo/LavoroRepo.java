@@ -1,6 +1,6 @@
-package com.cl3t4p.progetto.lavoratori2022.model.repo;
+package com.cl3t4p.progetto.lavoratori2022.repo;
 
-import com.cl3t4p.progetto.lavoratori2022.model.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoro;
 
 import java.sql.SQLException;
 import java.util.List;

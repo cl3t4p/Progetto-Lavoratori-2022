@@ -6,15 +6,14 @@ import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
-import com.cl3t4p.progetto.lavoratori2022.model.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
-import com.cl3t4p.progetto.lavoratori2022.model.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Filter;
 
 public class ModificaController implements Initializable {
 
