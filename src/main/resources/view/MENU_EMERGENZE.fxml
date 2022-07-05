@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField?>
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -39,7 +39,7 @@
                 <TextField fx:id="em_cognome" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1"
                            GridPane.rowIndex="2"/>
                 <Label text="EMERGENZA TELEFONO" GridPane.rowIndex="3"/>
-                <NumberField fx:id="em_telefono" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <LongTextField fx:id="em_telefono" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                 <Label text="EMERGENZA EMAIL" GridPane.rowIndex="4"/>
                 <TextField fx:id="em_email" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
                 <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addEmergenza"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -50,7 +50,7 @@
                 <Label text="EMERGENZA COGNOME" GridPane.rowIndex="1"/>
                 <TextField fx:id="em_cognome" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <Label text="EMERGENZA TELEFONO" GridPane.rowIndex="2"/>
-                <NumberField fx:id="em_telefono" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <LongTextField fx:id="em_telefono" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                 <Label text="EMERGENZA EMAIL" GridPane.rowIndex="3"/>
                 <TextField fx:id="em_email" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
             </children>
@@ -88,7 +88,7 @@
                 <Label text="INDIRIZZO" GridPane.rowIndex="5"/>
                 <TextField fx:id="indirizzo" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                 <Label text="TELEFONO" GridPane.rowIndex="6"/>
-                <NumberField fx:id="telefono" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                <LongTextField fx:id="telefono" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
                 <Label text="EMAIL" GridPane.rowIndex="7"/>
                 <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
                 <Label text="AUTOMUNITO" GridPane.rowIndex="8"/>

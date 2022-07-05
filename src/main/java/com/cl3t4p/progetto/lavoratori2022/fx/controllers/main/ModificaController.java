@@ -7,7 +7,7 @@ import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
 import javafx.event.ActionEvent;
@@ -36,7 +36,7 @@ public class ModificaController implements Initializable {
     @FXML
     private TextField nome, cognome, luogo, nazionalita;
     @FXML
-    private NumberField id_lav;
+    private LongTextField id_lav;
     @FXML
     private TableColumn<Map, String> col_id, col_nome, col_cognome, col_luogo, col_data;
 

@@ -44,7 +44,7 @@ public class Main extends Application {
         dataRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01", "12345"));
 
         //End Testing
-        loader.loadView("RICERCA_LAVORATORE");
+        loader.loadView("MENU_LAVORO");
         //loader.loadView("LOGIN");
     }
 

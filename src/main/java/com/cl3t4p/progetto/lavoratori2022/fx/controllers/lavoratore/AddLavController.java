@@ -6,7 +6,7 @@ import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.type.Emergenza;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
 import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
 import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
@@ -43,7 +43,7 @@ public class AddLavController implements Initializable {
     @FXML
     private TextField nome, cognome, luogo_nascita, nazionalita, indirizzo, email, em_nome, em_cognome, em_email;
     @FXML
-    private NumberField telefono, em_telefono;
+    private LongTextField telefono, em_telefono;
     @FXML
     private ChoiceBox<String> automunito;
 

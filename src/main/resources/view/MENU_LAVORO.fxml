@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField?>
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.DoubleTextField?>
 <AnchorPane prefHeight="619.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.MenuLavoroController">
@@ -48,8 +49,8 @@
                 <TextField fx:id="luogo" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                 <Label text="RETRIBUZIONE LORDA GIORNALIERA(€)" textOverrun="CLIP" wrapText="true"
                        GridPane.rowIndex="4"/>
-                <NumberField fx:id="retri" prefHeight="25.0" prefWidth="206.0" GridPane.columnIndex="1"
-                             GridPane.rowIndex="4"/>
+                <DoubleTextField fx:id="retri" prefHeight="25.0" prefWidth="206.0" GridPane.columnIndex="1"
+                                 GridPane.rowIndex="4"/>
                 <Label fx:id="lav_id" text="ID: "/>
                 <Label layoutX="10.0" layoutY="57.0" text="INIZIO PERIODO" GridPane.rowIndex="5"/>
                 <DatePicker fx:id="ini_per" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1"

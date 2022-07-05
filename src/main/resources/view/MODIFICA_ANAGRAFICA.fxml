@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData?>
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField?>
 <AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.main.ModificaController">
     <children>
         <Button layoutX="622.0" layoutY="318.0" mnemonicParsing="false" onAction="#search" prefHeight="37.0" prefWidth="82.0" text="CERCA" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="330.0" />
@@ -33,7 +33,7 @@
               </rowConstraints>
                <children>
                       <Label text="ID LAVORATORE" />
-                      <NumberField fx:id="id_lav" GridPane.columnIndex="1" />
+                      <LongTextField fx:id="id_lav" GridPane.columnIndex="1" />
                       <Label text="NOME" GridPane.rowIndex="1" />
                       <TextField fx:id="nome" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                       <Label text="COGNOME" GridPane.rowIndex="2" />

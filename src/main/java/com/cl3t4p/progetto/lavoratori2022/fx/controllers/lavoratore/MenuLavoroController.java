@@ -1,12 +1,12 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.DoubleTextField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoro;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.NumberField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoroRepo;
 import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
@@ -48,7 +48,7 @@ public class MenuLavoroController implements Initializable {
     private TextField nome, luogo, mansione;
 
     @FXML
-    private NumberField retri;
+    private DoubleTextField retri;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
