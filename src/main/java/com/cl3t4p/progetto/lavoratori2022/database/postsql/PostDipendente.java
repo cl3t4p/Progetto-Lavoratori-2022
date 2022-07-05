@@ -1,5 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
+import com.cl3t4p.progetto.lavoratori2022.tools.Hashing;
 import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.SQLMapper;
@@ -20,6 +21,8 @@ public class PostDipendente extends APost implements DipendenteRepo {
         String sql = "SELECT * FROM dipendente WHERE username=? and password=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, user);
+            //TODO Hashing
+            //statement.setBytes(2, Hashing.generateHash(pass));
             statement.setString(2, pass);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next())

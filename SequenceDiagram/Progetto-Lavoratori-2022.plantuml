@@ -1,0 +1,141 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class APost {
+  + APost(PostDriver): 
+  # getListString(int, String): List<String>
+   connection: Connection
+}
+interface ComuneRepo << interface >> {
+  + getComuneILike(String): List<String>
+  + getAllComuni(PreparedStatement): List<String>
+  + addComuneByID(String, int): void
+  + getComuneILike(String, int): List<String>
+  + getComuniByName(String): String
+  + getComuniByID(int): List<String>
+  + delComunebyID(int, String): boolean
+}
+interface DipendenteRepo << interface >> {
+  + getDipendenteByUserAndPassword(String, String): Dipendente
+}
+interface EmergenzaRepo << interface >> {
+  + addEmergenza(Emergenza): int
+  + getEmergenze(int): List<Emergenza>
+  + checkIfEmergenzaIsLinked(int, int): boolean
+  + getEmergenzeIDByValues(Map<String, String>): int
+  + addEmergenza(Emergenza, Integer): boolean
+  + delEmergenzeByID(int, Map<String, String>): boolean
+}
+interface EsperienzaRepo << interface >> {
+  + getEspByID(int): List<String>
+  + addEsp(String): void
+  + addEspByID(int, String): void
+  + getEspLike(String): String
+  + delEspByID(int, String): boolean
+}
+interface LavoratoreRepo << interface >> {
+  + getLavoratoreByID(int): Lavoratore
+  + updateLavoratore(Lavoratore): void
+  + delLavoratore(int): boolean
+  + filterLavoratore(FilterBuilder): List<Lavoratore>
+  + addLavoratore(Lavoratore): int
+}
+interface LavoroRepo << interface >> {
+  + deleteLavoroByID(Integer): boolean
+  + addLavoro(Lavoro): int
+  + getLavoroByLavID(Integer): List<Lavoro>
+}
+interface LinguaRepo << interface >> {
+  + delLinguaByID(int, String): boolean
+  + getLinguaLike(String): String
+  + addLinguaByID(int, String): void
+  + addLingua(String): void
+  + getLingueByID(int): List<String>
+}
+interface PatenteRepo << interface >> {
+  + addPatenteByID(int, String): void
+  + getPatentiByID(int): List<String>
+  + delPatenteByID(int, String): boolean
+   allPatenti: List<String>
+}
+class PostComune {
+  + PostComune(PostDriver): 
+  + getComuneILike(String): List<String>
+  + getComuneILike(String, int): List<String>
+  + delComunebyID(int, String): boolean
+  + addComuneByID(String, int): void
+  + getAllComuni(PreparedStatement): List<String>
+  + getComuniByName(String): String
+  + getComuniByID(int): List<String>
+}
+class PostDipendente {
+  + PostDipendente(PostDriver): 
+  + getDipendenteByUserAndPassword(String, String): Dipendente
+}
+class PostEmergenza {
+  + PostEmergenza(PostDriver): 
+  + checkIfEmergenzaIsLinked(int, int): boolean
+  + getEmergenze(int): List<Emergenza>
+  + addEmergenza(Emergenza): int
+  + getEmergenzeIDByValues(Map<String, String>): int
+  + delEmergenzeByID(int, Map<String, String>): boolean
+  + addEmergenza(Emergenza, Integer): boolean
+}
+class PostEsperienza {
+  + PostEsperienza(PostDriver): 
+  + delEspByID(int, String): boolean
+  + getEspByID(int): List<String>
+  + addEsp(String): void
+  + addEspByID(int, String): void
+  + getEspLike(String): String
+}
+class PostLavoratore {
+  + PostLavoratore(PostDriver): 
+  + addLavoratore(Lavoratore): int
+  + delLavoratore(int): boolean
+  + updateLavoratore(Lavoratore): void
+  + getLavoratoreByID(int): Lavoratore
+  + filterLavoratore(FilterBuilder): List<Lavoratore>
+}
+class PostLavoro {
+  + PostLavoro(PostDriver): 
+  + addLavoro(Lavoro): int
+  + deleteLavoroByID(Integer): boolean
+  + getLavoroByLavID(Integer): List<Lavoro>
+}
+class PostLingua {
+  + PostLingua(PostDriver): 
+  + addLingua(String): void
+  + getLinguaLike(String): String
+  + getLingueByID(int): List<String>
+  + addLinguaByID(int, String): void
+  + delLinguaByID(int, String): boolean
+}
+class PostPatente {
+  + PostPatente(PostDriver): 
+  + addPatenteByID(int, String): void
+  + getPatentiByID(int): List<String>
+  + delPatenteByID(int, String): boolean
+   allPatenti: List<String>
+}
+
+PostComune      -[#000082,plain]-^  APost          
+PostComune      -[#008200,dashed]-^  ComuneRepo     
+PostDipendente  -[#000082,plain]-^  APost          
+PostDipendente  -[#008200,dashed]-^  DipendenteRepo 
+PostEmergenza   -[#000082,plain]-^  APost          
+PostEmergenza   -[#008200,dashed]-^  EmergenzaRepo  
+PostEsperienza  -[#000082,plain]-^  APost          
+PostEsperienza  -[#008200,dashed]-^  EsperienzaRepo 
+PostLavoratore  -[#000082,plain]-^  APost          
+PostLavoratore  -[#008200,dashed]-^  LavoratoreRepo 
+PostLavoro      -[#000082,plain]-^  APost          
+PostLavoro      -[#008200,dashed]-^  LavoroRepo     
+PostLingua      -[#000082,plain]-^  APost          
+PostLingua      -[#008200,dashed]-^  LinguaRepo     
+PostPatente     -[#000082,plain]-^  APost          
+PostPatente     -[#008200,dashed]-^  PatenteRepo    
+@enduml
