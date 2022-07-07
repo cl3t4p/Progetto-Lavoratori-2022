@@ -1,15 +1,15 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.DoubleTextField;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
-import com.cl3t4p.progetto.lavoratori2022.type.Lavoro;
+import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.DoubleTextField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoroRepo;
-import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoro;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -63,8 +63,6 @@ public class MenuLavoroController implements Initializable {
             lav_view.refreshData();
             return null;
         });
-
-
 
 
         lav_view.setSupplier(() -> TableData.toMap(lavoroRepo.getLavoroByLavID(dataRepo.getLavoratore_id())));

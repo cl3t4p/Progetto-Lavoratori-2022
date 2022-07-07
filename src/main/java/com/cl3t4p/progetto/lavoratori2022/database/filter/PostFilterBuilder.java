@@ -1,7 +1,10 @@
-package com.cl3t4p.progetto.lavoratori2022.data;
+package com.cl3t4p.progetto.lavoratori2022.database.filter;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,16 +12,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 
-/***
- * This class is used to build create a SQL query from a list of filters.
- */
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilterBuilder {
+public class PostFilterBuilder implements FilterBuilder {
 
     private Logic defaultLogic = Logic.OR;
     private boolean defaultSimilar = true;
@@ -35,43 +34,31 @@ public class FilterBuilder {
     final List<ResearchField> fields = new ArrayList<>();
 
 
-    /***
-     * This method is used to add a filter to the query with the default logic.
-     * @param name The name of the field.
-     * @param value The value of the field.
-     * @param type The type of the field (string, int, date, long).
-     */
+    @Override
     public void addFilter(String name, String value, TypeVar type) {
         addFilter(name, value, type, defaultLogic, defaultSimilar);
     }
 
 
-    /***
-     * This method is used to add a filter to the query.
-     * @param name The name of the field.
-     * @param value The value of the field.
-     * @param type The type of the field (string, int, date, long).
-     * @param logic The logic used to join the filters (AND, OR).
-     * @param isSimilar If it's true then it will return values that can contain the data of value
-     *                  , otherwise it will return values that are exactly, it's not case sensitive.
-     */
+    @Override
     public void addFilter(String name, String value, TypeVar type, Logic logic, boolean isSimilar) {
         if (value == null)
             return;
         if (value.isEmpty() || value.isBlank())
             return;
-        ResearchField field = new ResearchField(name,type,logic,isSimilar);
+        ResearchField field = new ResearchField(name, type, logic, isSimilar);
         field.value = value;
-        if(fields.stream().anyMatch(field::equals))
+        if (fields.stream().anyMatch(field::equals))
             return;
         fields.add(field);
     }
 
     /**
      * This method will create a clone of the list of filters.
-     * @return  A clone of the list of filters.
+     *
+     * @return A clone of the list of filters.
      */
-    private List<ResearchField> getListClone(){
+    private List<ResearchField> getListClone() {
         ArrayList<ResearchField> list = new ArrayList<>(fields.size());
         for (ResearchField field : fields) {
             list.add(field.clone());
@@ -79,10 +66,8 @@ public class FilterBuilder {
         return list;
     }
 
-    /***
-     * This method is used to build the query.
-     * @return The query.
-     */
+
+    @Override
     public String buildSQL() {
         StringBuilder builder = new StringBuilder();
         List<ResearchField> list = getListClone();
@@ -96,11 +81,8 @@ public class FilterBuilder {
     }
 
 
-    /***
-     * This method is used to build the readable query for the user.
-     */
-    public String readableString(){
-        StringBuilder builder = new StringBuilder();
+    @Override
+    public String readableString() {
         List<ResearchField> list = getListClone();
         if (list.size() == 0)
             return "";
@@ -112,15 +94,17 @@ public class FilterBuilder {
     }
 
 
-    public String getReadableAttribute(String name){
+    @Override
+    public String getReadableAttribute(String name) {
         String string = fields.stream()
                 .filter(f -> f.name.equals(name))
                 .map(ResearchField::toReadForm)
                 .collect(Collectors.joining(","));
-        return name +":("+string+")";
+        return name + ":(" + string + ")";
     }
 
 
+    @Override
     public PreparedStatement getSQLStatment(Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql + buildSQL());
         for (int i = 0; i < fields.size(); i++) {
@@ -138,6 +122,15 @@ public class FilterBuilder {
         }
     }
 
+    @Override
+    public void removeLast() {
+        fields.remove(fields.size() - 1);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return fields.isEmpty();
+    }
 
     @Getter
     @EqualsAndHashCode
@@ -161,7 +154,7 @@ public class FilterBuilder {
 
 
         private String toFirstSQL() {
-            if(typeVar.equals(TypeVar.DATE)){
+            if (typeVar.equals(TypeVar.DATE)) {
                 return " ? BETWEEN lavoratore.inizio_periodo_disp AND lavoratore.fine_periodo_disp";
             }
             if (isSimilar)
@@ -173,7 +166,7 @@ public class FilterBuilder {
             StringBuilder builder = new StringBuilder();
             builder.append(logic.readChar);
 
-            if(isSimilar)
+            if (isSimilar)
                 builder.append("%");
             builder.append("'")
                     .append(value)
@@ -190,24 +183,6 @@ public class FilterBuilder {
             }
         }
 
-
-    }
-
-    public enum Logic {
-        AND('&'),
-        OR('|');
-
-        final char readChar;
-        Logic(char readChar) {
-            this.readChar = readChar;
-        }
-    }
-
-    public enum TypeVar {
-        LONG,
-        INT,
-        STRING,
-        DATE
 
     }
 

@@ -1,7 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.components.button;
 
 
-
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory.ICellButtonFactory;
 import javafx.scene.control.TableColumn;
 

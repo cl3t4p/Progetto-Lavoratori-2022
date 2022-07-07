@@ -2,14 +2,14 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
-import com.cl3t4p.progetto.lavoratori2022.type.Emergenza;
-import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
 import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
-import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
+import com.cl3t4p.progetto.lavoratori2022.type.Emergenza;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,13 +62,13 @@ public class AddLavController implements Initializable {
 
 
         //TODO Add View Mode
-        if(dataRepo.isViewMode())
+        if (dataRepo.isViewMode())
             setupView();
         else if (dataRepo.getLavoratore_id() != null)
             setupModify();
     }
 
-    private void setupView(){
+    private void setupView() {
         id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
         id_lavoratore.setVisible(true);
         eme_pane.setVisible(false);
@@ -77,7 +77,7 @@ public class AddLavController implements Initializable {
         setupLavoratore();
     }
 
-    private void setupModify(){
+    private void setupModify() {
         id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
         id_lavoratore.setVisible(true);
         eme_pane.setVisible(false);
@@ -103,7 +103,6 @@ public class AddLavController implements Initializable {
         data_fine.setValue(lavoratore.getFine_disponibile().toLocalDate());
         automunito.setValue(lavoratore.getAutomunito());
     }
-
 
 
     @FXML

@@ -1,10 +1,10 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
-import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
-import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.SQLMapper;
+import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

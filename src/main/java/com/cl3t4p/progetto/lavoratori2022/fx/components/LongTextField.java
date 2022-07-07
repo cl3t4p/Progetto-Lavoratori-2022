@@ -15,9 +15,9 @@ public class LongTextField extends TextField {
 
         UnaryOperator<TextFormatter.Change> filter = c -> {
             if (pattern.matcher(c.getControlNewText()).matches()) {
-                return c ;
+                return c;
             } else {
-                return null ;
+                return null;
             }
         };
 

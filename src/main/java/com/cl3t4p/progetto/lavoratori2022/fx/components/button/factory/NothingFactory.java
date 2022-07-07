@@ -10,7 +10,7 @@ import java.util.Map;
 public class NothingFactory extends ACellButtonFactory {
 
     public NothingFactory(Callback<Map<String, String>, Void> callback, String text) {
-        super(callback,text);
+        super(callback, text);
     }
 
 
@@ -29,6 +29,7 @@ public class NothingFactory extends ACellButtonFactory {
                             callback.call(key);
                         });
                     }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);

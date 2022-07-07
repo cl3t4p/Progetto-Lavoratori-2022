@@ -1,9 +1,13 @@
 package com.cl3t4p.progetto.lavoratori2022.database;
 
+import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
+import com.cl3t4p.progetto.lavoratori2022.database.filter.PostFilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.database.postsql.*;
 import com.cl3t4p.progetto.lavoratori2022.repo.*;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class PostDriver implements MainRepo {
     private final String user, pass, db_name, host;
@@ -96,6 +100,11 @@ public class PostDriver implements MainRepo {
     @Override
     public DipendenteRepo getDipendenteRepo() {
         return postDipendente;
+    }
+
+    @Override
+    public FilterBuilder getFilterBuilderInstance() {
+        return new PostFilterBuilder();
     }
 
 }

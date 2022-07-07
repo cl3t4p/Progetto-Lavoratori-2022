@@ -15,9 +15,9 @@ public class DoubleTextField extends TextField {
 
         UnaryOperator<Change> filter = c -> {
             if (pattern.matcher(c.getControlNewText()).matches()) {
-                return c ;
+                return c;
             } else {
-                return null ;
+                return null;
             }
         };
 

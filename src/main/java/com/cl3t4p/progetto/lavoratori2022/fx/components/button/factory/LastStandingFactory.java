@@ -13,7 +13,7 @@ public class LastStandingFactory extends ACellButtonFactory {
     final String errorMsg = "Non puoi rimuovere l'ultimo elemento!";
 
     public LastStandingFactory(Callback<Map<String, String>, Void> callback, String text) {
-        super(callback,text);
+        super(callback, text);
     }
 
 
@@ -28,7 +28,7 @@ public class LastStandingFactory extends ACellButtonFactory {
                     {
                         btn.setPrefWidth(getWidth() - 2);
                         btn.setOnAction(e -> {
-                            if(getTableView().getItems().size() == 1){
+                            if (getTableView().getItems().size() == 1) {
                                 JavaFXError.show(errorMsg);
                                 return;
                             }
@@ -37,6 +37,7 @@ public class LastStandingFactory extends ACellButtonFactory {
                             callback.call(key);
                         });
                     }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);

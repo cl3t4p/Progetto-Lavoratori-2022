@@ -1,11 +1,11 @@
 package com.cl3t4p.progetto.lavoratori2022;
 
 
+import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.io.ViewLoader;
 import com.cl3t4p.progetto.lavoratori2022.repo.MainRepo;
-import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -44,7 +44,7 @@ public class Main extends Application {
         dataRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01", "12345"));
 
         //End Testing
-        loader.loadView("MENU_LAVORO");
+        loader.loadView("RICERCA_LAVORATORE");
         //loader.loadView("LOGIN");
     }
 

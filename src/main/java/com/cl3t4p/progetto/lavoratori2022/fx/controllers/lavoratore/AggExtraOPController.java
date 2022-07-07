@@ -43,6 +43,7 @@ public class AggExtraOPController implements Initializable {
     ComboBox<String> comune;
     @FXML
     TextField esperienze, lingue;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lavoratore_id = Main.getDataRepo().getLavoratore_id();

@@ -5,7 +5,6 @@ import com.cl3t4p.progetto.lavoratori2022.fx.components.button.DefaultColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory.ICellButtonFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
@@ -70,7 +69,7 @@ public class TableData extends TableView<Map<String, String>> {
         setupColumnOpt(column, key);
         column.prefWidthProperty().bind(
                 widthProperty()
-                        .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum()+15)
+                        .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum() + 15)
                         .divide(getColumns().size() - customSize.size()));
     }
 

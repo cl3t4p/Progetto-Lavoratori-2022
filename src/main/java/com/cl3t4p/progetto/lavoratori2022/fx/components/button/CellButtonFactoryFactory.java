@@ -22,12 +22,13 @@ public class CellButtonFactoryFactory {
         this.text = text;
     }
 
+
     public CellButtonFactoryFactory(Callback<Map<String, String>, Void> callback) {
         this.callback = callback;
         this.text = "-";
     }
 
-    public ICellButtonFactory getCellFactory(ColumnAction action){
+    public ICellButtonFactory getCellFactory(ColumnAction action) {
         return switch (action) {
             case REMOVE -> new RemoveFactory(callback, text);
             case LAST_STANDING -> new LastStandingFactory(callback, text);

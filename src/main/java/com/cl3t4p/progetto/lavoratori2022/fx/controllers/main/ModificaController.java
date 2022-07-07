@@ -2,14 +2,15 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
-import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
+import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
+import com.cl3t4p.progetto.lavoratori2022.database.filter.PostFilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,7 +51,7 @@ public class ModificaController implements Initializable {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(lav.get("id")));
             Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
             return null;
-        },"*");
+        }, "*");
         lav_view.setButtonColumn(factory.getCellFactory(ColumnAction.NOTHING));
 
         lav_view.setSupplier(this::getLavoratori);
@@ -63,10 +64,10 @@ public class ModificaController implements Initializable {
 
     private List<Map<String, String>> getLavoratori() {
         List<Lavoratore> list = new ArrayList<>();
-        if(!id_lav.getText().isBlank()){
+        if (!id_lav.getText().isBlank()) {
             list.add(lavRepo.getLavoratoreByID(id_lav.getValue().intValue()));
-        }else {
-            FilterBuilder builder = new FilterBuilder(FilterBuilder.Logic.AND, true);
+        } else {
+            FilterBuilder builder = new PostFilterBuilder(FilterBuilder.Logic.AND, true);
             builder.addFilter("nome", nome.getText(), FilterBuilder.TypeVar.STRING);
             builder.addFilter("cognome", cognome.getText(), FilterBuilder.TypeVar.STRING);
             builder.addFilter("luogo_nascita", luogo.getText(), FilterBuilder.TypeVar.STRING);
