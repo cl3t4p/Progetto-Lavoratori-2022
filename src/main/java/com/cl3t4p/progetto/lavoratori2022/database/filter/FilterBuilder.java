@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/***
+/**
  * This class is used to build create a SQL query from a list of filters.
  */
 public interface FilterBuilder {
 
 
-    /***
+    /**
      * This method is used to add a filter to the query with the default logic.
      * @param name The name of the field.
      * @param value The value of the field.
@@ -19,7 +19,7 @@ public interface FilterBuilder {
     void addFilter(String name, String value, TypeVar type);
 
 
-    /***
+    /**
      * This method is used to add a filter to the query.
      * @param name The name of the field.
      * @param value The value of the field.
@@ -31,14 +31,14 @@ public interface FilterBuilder {
     void addFilter(String name, String value, TypeVar type, Logic logic, boolean isSimilar);
 
 
-    /***
+    /**
      * This method is used to build the SQL String for the query.
      * @return SQL String;
      */
     String buildSQL();
 
 
-    /***
+    /**
      * This method is used to build the readable query for the user.
      */
     String readableString();

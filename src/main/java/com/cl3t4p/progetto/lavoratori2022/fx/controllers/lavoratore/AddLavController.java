@@ -251,12 +251,12 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void extraMenu(ActionEvent event) {
-        Main.getLoader().loadView("AGG_LAV_OPZ");
+         Main.getLoader().loadView("AGG_LAV_OPZ");
     }
 
     @FXML
     private void emergenzeMenu(ActionEvent event) {
-        Main.getLoader().loadView("MENU_EMERGENZE");
+            Main.getLoader().loadView("MENU_EMERGENZE");
     }
 
 }
