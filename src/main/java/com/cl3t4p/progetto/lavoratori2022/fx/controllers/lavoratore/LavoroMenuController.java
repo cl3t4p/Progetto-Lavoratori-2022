@@ -101,13 +101,12 @@ public class LavoroMenuController implements Initializable {
                 JavaFXError.INVALID_DATE.printContent("La data di fine periodo deve essere inferiore ai 5 anni");
                 return;
             }
-            if(start.isAfter(finish)){
+            if(start.isAfter(finish)) {
                 JavaFXError.INVALID_DATE.printContent("La data di inizio non puó essere dopo la data di fine");
                 return;
             }
-            if (lavoroRepo.addLavoro(lavoro) == -1) {
+            if (lavoroRepo.addLavoro(lavoro) == -1)
                 throw new JavaFXDataError();
-            }
         } catch (SQLException | JavaFXDataError e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.printContent("Errore nell'inserimento del lavoro");
