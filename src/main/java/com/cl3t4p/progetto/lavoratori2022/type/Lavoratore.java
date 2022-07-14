@@ -15,7 +15,7 @@ import java.sql.Date;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Lavoratore implements ValidateData, Mappable {
+public class Lavoratore implements ValidateData, Mappable,Cloneable {
 
     @FieldChecker
     int id, id_dipendente;
@@ -41,5 +41,14 @@ public class Lavoratore implements ValidateData, Mappable {
             return false;
         }
         return RegexChecker.TEL_NUMBER.validate(String.valueOf(telefono));
+    }
+
+    @Override
+    public Lavoratore clone() {
+        try {
+            return (Lavoratore) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
