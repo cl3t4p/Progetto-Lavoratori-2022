@@ -4,6 +4,7 @@ import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
+import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
 import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
@@ -221,12 +222,14 @@ public class AddLavController implements Initializable {
         if (checkData(data_fine))
             throw new JavaFXDataError("Data fine non valida");
 
-        lavoratore.setFine_disponibile(Date.valueOf(data_inizio.getValue()));
+        lavoratore.setFine_disponibile(Date.valueOf(data_fine.getValue()));
         if (telefono.getValue() == null)
             throw new JavaFXDataError("Telefono emergenze non valido");
 
         if (!lavoratore.validate())
             throw new JavaFXDataError("Campo vuoto o errore nell'inserimento di un dato");
+        if(data_inizio.getValue().isAfter(data_fine.getValue()))
+            throw new JavaFXDataError("La data di inizio non puó essere dopo la data di fine");
         lavoratore.setId_dipendente(Main.getDataRepo().getDipendente().getId());
         return lavoratore;
     }
