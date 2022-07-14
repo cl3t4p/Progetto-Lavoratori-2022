@@ -89,13 +89,13 @@ public class LavoroMenuController implements Initializable {
     public void addLavoro(ActionEvent event) {
         try {
             Lavoro lavoro = getLavoro();
-            LocalDate start = LocalDate.ofEpochDay(lavoro.getFine_periodo().getTime());
+            LocalDate start = fine_per.getValue();
             LocalDate now = LocalDate.now();
             if (Period.between(start, now).getYears() > 5) {
                 JavaFXError.INVALID_DATE.printContent("La data di fine periodo deve essere inferiore ai 5 anni");
                 return;
             }
-            if (lavoroRepo.addLavoro(getLavoro()) == -1) {
+            if (lavoroRepo.addLavoro(lavoro) == -1) {
                 throw new JavaFXDataError();
             }
         } catch (SQLException | JavaFXDataError e) {
