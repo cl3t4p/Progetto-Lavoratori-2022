@@ -94,11 +94,15 @@ public class LavoroMenuController implements Initializable {
                 JavaFXError.INVALID_DATA.printContent("Campi vuoti o errati");
                 return;
             }
-            LocalDate start = fine_per.getValue();
+            LocalDate start = ini_per.getValue();
+            LocalDate finish = fine_per.getValue();
             LocalDate now = LocalDate.now();
             if (Period.between(start, now).getYears() > 5) {
                 JavaFXError.INVALID_DATE.printContent("La data di fine periodo deve essere inferiore ai 5 anni");
                 return;
+            }
+            if(start.isAfter(finish)){
+                JavaFXError.INVALID_DATE.printContent("La di inizio non puo essere dopo la data di fine");
             }
             if (lavoroRepo.addLavoro(lavoro) == -1) {
                 throw new JavaFXDataError();
