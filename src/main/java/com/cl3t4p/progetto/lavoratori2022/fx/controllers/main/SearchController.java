@@ -33,7 +33,7 @@ public class SearchController implements Initializable {
     FilterBuilder builder = Main.getRepo().getFilterBuilderInstance();
 
     @FXML
-    Button bt_nome, bt_cognome, bt_lingua, bt_residenza, bt_patente, bt_automunito, bt_esperienza, bt_data;
+    Button bt_nome, bt_cognome, bt_lingua, bt_comune, bt_patente, bt_automunito, bt_esperienza, bt_data;
     @FXML
     TableData lav_view;
     @FXML
@@ -51,7 +51,7 @@ public class SearchController implements Initializable {
     @FXML
     TextArea filters;
     @FXML
-    TextField nome, cognome, lingua, esperienza, residenza;
+    TextField nome, cognome, lingua, esperienza, comune;
 
 
     @Override
@@ -82,7 +82,7 @@ public class SearchController implements Initializable {
         bt_cognome.setOnAction(e -> addFilter("cognome", cognome));
         bt_lingua.setOnAction(e -> addFilter("nome_lingua", lingua));
         bt_esperienza.setOnAction(e -> addFilter("esperienza", esperienza));
-        bt_residenza.setOnAction(e -> addFilter("nome_comune", residenza));
+        bt_comune.setOnAction(e -> addFilter("comune", comune));
 
         bt_data.setOnAction(this::addDataToFilter);
 

@@ -37,9 +37,9 @@
                 <Label text="MANSIONE" GridPane.rowIndex="3" />
                 <TextField fx:id="esperienza" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <Button fx:id="bt_esperienza" mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                <Label text="LUOGO RESIDENZA" GridPane.rowIndex="4" />
-                <TextField fx:id="residenza" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <Button fx:id="bt_residenza" mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                <Label text="COMUNE" GridPane.rowIndex="4" />
+                <TextField fx:id="comune" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Button fx:id="bt_comune" mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             </children>
         </GridPane>
         <GridPane layoutX="368.0" layoutY="14.0" prefHeight="175.0" prefWidth="392.0">
