@@ -1,13 +1,12 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.components;
+package com.cl3t4p.progetto.lavoratori2022.fx.components.table;
 
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.button.DefaultColumn;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory.ICellButtonFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.MapValueFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,14 +31,15 @@ public class TableData extends TableView<Map<String, String>> {
         setItems(list);
     }
 
+
     public void setSupplier(Supplier<List<Map<String, String>>> supplier) {
         this.supplier = supplier;
     }
 
     public void setButtonColumn(ICellButtonFactory buttonFactory) {
-        DefaultColumn column = new DefaultColumn(buttonFactory);
+        ButtonColumn column = new ButtonColumn(buttonFactory);
         getColumns().add(column);
-        customSize.add(column.getWidth());
+        customSize.add(column.getWidth() + 3);
     }
 
     /**
@@ -65,27 +65,36 @@ public class TableData extends TableView<Map<String, String>> {
      * @param column the column to prepare
      * @param key    The key of the map to use as value for the column.
      */
-    public void setupColumn(TableColumn<Map, String> column, String key) {
+    public void setupColumn(TableColumn<Map<String, String>, String> column, String key) {
         setupColumnOpt(column, key);
         column.prefWidthProperty().bind(
                 widthProperty()
-                        .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum() + 15)
+                        .subtract(customSize.stream().mapToDouble(Double::doubleValue).sum())
                         .divide(getColumns().size() - customSize.size()));
     }
 
-    public void setupColumn(TableColumn<Map, String> column, String key, int size) {
+    public void setupColumn(TableColumn<Map<String, String>, String> column, String key, int size) {
         setupColumnOpt(column, key);
         if (size != -1)
             column.setPrefWidth(size);
         customSize.add(column.getWidth());
     }
 
-    private void setupColumnOpt(TableColumn<Map, String> column, String key) {
+    private void setupColumnOpt(TableColumn<Map<String, String>, String> column, String key) {
         column.setEditable(false);
         column.setResizable(false);
         column.setReorderable(false);
-        column.setCellValueFactory(new MapValueFactory<>(key));
+
+        //This will make
+        column.setCellFactory(column1 -> new DataTableCell());
+        column.setCellValueFactory(new MapStringFactory(key));
+        //While hover on cell show the value in the tooltip.
         refreshData();
+    }
+
+    public void setupSingleColumn() {
+        TableColumn<Map<String, String>, String> first = (TableColumn<Map<String, String>, String>) getColumns().get(0);
+        setupColumn(first, "default");
     }
 
 

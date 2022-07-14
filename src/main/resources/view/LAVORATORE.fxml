@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<AnchorPane id="AnchorPane" prefHeight="528.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/16"
+<AnchorPane id="AnchorPane" prefHeight="528.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.AddLavController">
     <children>
@@ -14,7 +14,7 @@
                 textAlignment="CENTER" wrapText="true"/>
         <Button layoutX="21.0" layoutY="463.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0"
                 prefWidth="82.0" text="BACK"/>
-        <Label fx:id="id_dipendente" layoutX="405.0" layoutY="23.0" text="ID DIPENDENTE : " visible="false"/>
+        <Label fx:id="id_dipendente" layoutX="405.0" layoutY="23.0" text="ID DIPENDENTE : "/>
         <Label fx:id="email_invalida" layoutX="286.0" layoutY="284.0" text="Email invalida" textFill="RED"
                underline="true" visible="false"/>
         <Label fx:id="tel_invalido" layoutX="277.0" layoutY="251.0" text="Telefono invalido" textFill="RED"

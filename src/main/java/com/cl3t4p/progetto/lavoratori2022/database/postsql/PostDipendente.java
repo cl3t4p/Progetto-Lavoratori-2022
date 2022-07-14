@@ -20,9 +20,6 @@ public class PostDipendente extends APost implements DipendenteRepo {
         String sql = "SELECT * FROM dipendente WHERE username=? and password=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, user);
-            //TODO Hashing
-            //statement.setBytes(2, Hashing.generateHash(pass));
-
             statement.setString(2, pass);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next())

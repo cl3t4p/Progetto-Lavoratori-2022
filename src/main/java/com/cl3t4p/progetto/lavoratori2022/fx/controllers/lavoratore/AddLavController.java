@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 import java.net.URL;
 import java.sql.Date;
@@ -24,28 +26,29 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
-
+//TODO Ask rename LavoratoreController
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AddLavController implements Initializable {
 
 
-    private final LavoratoreRepo lavRepo = Main.getRepo().getLavoratoreRepo();
-    private final EmergenzaRepo emeRepo = Main.getRepo().getEmergenzaRepo();
-    DataRepo dataRepo = Main.getDataRepo();
+    final LavoratoreRepo lavRepo = Main.getRepo().getLavoratoreRepo();
+    final EmergenzaRepo emeRepo = Main.getRepo().getEmergenzaRepo();
+    final DataRepo dataRepo = Main.getDataRepo();
 
     @FXML
-    public GridPane eme_pane;
+    GridPane eme_pane;
     @FXML
-    private Button main_button;
+    Button main_button;
     @FXML
-    private DatePicker data_inizio, data_fine, data_nascita;
+    DatePicker data_inizio, data_fine, data_nascita;
     @FXML
-    private Label email_invalida, tel_invalido, id_dipendente, nascita_invalida, data_in_invalida, data_fin_invalida, id_lavoratore;
+    Label email_invalida, tel_invalido, id_dipendente, nascita_invalida, data_in_invalida, data_fin_invalida, id_lavoratore;
     @FXML
-    private TextField nome, cognome, luogo_nascita, nazionalita, indirizzo, email, em_nome, em_cognome, em_email;
+    TextField nome, cognome, luogo_nascita, nazionalita, indirizzo, email, em_nome, em_cognome, em_email;
     @FXML
-    private LongTextField telefono, em_telefono;
+    LongTextField telefono, em_telefono;
     @FXML
-    private ChoiceBox<String> automunito;
+    ChoiceBox<String> automunito;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,27 +58,13 @@ public class AddLavController implements Initializable {
         data_nascita.setOnAction(this::checkNascita);
 
         Dipendente dipendente = dataRepo.getDipendente();
-        if (dipendente != null) {
-            id_dipendente.setText(id_dipendente.getText() + dipendente.getId());
-            id_dipendente.setVisible(true);
-        }
+        id_dipendente.setText(id_dipendente.getText() + dipendente.getId());
 
 
-        //TODO Add View Mode
-        if (dataRepo.isViewMode())
-            setupView();
-        else if (dataRepo.getLavoratore_id() != null)
+        if (dataRepo.getLavoratore_id() != null)
             setupModify();
     }
 
-    private void setupView() {
-        id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
-        id_lavoratore.setVisible(true);
-        eme_pane.setVisible(false);
-        main_button.setVisible(false);
-
-        setupLavoratore();
-    }
 
     private void setupModify() {
         id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
@@ -156,7 +145,7 @@ public class AddLavController implements Initializable {
             lavoratore.setId(dataRepo.getLavoratore_id());
             try {
                 lavRepo.updateLavoratore(lavoratore);
-                Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
+                Main.getLoader().loadView("LAVORATORE");
 
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
@@ -175,7 +164,7 @@ public class AddLavController implements Initializable {
                 int id = lavRepo.addLavoratore(lavoratore);
                 dataRepo.setLavoratore_id(id);
                 emeRepo.addEmergenza(emergenza, id);
-                Main.getLoader().loadView("AGGIUNGI_LAVORATORE");
+                Main.getLoader().loadView("LAVORATORE");
             } catch (SQLException e) {
                 throw new JavaFXDataError("Database Error!");
             }
@@ -251,12 +240,12 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void extraMenu(ActionEvent event) {
-         Main.getLoader().loadView("AGG_LAV_OPZ");
+        Main.getLoader().loadView("MENU_OPZ");
     }
 
     @FXML
     private void emergenzeMenu(ActionEvent event) {
-            Main.getLoader().loadView("MENU_EMERGENZE");
+        Main.getLoader().loadView("MENU_EMERGENZE");
     }
 
 }

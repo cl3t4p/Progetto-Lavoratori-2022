@@ -4,9 +4,9 @@ import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.PatenteRepo;
 import javafx.event.ActionEvent;
@@ -39,7 +39,7 @@ public class SearchController implements Initializable {
     @FXML
     HBox radio_buttons;
     @FXML
-    TableColumn<Map, String> col_id, col_nome, col_cognome, col_nascita, col_residenza;
+    TableColumn<Map<String, String>, String> col_id, col_nome, col_cognome, col_nascita, col_residenza;
     @FXML
     DatePicker inizio_dis, fine_dis;
     @FXML
@@ -64,8 +64,7 @@ public class SearchController implements Initializable {
         CellButtonFactoryFactory factory = new CellButtonFactoryFactory(map -> {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(map.get("id")));
             Main.getDataRepo().setViewMode(true);
-            //TODO Add View Mode to the fxml files
-            Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
+            Main.getLoader().loadView("LAVORATORE");
             return null;
         }, "+");
 

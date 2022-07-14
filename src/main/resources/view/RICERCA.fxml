@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData?>
 <AnchorPane id="AnchorPane" prefHeight="551.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.main.SearchController">
     <children>
         <Button layoutX="14.0" layoutY="499.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0" prefWidth="82.0" text="BACK" />

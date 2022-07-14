@@ -7,16 +7,16 @@ import javafx.fxml.FXML;
 public class MenuController {
     @FXML
     private void ricerca_lav(ActionEvent event) {
-        Main.getLoader().loadView("RICERCA_LAVORATORE");
+        Main.getLoader().loadView("RICERCA");
     }
 
     @FXML
     private void aggiungi_lavoratore(ActionEvent event) {
-        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
+        Main.getLoader().loadView("LAVORATORE");
     }
 
     @FXML
     private void modifica_anagrafica(ActionEvent event) {
-        Main.getLoader().loadView("MODIFICA_ANAGRAFICA");
+        Main.getLoader().loadView("MODIFICA");
     }
 }

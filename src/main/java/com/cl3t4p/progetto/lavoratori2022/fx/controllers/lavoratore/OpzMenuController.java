@@ -2,9 +2,9 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.ComuneRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.EsperienzaRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.LinguaRepo;
@@ -25,18 +25,21 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AggExtraOPController implements Initializable {
+public class OpzMenuController implements Initializable {
+
     final PatenteRepo patRepo = Main.getRepo().getPatenteRepo();
     final LinguaRepo ligRepo = Main.getRepo().getLinguaRepo();
     final EsperienzaRepo espRepo = Main.getRepo().getEsperienzaRepo();
     final ComuneRepo comuneRepo = Main.getRepo().getComuneRepo();
+
     int lavoratore_id;
+
     @FXML
     Label label_id;
     @FXML
     TableData patenti_view, esp_view, lig_view, comuni_view;
     @FXML
-    TableColumn<Map, String> patente_colum, esp_col, lig_col, comuni_col;
+    TableColumn<Map<String, String>, String> patente_colum, esp_col, lig_col, comuni_col;
     @FXML
     ChoiceBox<String> patente;
     @FXML
@@ -47,8 +50,6 @@ public class AggExtraOPController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lavoratore_id = Main.getDataRepo().getLavoratore_id();
-
-
         setupLabel();
         setupPatenti();
         setupLingue();
@@ -207,6 +208,6 @@ public class AggExtraOPController implements Initializable {
 
 
     public void back(ActionEvent event) {
-        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
+        Main.getLoader().loadView("LAVORATORE");
     }
 }

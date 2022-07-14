@@ -5,9 +5,9 @@ import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
 import com.cl3t4p.progetto.lavoratori2022.type.Emergenza;
 import javafx.event.ActionEvent;
@@ -16,28 +16,31 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class AggEmeOPController implements Initializable {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class EmeMenuController implements Initializable {
 
 
-    private final EmergenzaRepo emeRepo = Main.getRepo().getEmergenzaRepo();
+    final EmergenzaRepo emeRepo = Main.getRepo().getEmergenzaRepo();
 
     @FXML
-    private TableData eme_view;
+    TableData eme_view;
     @FXML
-    private Label lav_id;
+    Label lav_id;
     @FXML
-    private TableColumn<Map, String> col_nome, col_cognome, col_telefono, col_email;
+    TableColumn<Map<String, String>, String> col_nome, col_cognome, col_telefono, col_email;
     @FXML
-    private TextField em_nome, em_cognome, em_email;
+    TextField em_nome, em_cognome, em_email;
     @FXML
     private LongTextField em_telefono;
-    private int lavoratore_id;
+    int lavoratore_id;
 
 
     @Override
@@ -103,6 +106,6 @@ public class AggEmeOPController implements Initializable {
     }
 
     public void back(ActionEvent event) {
-        Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
+        Main.getLoader().loadView("LAVORATORE");
     }
 }

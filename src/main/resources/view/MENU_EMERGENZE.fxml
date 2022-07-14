@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField?>
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="400.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.AggEmeOPController">
+            fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.EmeMenuController">
     <children>
         <TableData fx:id="eme_view" layoutX="344.0" layoutY="10.0" prefHeight="380.0" prefWidth="456.0">
             <columns>

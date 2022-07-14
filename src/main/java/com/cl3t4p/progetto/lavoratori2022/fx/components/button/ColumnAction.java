@@ -15,5 +15,5 @@ public enum ColumnAction {
     /**
      * This action will do nothing.
      */
-    NOTHING;
+    NOTHING
 }

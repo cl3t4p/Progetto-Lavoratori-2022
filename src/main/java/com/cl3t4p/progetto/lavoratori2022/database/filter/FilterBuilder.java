@@ -12,19 +12,21 @@ public interface FilterBuilder {
 
     /**
      * This method is used to add a filter to the query with the default logic.
-     * @param name The name of the field.
+     *
+     * @param name  The name of the field.
      * @param value The value of the field.
-     * @param type The type of the field (string, int, date, long).
+     * @param type  The type of the field (string, int, date, long).
      */
     void addFilter(String name, String value, TypeVar type);
 
 
     /**
      * This method is used to add a filter to the query.
-     * @param name The name of the field.
-     * @param value The value of the field.
-     * @param type The type of the field (string, int, date, long).
-     * @param logic The logic used to join the filters (AND, OR).
+     *
+     * @param name      The name of the field.
+     * @param value     The value of the field.
+     * @param type      The type of the field (string, int, date, long).
+     * @param logic     The logic used to join the filters (AND, OR).
      * @param isSimilar If it's true then it will return values that can contain the data of value
      *                  , otherwise it will return values that are exactly, it's not case sensitive.
      */
@@ -33,6 +35,7 @@ public interface FilterBuilder {
 
     /**
      * This method is used to build the SQL String for the query.
+     *
      * @return SQL String;
      */
     String buildSQL();

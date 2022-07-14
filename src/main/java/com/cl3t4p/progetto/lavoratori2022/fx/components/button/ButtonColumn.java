@@ -6,10 +6,10 @@ import javafx.scene.control.TableColumn;
 
 import java.util.Map;
 
-public class DefaultColumn extends TableColumn<Map<String, String>, Void> {
+public class ButtonColumn extends TableColumn<Map<String, String>, Void> {
 
 
-    public DefaultColumn(ICellButtonFactory factory) {
+    public ButtonColumn(ICellButtonFactory factory) {
         setPrefWidth(25);
         setCellFactory(factory.getButtonFactory());
         setEditable(false);

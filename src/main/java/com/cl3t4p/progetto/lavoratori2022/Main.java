@@ -34,18 +34,9 @@ public class Main extends Application {
             JavaFXError.show("Database connection error!");
             return;
         }
-
-
         stage.setResizable(false);
         loader.setPrimaryStage(stage);
-
-        //TODO Replace AGG_LAV_OPZ with LOGIN
-        //Testing
-        dataRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01", "12345"));
-
-        //End Testing
-        loader.loadView("RICERCA_LAVORATORE");
-        //loader.loadView("LOGIN");
+        loader.loadView("LOGIN");
     }
 
     public static void main(String[] args) {

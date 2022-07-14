@@ -8,15 +8,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoginController {
 
-    private final DipendenteRepo dipendenteRepo = Main.getRepo().getDipendenteRepo();
+    final DipendenteRepo dipendenteRepo = Main.getRepo().getDipendenteRepo();
 
     @FXML
-    private TextField txuser;
+    TextField txuser;
     @FXML
-    private PasswordField txpass;
+    PasswordField txpass;
 
     @FXML
     private void login(ActionEvent event) {

@@ -6,9 +6,9 @@ import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.PostFilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import javafx.event.ActionEvent;
@@ -39,7 +39,7 @@ public class ModificaController implements Initializable {
     @FXML
     private LongTextField id_lav;
     @FXML
-    private TableColumn<Map, String> col_id, col_nome, col_cognome, col_luogo, col_data;
+    private TableColumn<Map<String, String>, String> col_id, col_nome, col_cognome, col_luogo, col_data;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,7 +49,7 @@ public class ModificaController implements Initializable {
 
         CellButtonFactoryFactory factory = new CellButtonFactoryFactory((lav) -> {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(lav.get("id")));
-            Main.getLoader().loadView("MODIFICA_AGG_LAVORATORE");
+            Main.getLoader().loadView("LAVORATORE");
             return null;
         }, "*");
         lav_view.setButtonColumn(factory.getCellFactory(ColumnAction.NOTHING));

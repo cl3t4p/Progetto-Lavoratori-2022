@@ -5,9 +5,9 @@ import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.DoubleTextField;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.TableData;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoroRepo;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoro;
 import javafx.event.ActionEvent;
@@ -17,6 +17,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 import java.net.URL;
 import java.sql.Date;
@@ -26,29 +28,30 @@ import java.time.Period;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class MenuLavoroController implements Initializable {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class LavoroMenuController implements Initializable {
 
 
-    private final LavoroRepo lavoroRepo = Main.getRepo().getLavoroRepo();
+    final LavoroRepo lavoroRepo = Main.getRepo().getLavoroRepo();
 
-    private final DataRepo dataRepo = Main.getDataRepo();
+    final DataRepo dataRepo = Main.getDataRepo();
     @FXML
-    private TableData lav_view;
-
-    @FXML
-    private DatePicker ini_per, fine_per;
+    TableData lav_view;
 
     @FXML
-    private TableColumn<Map, String> col_nome, col_mansione, col_luogo, col_retri, col_ini, col_fine, col_id;
+    DatePicker ini_per, fine_per;
 
     @FXML
-    private Label lav_id;
+    TableColumn<Map<String, String>, String> col_nome, col_mansione, col_luogo, col_retri, col_ini, col_fine, col_id;
 
     @FXML
-    private TextField nome, luogo, mansione;
+    Label lav_id;
 
     @FXML
-    private DoubleTextField retri;
+    TextField nome, luogo, mansione;
+
+    @FXML
+    DoubleTextField retri;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
