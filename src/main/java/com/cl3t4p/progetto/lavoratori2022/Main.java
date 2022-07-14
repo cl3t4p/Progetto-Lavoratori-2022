@@ -36,9 +36,10 @@ public class Main extends Application {
         }
         stage.setResizable(false);
         loader.setPrimaryStage(stage);
+
         dataRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01","12345"));
 
-        loader.loadView("LAVORATORE");
+        loader.loadView("MENU");
     }
 
     public static void main(String[] args) {
