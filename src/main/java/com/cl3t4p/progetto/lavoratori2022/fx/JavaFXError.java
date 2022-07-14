@@ -7,7 +7,8 @@ import javafx.scene.control.Alert;
  */
 public enum JavaFXError {
     DB_ERROR("Errore DB"),
-    INVALID_DATE("Data non valida");
+    INVALID_DATE("Data non valida"),
+    INVALID_DATA("Dati invalidi");
 
     final String error;
 

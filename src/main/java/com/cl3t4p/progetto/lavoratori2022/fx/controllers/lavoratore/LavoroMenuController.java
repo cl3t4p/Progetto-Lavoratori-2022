@@ -89,6 +89,11 @@ public class LavoroMenuController implements Initializable {
     public void addLavoro(ActionEvent event) {
         try {
             Lavoro lavoro = getLavoro();
+            if(!lavoro.validate())
+            {
+                JavaFXError.INVALID_DATA.printContent("Campi vuoti o errati");
+                return;
+            }
             LocalDate start = fine_per.getValue();
             LocalDate now = LocalDate.now();
             if (Period.between(start, now).getYears() > 5) {
