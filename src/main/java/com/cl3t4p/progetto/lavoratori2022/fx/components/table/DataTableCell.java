@@ -36,6 +36,8 @@ public class DataTableCell extends TableCell<Map<String, String>, String> {
             String original = getItem();
             Text text = (Text) lookup(".text"); // "text" is the style class of Text
             String actual = text.getText();
+            if(original == null)
+                return;
 
             if (!actual.isEmpty() && !original.equals(actual)) {
                 Tooltip tooltip = new Tooltip(getItem());

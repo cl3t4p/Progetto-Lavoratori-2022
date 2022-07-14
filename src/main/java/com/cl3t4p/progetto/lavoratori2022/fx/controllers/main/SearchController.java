@@ -63,8 +63,7 @@ public class SearchController implements Initializable {
 
         CellButtonFactoryFactory factory = new CellButtonFactoryFactory(map -> {
             Main.getDataRepo().setLavoratore_id(Integer.valueOf(map.get("id")));
-            Main.getDataRepo().setViewMode(true);
-            Main.getLoader().loadView("LAVORATORE");
+            Main.getLoader().loadView("VIEW_LAVORATORE");
             return null;
         }, "+");
 

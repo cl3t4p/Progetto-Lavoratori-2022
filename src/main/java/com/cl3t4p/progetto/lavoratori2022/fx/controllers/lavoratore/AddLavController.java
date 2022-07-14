@@ -227,13 +227,12 @@ public class AddLavController implements Initializable {
 
         if (!lavoratore.validate())
             throw new JavaFXDataError("Campo vuoto o errore nell'inserimento di un dato");
-
+        lavoratore.setId_dipendente(Main.getDataRepo().getDipendente().getId());
         return lavoratore;
     }
 
     @FXML
     private void back(ActionEvent event) {
-        Main.getDataRepo().setViewMode(false);
         Main.getDataRepo().setLavoratore_id(null);
         Main.getLoader().loadView("MENU");
     }

@@ -7,7 +7,6 @@ import java.util.Base64;
 
 public class Hashing {
 
-
     //TODO Chiedere
     @SneakyThrows
     public static String generateHash(String password) {

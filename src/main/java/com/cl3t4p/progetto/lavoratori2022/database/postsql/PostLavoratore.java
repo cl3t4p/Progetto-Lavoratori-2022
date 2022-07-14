@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PostLavoratore extends APost implements LavoratoreRepo {
 
@@ -93,6 +95,7 @@ public class PostLavoratore extends APost implements LavoratoreRepo {
     public List<Lavoratore> filterLavoratore(FilterBuilder creator) {
         try (PreparedStatement statement = creator.getSQLStatment(getConnection())) {
             ResultSet resultSet = statement.executeQuery();
+
             List<Lavoratore> lavoratori = new ArrayList<>();
             while (resultSet.next()) {
                 try {
@@ -101,7 +104,7 @@ public class PostLavoratore extends APost implements LavoratoreRepo {
                     throw new RuntimeException(e);
                 }
             }
-            return lavoratori;
+            return lavoratori.stream().distinct().toList();
         } catch (SQLException ignore) {
             return List.of();
         }

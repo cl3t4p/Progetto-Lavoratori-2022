@@ -28,7 +28,7 @@
                 <Label text="NOME" />
                 <TextField fx:id="nome" GridPane.columnIndex="1" />
                 <Button fx:id="bt_nome" mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" />
-                <Label prefHeight="0.0" prefWidth="60.0" text="COGNOME" GridPane.rowIndex="1" />
+                <Label prefHeight="0.0" text="COGNOME" GridPane.rowIndex="1" />
                 <TextField fx:id="cognome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Button fx:id="bt_cognome" mnemonicParsing="false" text="ADD" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                 <Label text="LINGUA" GridPane.rowIndex="2" />

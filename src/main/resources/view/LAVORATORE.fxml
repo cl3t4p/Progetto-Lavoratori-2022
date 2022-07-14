@@ -10,7 +10,7 @@
             fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.AddLavController">
     <children>
         <Button fx:id="main_button" layoutX="737.0" layoutY="456.0" mnemonicParsing="false"
-                onAction="#inserimento_lavoratore" prefHeight="50.0" prefWidth="158.0" text="AGGIUNGI LAVORATORE"
+                onAction="#inserimento_lavoratore" prefHeight="50.0" prefWidth="158.0" text="INSERISCI LAVORATORE"
                 textAlignment="CENTER" wrapText="true"/>
         <Button layoutX="21.0" layoutY="463.0" mnemonicParsing="false" onAction="#back" prefHeight="37.0"
                 prefWidth="82.0" text="BACK"/>

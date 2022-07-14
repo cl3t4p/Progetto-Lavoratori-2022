@@ -74,6 +74,8 @@ public class ModificaController implements Initializable {
             builder.addFilter("nazionalita", nazionalita.getText(), FilterBuilder.TypeVar.STRING);
             list = lavRepo.filterLavoratore(builder);
         }
+        if(list.isEmpty())
+            return List.of();
         return list.stream()
                 .map(Mappable::toMap)
                 .toList();

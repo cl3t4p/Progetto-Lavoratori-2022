@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DataRepo {
-    boolean isViewMode = false;
     Dipendente dipendente;
     Integer lavoratore_id;
 }
