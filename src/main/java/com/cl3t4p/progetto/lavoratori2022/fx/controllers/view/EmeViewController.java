@@ -39,7 +39,6 @@ public class EmeViewController implements Initializable {
         eme_view.setupColumn(col_cognome, "cognome");
         eme_view.setupColumn(col_telefono, "telefono");
         eme_view.setupColumn(col_email, "email");
-        System.out.println(TableData.toMap(emeRepo.getEmergenze(lavoratore_id)));
         eme_view.refreshData(TableData.toMap(emeRepo.getEmergenze(lavoratore_id)));
 
 

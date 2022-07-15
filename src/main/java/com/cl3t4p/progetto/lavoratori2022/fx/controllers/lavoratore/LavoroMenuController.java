@@ -107,15 +107,19 @@ public class LavoroMenuController implements Initializable {
             }
             if (lavoroRepo.addLavoro(lavoro) == -1)
                 throw new JavaFXDataError();
-        } catch (SQLException | JavaFXDataError e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             JavaFXError.DB_ERROR.printContent("Errore nell'inserimento del lavoro");
+        }catch (JavaFXDataError e){
+            e.show();
         }
         lav_view.refreshData();
     }
 
 
-    private Lavoro getLavoro() {
+    private Lavoro getLavoro() throws JavaFXDataError {
+        if(retri.getValue() == null)
+            throw new JavaFXDataError("Retribuzione invalida o vuota");
         Lavoro lavoro = new Lavoro();
         lavoro.setLuogo(luogo.getText());
         lavoro.setMansione(mansione.getText());

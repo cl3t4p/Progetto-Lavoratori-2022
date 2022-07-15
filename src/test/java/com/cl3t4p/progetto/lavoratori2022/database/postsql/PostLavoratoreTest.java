@@ -1,13 +1,12 @@
 package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
+import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,23 +18,23 @@ import java.util.Properties;
 class PostLavoratoreTest {
 
     Lavoratore lavoratore;
-    PostDriver repo;
-    PostLavoratore postLav;
-    private void loadDBConfig() throws IOException {
-        FileReader reader = new FileReader(getClass().getResource("/test.properties").getPath());
+    static PostDriver repo;
+    static PostLavoratore postLav;
+    private static void loadDBConfig() throws IOException {
+        FileReader reader = new FileReader(Main.class.getResource("/test.properties").getPath());
         Properties p = new Properties();
         p.load(reader);
         repo = new PostDriver(p.getProperty("username"), p.getProperty("password"), p.getProperty("db_name"), p.getProperty("host"), Integer.parseInt(p.getProperty("port")));
         postLav = (PostLavoratore) repo.getLavoratoreRepo();
     }
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeAll
+    public static void setUp() throws IOException {
         loadDBConfig();
     }
 
-    @After
-    public void tearDown() throws SQLException {
+    @AfterAll
+    public static void tearDown() throws SQLException {
         repo.getConnection().close();
     }
 
