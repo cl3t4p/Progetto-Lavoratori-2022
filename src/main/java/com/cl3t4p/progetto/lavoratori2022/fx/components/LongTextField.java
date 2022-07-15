@@ -27,9 +27,11 @@ public class LongTextField extends TextField {
     }
 
     public Long getValue() {
+        if(getText().isEmpty())
+            return null;
         try {
             return Long.parseLong(getText());
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return null;
         }
 

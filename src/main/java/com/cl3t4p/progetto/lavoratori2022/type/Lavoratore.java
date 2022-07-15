@@ -1,7 +1,8 @@
 package com.cl3t4p.progetto.lavoratori2022.type;
 
 
-import com.cl3t4p.progetto.lavoratori2022.annotation.FieldChecker;
+import com.cl3t4p.progetto.lavoratori2022.annotation.RegexCheck;
+import com.cl3t4p.progetto.lavoratori2022.annotation.SkipCheck;
 import com.cl3t4p.progetto.lavoratori2022.annotation.SQLDInfo;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
@@ -17,14 +18,14 @@ import java.sql.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Lavoratore implements ValidateData, Mappable,Cloneable {
 
-    @FieldChecker
+    @SkipCheck
     int id, id_dipendente;
     String nome, cognome, luogo_nascita;
     Date data_nascita;
     String nazionalita, indirizzo;
-    @FieldChecker
+    @RegexCheck(RegexChecker.TEL_NUMBER)
     long telefono;
-    @FieldChecker
+    @RegexCheck(RegexChecker.EMAIL)
     String email;
     String automunito;
     @SQLDInfo(sql_name = "inizio_periodo_disp")
@@ -32,16 +33,6 @@ public class Lavoratore implements ValidateData, Mappable,Cloneable {
     @SQLDInfo(sql_name = "fine_periodo_disp")
     Date fine_disponibile;
 
-
-    public boolean validate() {
-        if (!ValidateData.super.validate()) {
-            return false;
-        }
-        if (!RegexChecker.EMAIL.validate(email)) {
-            return false;
-        }
-        return RegexChecker.TEL_NUMBER.validate(String.valueOf(telefono));
-    }
 
     @Override
     public Lavoratore clone() {

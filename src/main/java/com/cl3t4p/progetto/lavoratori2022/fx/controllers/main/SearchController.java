@@ -72,7 +72,7 @@ public class SearchController implements Initializable {
         lav_view.setupColumn(col_id, "id", 50);
         lav_view.setupColumn(col_nome, "nome");
         lav_view.setupColumn(col_cognome, "cognome");
-        lav_view.setupColumn(col_nascita, "nascita");
+        lav_view.setupColumn(col_nascita, "data_nascita");
         lav_view.setupColumn(col_residenza, "indirizzo");
 
         bt_automunito.setOnAction(e -> addFilter("automunito", FilterBuilder.TypeVar.STRING, automunito.getValue()));

@@ -184,10 +184,10 @@ public class AddLavController implements Initializable {
         emergenza.setNome(em_nome.getText());
         emergenza.setCognome(em_cognome.getText());
         emergenza.setEmail(em_email.getText());
-        emergenza.setTelefono(em_telefono.getValue());
         if (em_telefono.getValue() == null) {
             throw new JavaFXDataError("Telefono emergenza non valido!");
         }
+        emergenza.setTelefono(em_telefono.getValue());
         if (!emergenza.validate()) {
             throw new JavaFXDataError("Campi emergenza non compilati o errati");
         }

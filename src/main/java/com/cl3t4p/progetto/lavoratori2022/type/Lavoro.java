@@ -2,7 +2,7 @@ package com.cl3t4p.progetto.lavoratori2022.type;
 
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.annotation.FieldChecker;
+import com.cl3t4p.progetto.lavoratori2022.annotation.SkipCheck;
 import com.cl3t4p.progetto.lavoratori2022.annotation.SQLDInfo;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;
@@ -18,17 +18,17 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Lavoro implements ValidateData, Mappable {
 
+    @SkipCheck
     int id;
     Date inizio_periodo;
     Date fine_periodo;
     String nome_azienda;
     @SQLDInfo(sql_name = "mansione_svolta")
     String mansione;
-    @FieldChecker
+    @SkipCheck
     @SQLDInfo(sql_name = "luogo_lavoro")
     String luogo;
     int id_lavoratore;
-
     //TODO Cambiare e mettere la virgola o fare lo shift di 2 numeri
     @SQLDInfo(sql_name = "retribuzione_lorda_giornaliera")
     int retribuzione;

@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * TableCell that help display the value and if the value is too long,
@@ -50,10 +51,11 @@ public class DataTableCell extends TableCell<Map<String, String>, String> {
 
     @Override
     protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (item != null) {
-            setText(item);
+        this.setItem(item);
+        if (empty && this.isSelected()) {
+            this.updateSelected(false);
         }
+        setText(Objects.requireNonNullElse(item, ""));
     }
 
 }
