@@ -81,7 +81,14 @@ public class SearchController implements Initializable {
         bt_nome.setOnAction(e -> addFilter("nome", nome));
         bt_cognome.setOnAction(e -> addFilter("cognome", cognome));
         bt_lingua.setOnAction(e -> addFilter("nome_lingua", lingua));
-        bt_esperienza.setOnAction(e -> addFilter("esperienza", esperienza));
+
+        //TODO test this filter
+        bt_esperienza.setOnAction(e -> {
+
+            addFilter("esperienza", esperienza);
+            builder.addFilter("lavoro_svolto.mansione_svolta", esperienza.getText(),
+                    FilterBuilder.TypeVar.STRING, FilterBuilder.Logic.OR,similar.isSelected() );
+        });
         bt_comune.setOnAction(e -> addFilter("comune", comune));
 
         bt_data.setOnAction(this::addDataToFilter);
@@ -93,7 +100,6 @@ public class SearchController implements Initializable {
         addFilter(nome, FilterBuilder.TypeVar.STRING, field.getText());
         field.clear();
     }
-
     private void addFilter(String nome, FilterBuilder.TypeVar type, String value) {
         builder.addFilter(nome, value, type, and.isSelected() ? FilterBuilder.Logic.AND : FilterBuilder.Logic.OR, similar.isSelected());
         filters.setText(builder.readableString());

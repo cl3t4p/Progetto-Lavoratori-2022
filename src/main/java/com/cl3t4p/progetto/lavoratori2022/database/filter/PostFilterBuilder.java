@@ -29,6 +29,7 @@ public class PostFilterBuilder implements FilterBuilder {
             "LEFT JOIN lingua_lav ON (lavoratore.id=lingua_lav.id_lavoratore) " +
             "LEFT JOIN lav_comune ON (lavoratore.id=lav_comune.id_lavoratore) " +
             "LEFT JOIN esp_lav ON (lavoratore.id=esp_lav.id_lavoratore) " +
+            "LEFT JOIN lavoro_svolto ON (lavoratore.id=lavoro_svolto.id_lavoratore)" +
             "WHERE ";
 
     final List<ResearchField> fields = new ArrayList<>();
