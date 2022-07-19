@@ -52,6 +52,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+
         </plugins>
         <resources>
             <resource>
@@ -89,6 +91,7 @@
             <artifactId>javafx-controls</artifactId>
             <version>${openjdk-version}</version>
         </dependency>
+
         <!--Testing Dependecy-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

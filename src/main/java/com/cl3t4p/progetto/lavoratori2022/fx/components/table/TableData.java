@@ -92,6 +92,7 @@ public class TableData extends TableView<Map<String, String>> {
         refreshData();
     }
 
+    @SuppressWarnings("unchecked")
     public void setupSingleColumn() {
         TableColumn<Map<String, String>, String> first = (TableColumn<Map<String, String>, String>) getColumns().get(0);
         setupColumn(first, "default");

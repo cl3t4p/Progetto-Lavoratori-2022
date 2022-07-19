@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateDataTest" time="0.031" tests="5" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\alexz\Desktop\projects\Progetto-Lavoratori-2022\target\test-classes;C:\Users\alexz\Desktop\projects\Progetto-Lavoratori-2022\target\classes;C:\Users\alexz\.m2\repository\org\postgresql\postgresql\42.3.6\postgresql-42.3.6.jar;C:\Users\alexz\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\alexz\.m2\repository\org\projectlombok\lombok\1.18.24\lombok-1.18.24.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-base\18.0.1\javafx-base-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-base\18.0.1\javafx-base-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-fxml\18.0.1\javafx-fxml-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-fxml\18.0.1\javafx-fxml-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-controls\18.0.1\javafx-controls-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-controls\18.0.1\javafx-controls-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1-linux.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1-mac.jar;C:\Users\alexz\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.2\junit-jupiter-api-5.8.2.jar;C:\Users\alexz\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\alexz\.m2\repository\org\junit\platform\junit-platform-commons\1.8.2\junit-platform-commons-1.8.2.jar;C:\Users\alexz\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\alexz\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\alexz\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\alexz\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.8.2\junit-jupiter-engine-5.8.2.jar;C:\Users\alexz\.m2\repository\org\junit\platform\junit-platform-engine\1.8.2\junit-platform-engine-1.8.2.jar;C:\Users\alexz\.m2\repository\io\zonky\test\embedded-postgres\2.0.0\embedded-postgres-2.0.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-windows-amd64\14.3.0\embedded-postgres-binaries-windows-amd64-14.3.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-darwin-amd64\14.3.0\embedded-postgres-binaries-darwin-amd64-14.3.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-linux-amd64\14.3.0\embedded-postgres-binaries-linux-amd64-14.3.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-linux-amd64-alpine\14.3.0\embedded-postgres-binaries-linux-amd64-alpine-14.3.0.jar;C:\Users\alexz\.m2\repository\org\slf4j\slf4j-api\1.7.36\slf4j-api-1.7.36.jar;C:\Users\alexz\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;C:\Users\alexz\.m2\repository\org\apache\commons\commons-compress\1.21\commons-compress-1.21.jar;C:\Users\alexz\.m2\repository\org\tukaani\xz\1.9\xz-1.9.jar;C:\Users\alexz\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\alexz\.m2\repository\commons-codec\commons-codec\1.15\commons-codec-1.15.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Europe/Rome"/>
+    <property name="user.country.format" value="IT"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Users\alexz\.jdks\openjdk-17.0.2\bin"/>
+    <property name="sun.java.command" value="C:\Users\alexz\AppData\Local\Temp\surefire7445406839202292689\surefirebooter6915425902781435478.jar C:\Users\alexz\AppData\Local\Temp\surefire7445406839202292689 2022-07-19T14-46-53_462-jvmRun1 surefire1201373453242816025tmp surefire_014370645575905841172tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\alexz\Desktop\projects\Progetto-Lavoratori-2022\target\test-classes;C:\Users\alexz\Desktop\projects\Progetto-Lavoratori-2022\target\classes;C:\Users\alexz\.m2\repository\org\postgresql\postgresql\42.3.6\postgresql-42.3.6.jar;C:\Users\alexz\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\alexz\.m2\repository\org\projectlombok\lombok\1.18.24\lombok-1.18.24.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-base\18.0.1\javafx-base-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-base\18.0.1\javafx-base-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-fxml\18.0.1\javafx-fxml-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-fxml\18.0.1\javafx-fxml-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-controls\18.0.1\javafx-controls-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-controls\18.0.1\javafx-controls-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1-win.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1-linux.jar;C:\Users\alexz\.m2\repository\org\openjfx\javafx-graphics\18.0.1\javafx-graphics-18.0.1-mac.jar;C:\Users\alexz\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.2\junit-jupiter-api-5.8.2.jar;C:\Users\alexz\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\alexz\.m2\repository\org\junit\platform\junit-platform-commons\1.8.2\junit-platform-commons-1.8.2.jar;C:\Users\alexz\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\alexz\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\alexz\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\alexz\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.8.2\junit-jupiter-engine-5.8.2.jar;C:\Users\alexz\.m2\repository\org\junit\platform\junit-platform-engine\1.8.2\junit-platform-engine-1.8.2.jar;C:\Users\alexz\.m2\repository\io\zonky\test\embedded-postgres\2.0.0\embedded-postgres-2.0.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-windows-amd64\14.3.0\embedded-postgres-binaries-windows-amd64-14.3.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-darwin-amd64\14.3.0\embedded-postgres-binaries-darwin-amd64-14.3.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-linux-amd64\14.3.0\embedded-postgres-binaries-linux-amd64-14.3.0.jar;C:\Users\alexz\.m2\repository\io\zonky\test\postgres\embedded-postgres-binaries-linux-amd64-alpine\14.3.0\embedded-postgres-binaries-linux-amd64-alpine-14.3.0.jar;C:\Users\alexz\.m2\repository\org\slf4j\slf4j-api\1.7.36\slf4j-api-1.7.36.jar;C:\Users\alexz\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;C:\Users\alexz\.m2\repository\org\apache\commons\commons-compress\1.21\commons-compress-1.21.jar;C:\Users\alexz\.m2\repository\org\tukaani\xz\1.9\xz-1.9.jar;C:\Users\alexz\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\alexz\.m2\repository\commons-codec\commons-codec\1.15\commons-codec-1.15.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\alexz"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2022-01-18"/>
+    <property name="java.home" value="C:\Users\alexz\.jdks\openjdk-17.0.2"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\alexz\Desktop\projects\Progetto-Lavoratori-2022"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\alexz\AppData\Local\Temp\surefire7445406839202292689\surefirebooter6915425902781435478.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="17.0.2+8-86"/>
+    <property name="user.name" value="alexz"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\alexz\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\alexz\AppData\Local\Temp\"/>
+    <property name="idea.version" value="2022.1.3"/>
+    <property name="java.version" value="17.0.2"/>
+    <property name="user.dir" value="C:\Users\alexz\Desktop\projects\Progetto-Lavoratori-2022"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.language.format" value="it"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Users\alexz\.jdks\openjdk-17.0.2\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Anaconda3\condabin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\libnvvp;C:\ProgramData\Anaconda3;C:\ProgramData\Anaconda3\Library\mingw-w64\bin;C:\ProgramData\Anaconda3\Library\usr\bin;C:\ProgramData\Anaconda3\Library\bin;C:\ProgramData\Anaconda3\Scripts;C:\Python310\Scripts\;C:\Python310\;C:\Program Files\Java\jdk-17.0.1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\alexz\AppData\Roaming\flutter\bin;C:\Program Files\Go\bin;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Users\alexz\AppData\Roaming\maven\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;D:\Dev\C++\Compiler\MineGW\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\NVIDIA Corporation\Nsight Compute 2020.3.1\;C:\LocalPrograms\protoc\bin;C:\Program Files\MATLAB\R2021b\bin;C:\Program Files\PowerShell\7\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\alexz\.cargo\bin;C:\Users\alexz\AppData\Local\Microsoft\WindowsApps;C:\Users\alexz\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\alexz\go\bin;C:\Users\alexz\.dotnet\tools;C:\Users\alexz\AppData\Roaming\npm;C:\Users\alexz\AppData\Local\GitHubDesktop\bin;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64;;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="17.0.2+8-86"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="invalidMail" classname="com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateDataTest" time="0.02"/>
+  <testcase name="invalidNull" classname="com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateDataTest" time="0.001"/>
+  <testcase name="validOptional" classname="com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateDataTest" time="0.003"/>
+  <testcase name="valid" classname="com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateDataTest" time="0.001"/>
+  <testcase name="invalidPhone" classname="com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateDataTest" time="0.001"/>
+</testsuite>

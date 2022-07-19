@@ -4,6 +4,7 @@ import com.cl3t4p.progetto.lavoratori2022.annotation.SQLDInfo;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class SQLMapper {
 
-    /***
+    /**
      * Remember that the order of the serialize is based on the fields names
      * @param statement Statment that need to be modified
      * @param a Object that need be serialized
@@ -62,7 +63,13 @@ public class SQLMapper {
 
     public static <A> A deserializeSQL(ResultSet result, Class<A> clazz) throws IllegalAccessException, InstantiationException, SQLException {
         //Create a empty instance of A class
-        A a = clazz.newInstance();
+        A a;
+        try {
+            a = clazz.getDeclaredConstructor().newInstance();
+        }catch (NoSuchMethodException | InvocationTargetException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
         //Loop every field in the class
         for (Field field : a.getClass().getDeclaredFields()) {
@@ -70,8 +77,7 @@ public class SQLMapper {
             boolean ignore = false;
             //Check if there is a SQLDInfo annotation and it's parameters
             for (Annotation annotation : field.getAnnotations())
-                if (annotation instanceof SQLDInfo) {
-                    SQLDInfo info = (SQLDInfo) annotation;
+                if (annotation instanceof SQLDInfo info) {
                     name = info.sql_name().isEmpty() ? name : info.sql_name();
                     ignore = info.ignore();
                     break;
