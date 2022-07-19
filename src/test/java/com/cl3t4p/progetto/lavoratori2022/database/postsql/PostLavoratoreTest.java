@@ -2,47 +2,57 @@ package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
+import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.MainRepo;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
-
+import io.zonky.test.db.postgres.embedded.EmbeddedPostgres;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.*;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Properties;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PostLavoratoreTest {
 
-    Lavoratore lavoratore;
-    static PostDriver repo;
-    static PostLavoratore postLav;
-    private static void loadDBConfig() throws IOException {
-        FileReader reader = new FileReader(PostLavoratore.class.getResource("/test.properties").getPath());
-        Properties p = new Properties();
-        p.load(reader);
-        System.out.println(p);
-        repo = new PostDriver(p.getProperty("username"), p.getProperty("password"), p.getProperty("db_name"), p.getProperty("host"), Integer.parseInt(p.getProperty("port")));
-        postLav = (PostLavoratore) repo.getLavoratoreRepo();
-    }
+
+    static Lavoratore lavoratore;
+    static MainRepo repo;
+    static LavoratoreRepo repoLav;
+    static EmbeddedPostgres db;
+
 
     @BeforeAll
-    public static void setUp() throws IOException {
-        System.out.println("Test");
-        loadDBConfig();
+    static void setUp() {
+        repo = setupTempDB();
+        repoLav = repo.getLavoratoreRepo();
     }
 
     @AfterAll
-    public static void tearDown() throws SQLException {
-        System.out.println("Test 1");
-        repo.getConnection().close();
+    static void tearDown() throws IOException {
+        db.close();
+    }
+
+    @SneakyThrows
+    private static MainRepo setupTempDB() {
+        db = EmbeddedPostgres.builder()
+                .start();
+        URL url = PostLavoratoreTest.class.getResource("/schema.sql");
+        assert url != null;
+        String schema = new String(Files.readAllBytes(Path.of(url.toURI())));
+        db.getPostgresDatabase().getConnection().createStatement().execute(schema);
+        return new PostDriver(db.getPostgresDatabase());
     }
 
 
     @Test
     @Order(1)
-    void addLavoratore() throws SQLException {
+    void addLavoratore() {
         lavoratore = new Lavoratore();
         lavoratore.setId_dipendente(1);
         lavoratore.setNome("Test1");
@@ -53,47 +63,60 @@ class PostLavoratoreTest {
         lavoratore.setIndirizzo("DIDID");
         lavoratore.setTelefono(2022233455);
         lavoratore.setEmail("te@te.com");
+        lavoratore.setAutomunito("SI");
         lavoratore.setInizio_disponibile(Date.valueOf(LocalDate.EPOCH));
         lavoratore.setFine_disponibile(Date.valueOf(LocalDate.now()));
-        int id = postLav.addLavoratore(lavoratore);
+        int id = 0;
+        try {
+            id = repoLav.addLavoratore(lavoratore);
+        } catch (SQLException e) {
+            Assertions.fail();
+        }
         lavoratore.setId(id);
     }
 
     @Test
     @Order(2)
     void getLavoratoreByID() {
-        Lavoratore repoLav = postLav.getLavoratoreByID(lavoratore.getId());
-        Assertions.assertEquals(repoLav, lavoratore);
+        Lavoratore tmpLav = repoLav.getLavoratoreByID(lavoratore.getId());
+        Assertions.assertEquals(tmpLav, lavoratore);
     }
 
     @Test
     @Order(3)
-    void updateLavoratore() throws SQLException {
+    void updateLavoratore() {
         Lavoratore tempLav = lavoratore.clone();
-        tempLav.setNome("Ale");
-        postLav.updateLavoratore(tempLav);
+        String name = "AL";
+        tempLav.setNome(name);
+        try {
+            repoLav.updateLavoratore(tempLav);
+        } catch (SQLException e) {
+            Assertions.fail();
+        }
+        Assertions.assertEquals(repoLav.getLavoratoreByID(lavoratore.getId()).getNome(), name);
     }
-
 
     @Test
     @Order(4)
     void filterWrongLavoratore() {
         FilterBuilder builder = repo.getFilterBuilderInstance();
-        builder.addFilter("nome","Test1", FilterBuilder.TypeVar.STRING, FilterBuilder.Logic.AND,false);
-        Assertions.assertNotEquals(postLav.filterLavoratore(builder).get(0), lavoratore);
+        builder.addFilter("nome", "Test1", FilterBuilder.TypeVar.STRING, FilterBuilder.Logic.AND, false);
+        Assertions.assertEquals(repoLav.filterLavoratore(builder).size(), 0);
     }
 
     @Test
     @Order(5)
     void filterLavoratore() {
         FilterBuilder builder = repo.getFilterBuilderInstance();
-        builder.addFilter("nome","Ale", FilterBuilder.TypeVar.STRING, FilterBuilder.Logic.AND,false);
-        Assertions.assertNotEquals(postLav.filterLavoratore(builder).get(0).getNome(), "Ale");
+        builder.addFilter("nome", "AL", FilterBuilder.TypeVar.STRING, FilterBuilder.Logic.AND, false);
+        String name = repoLav.filterLavoratore(builder).get(0).getNome();
+        Assertions.assertEquals(name, "AL");
     }
 
     @Test
     @Order(6)
     void delLavoratore() {
-        postLav.delLavoratore(lavoratore.getId());
+        repoLav.delLavoratore(lavoratore.getId());
+        Assertions.assertNull(repoLav.getLavoratoreByID(lavoratore.getId()));
     }
 }

@@ -5,6 +5,7 @@ import com.cl3t4p.progetto.lavoratori2022.database.filter.PostFilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.database.postsql.*;
 import com.cl3t4p.progetto.lavoratori2022.repo.*;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 public class PostDriver implements MainRepo {
     private final String user, pass, db_name, host;
     private final int port;
+    private final DataSource source;
 
     private Connection connection;
 
@@ -30,11 +32,29 @@ public class PostDriver implements MainRepo {
         this.db_name = db_name;
         this.host = host;
         this.port = port;
+        source = null;
+
+    }
+
+    public PostDriver(DataSource source) {
+        this.user = "";
+        this.pass = "";
+        this.db_name = "";
+        this.host = "";
+        this.port = 0;
+        this.source = source;
     }
 
 
     @Override
     public Connection getConnection() {
+        if(source != null) {
+            try {
+                connection = source.getConnection();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         if (connection == null)
             try {
                 connection = getNewConnection();
@@ -45,6 +65,13 @@ public class PostDriver implements MainRepo {
     }
 
     private Connection getNewConnection() throws SQLException, ClassNotFoundException {
+        if(source != null) {
+            try {
+                return source.getConnection();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(String.format("jdbc:postgresql://%s:%d/%s", host, port, db_name), user,
                 pass);

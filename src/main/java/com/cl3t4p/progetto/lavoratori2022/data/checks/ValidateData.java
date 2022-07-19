@@ -34,7 +34,8 @@ public interface ValidateData {
                 if (obj == null)
                     return false;
                 if(checker != null)
-                    return checker.validate(obj.toString());
+                    if(!checker.validate(obj.toString()))
+                        return false;
                 if (obj instanceof String)
                     if (((String) obj).isEmpty())
                         return false;
