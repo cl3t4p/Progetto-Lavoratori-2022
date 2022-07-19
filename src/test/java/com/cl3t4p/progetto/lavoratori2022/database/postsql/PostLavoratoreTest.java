@@ -4,8 +4,6 @@ import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 import java.io.FileReader;
@@ -24,17 +22,20 @@ class PostLavoratoreTest {
         FileReader reader = new FileReader(PostLavoratore.class.getResource("/test.properties").getPath());
         Properties p = new Properties();
         p.load(reader);
+        System.out.println(p);
         repo = new PostDriver(p.getProperty("username"), p.getProperty("password"), p.getProperty("db_name"), p.getProperty("host"), Integer.parseInt(p.getProperty("port")));
         postLav = (PostLavoratore) repo.getLavoratoreRepo();
     }
 
     @BeforeAll
     public static void setUp() throws IOException {
+        System.out.println("Test");
         loadDBConfig();
     }
 
     @AfterAll
     public static void tearDown() throws SQLException {
+        System.out.println("Test 1");
         repo.getConnection().close();
     }
 

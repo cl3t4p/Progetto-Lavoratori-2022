@@ -82,12 +82,10 @@ public class SearchController implements Initializable {
         bt_cognome.setOnAction(e -> addFilter("cognome", cognome));
         bt_lingua.setOnAction(e -> addFilter("nome_lingua", lingua));
 
-        //TODO test this filter
         bt_esperienza.setOnAction(e -> {
-
+            String value = esperienza.getText();
             addFilter("esperienza", esperienza);
-            builder.addFilter("lavoro_svolto.mansione_svolta", esperienza.getText(),
-                    FilterBuilder.TypeVar.STRING, FilterBuilder.Logic.OR,similar.isSelected() );
+            addFilter("mansione_svolta", FilterBuilder.TypeVar.STRING, value, FilterBuilder.Logic.OR);
         });
         bt_comune.setOnAction(e -> addFilter("comune", comune));
 
@@ -100,12 +98,16 @@ public class SearchController implements Initializable {
         addFilter(nome, FilterBuilder.TypeVar.STRING, field.getText());
         field.clear();
     }
-    private void addFilter(String nome, FilterBuilder.TypeVar type, String value) {
-        builder.addFilter(nome, value, type, and.isSelected() ? FilterBuilder.Logic.AND : FilterBuilder.Logic.OR, similar.isSelected());
+    private void addFilter(String nome, FilterBuilder.TypeVar type, String value, FilterBuilder.Logic logic) {
+        builder.addFilter(nome, value, type, logic, similar.isSelected());
         filters.setText(builder.readableString());
         search();
         if (radio_buttons.isDisable())
             radio_buttons.setDisable(false);
+    }
+
+    private void addFilter(String nome, FilterBuilder.TypeVar type, String value) {
+        addFilter(nome, type, value, and.isSelected() ? FilterBuilder.Logic.AND : FilterBuilder.Logic.OR);
     }
 
 
