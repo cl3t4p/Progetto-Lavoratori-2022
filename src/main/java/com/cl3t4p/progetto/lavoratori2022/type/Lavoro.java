@@ -25,7 +25,6 @@ public class Lavoro implements ValidateData, Mappable {
     String nome_azienda;
     @SQLDInfo(sql_name = "mansione_svolta")
     String mansione;
-    @SkipCheck
     @SQLDInfo(sql_name = "luogo_lavoro")
     String luogo;
     int id_lavoratore;
