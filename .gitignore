@@ -179,5 +179,6 @@ gen
 db.properties
 test.properties
 target/!/TODO.txt
+target/
 
 /tmp
