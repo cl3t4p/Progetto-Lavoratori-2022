@@ -2,7 +2,7 @@ package com.cl3t4p.progetto.lavoratori2022.data.checks;
 
 
 import com.cl3t4p.progetto.lavoratori2022.annotation.RegexCheck;
-import com.cl3t4p.progetto.lavoratori2022.annotation.SkipCheck;
+import com.cl3t4p.progetto.lavoratori2022.annotation.Optional;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -19,7 +19,7 @@ public interface ValidateData {
             field.setAccessible(true);
             boolean ignore = false;
             for (Annotation annotation : field.getAnnotations()) {
-                if (annotation instanceof SkipCheck)
+                if (annotation instanceof Optional)
                     ignore = true;
 
                 if (annotation instanceof RegexCheck)

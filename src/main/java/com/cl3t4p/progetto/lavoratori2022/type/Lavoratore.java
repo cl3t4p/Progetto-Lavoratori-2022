@@ -2,7 +2,7 @@ package com.cl3t4p.progetto.lavoratori2022.type;
 
 
 import com.cl3t4p.progetto.lavoratori2022.annotation.RegexCheck;
-import com.cl3t4p.progetto.lavoratori2022.annotation.SkipCheck;
+import com.cl3t4p.progetto.lavoratori2022.annotation.Optional;
 import com.cl3t4p.progetto.lavoratori2022.annotation.SQLDInfo;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
@@ -18,7 +18,7 @@ import java.sql.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Lavoratore implements ValidateData, Mappable,Cloneable {
 
-    @SkipCheck
+    @Optional
     int id, id_dipendente;
     String nome, cognome, luogo_nascita;
     Date data_nascita;

@@ -35,7 +35,6 @@ class MappableTest {
         assertEquals(map.get("phone"),String.valueOf(object.getPhone()));
     }
 
-
     @Test
     void complexMap() {
         assertEquals(map.get("date"),object.getDate().toString());

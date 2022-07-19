@@ -15,6 +15,7 @@ class ValidateDataTest {
         object.setOptional("Optional");
         object.setPhone(1545855977);
         object.setEmail("test@test.com");
+        object.setSecond_email("test2@email.io");
     }
 
     @Test
@@ -41,8 +42,33 @@ class ValidateDataTest {
     }
 
     @Test
-    void validOptional() {
+    void validOptionalNull() {
         object.setOptional(null);
         Assertions.assertTrue(object.validate());
     }
+    @Test
+    void validOptionalEmpty() {
+        object.setOptional("");
+        Assertions.assertTrue(object.validate());
+    }
+
+    @Test
+    void validOptionalRegexNull() {
+        object.setSecond_email(null);
+        Assertions.assertTrue(object.validate());
+    }
+
+    @Test
+    void validOptionalRegexEmpty() {
+        object.setSecond_email("");
+        Assertions.assertTrue(object.validate());
+    }
+
+    @Test
+    void invalidOptionalRegex() {
+        object.setSecond_email("@test");
+        Assertions.assertFalse(object.validate());
+    }
+
+
 }

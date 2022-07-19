@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.test;
 
 import com.cl3t4p.progetto.lavoratori2022.annotation.RegexCheck;
-import com.cl3t4p.progetto.lavoratori2022.annotation.SkipCheck;
+import com.cl3t4p.progetto.lavoratori2022.annotation.Optional;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;
 import lombok.Data;
@@ -13,7 +13,10 @@ public class ValidateClass implements ValidateData {
     long phone;
     @RegexCheck(RegexChecker.EMAIL)
     String email;
-    @SkipCheck
+    @Optional
     String optional;
+    @RegexCheck(RegexChecker.EMAIL)
+    @Optional
+    String second_email;
 
 }
