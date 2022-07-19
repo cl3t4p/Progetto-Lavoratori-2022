@@ -18,27 +18,36 @@ public interface ValidateData {
             RegexChecker checker = null;
             field.setAccessible(true);
             boolean ignore = false;
-            for (Annotation annotation : field.getAnnotations())
-                if (annotation instanceof SkipCheck) {
+            for (Annotation annotation : field.getAnnotations()) {
+                if (annotation instanceof SkipCheck)
                     ignore = true;
-                    break;
-                }else if(annotation instanceof RegexCheck) {
-                    checker = ((RegexCheck) annotation).value();
-                    break;
-                }
 
-            if (ignore)
-                continue;
+                if (annotation instanceof RegexCheck)
+                    checker = ((RegexCheck) annotation).value();
+            }
+
+
             try {
                 Object obj = field.get(this);
-                if (obj == null)
-                    return false;
+                if (obj == null) {
+                    //Skip if the field is ignored
+                    if(ignore)
+                        continue;
+                    else
+                        return false;
+                }
+                if (obj instanceof String string)
+                    if (string.isEmpty()) {
+                        //Skip if the field is ignored
+                        if (ignore)
+                            continue;
+                        return false;
+                    }
+
                 if(checker != null)
                     if(!checker.validate(obj.toString()))
                         return false;
-                if (obj instanceof String)
-                    if (((String) obj).isEmpty())
-                        return false;
+
 
             } catch (IllegalAccessException | IllegalArgumentException e) {
                 e.printStackTrace();
