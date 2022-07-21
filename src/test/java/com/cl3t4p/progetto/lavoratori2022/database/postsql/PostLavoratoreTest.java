@@ -20,7 +20,6 @@ import java.time.LocalDate;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PostLavoratoreTest {
 
-
     static Lavoratore lavoratore;
     static MainRepo repo;
     static LavoratoreRepo repoLav;

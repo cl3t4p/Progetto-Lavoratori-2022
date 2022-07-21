@@ -5,7 +5,7 @@ import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.PostFilterBuilder;
-import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField;
+import com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf.LongTextField;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ColumnAction;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData;
@@ -19,10 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ModificaController implements Initializable {
 
@@ -77,6 +74,7 @@ public class ModificaController implements Initializable {
         if(list.isEmpty())
             return List.of();
         return list.stream()
+                .filter(Objects::nonNull)
                 .map(Mappable::toMap)
                 .toList();
     }

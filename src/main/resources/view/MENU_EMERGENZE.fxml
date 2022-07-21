@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.LongTextField?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf.LongTextField?>
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>

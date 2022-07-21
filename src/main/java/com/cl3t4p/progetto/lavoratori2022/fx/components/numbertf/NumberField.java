@@ -1,18 +1,22 @@
-package com.cl3t4p.progetto.lavoratori2022.fx.components;
+package com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf;
+
+
+
 
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.util.Callback;
 
+import java.lang.reflect.Executable;
+import java.util.Map;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-public class LongTextField extends TextField {
+public abstract class NumberField <A extends Number>  extends TextField {
 
 
-    public LongTextField() {
-        Pattern pattern = Pattern.compile("-?\\d*()?");
-
+    public NumberField(Pattern pattern) {
         UnaryOperator<TextFormatter.Change> filter = c -> {
             if (pattern.matcher(c.getControlNewText()).matches()) {
                 return c;
@@ -20,20 +24,18 @@ public class LongTextField extends TextField {
                 return null;
             }
         };
-
-        TextFormatter<Double> formatter = new TextFormatter<>(filter);
-
-        setTextFormatter(formatter);
+        setTextFormatter(new TextFormatter<A>(filter));
     }
 
-    public Long getValue() {
+    public A getValue() {
         if(getText().isEmpty())
             return null;
         try {
-            return Long.parseLong(getText());
+            return parseValue(getText());
         } catch (Exception e) {
             return null;
         }
-
     }
+
+    public abstract A parseValue(String value);
 }

@@ -3,7 +3,7 @@
 <?import com.cl3t4p.progetto.lavoratori2022.fx.components.table.TableData?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.cl3t4p.progetto.lavoratori2022.fx.components.DoubleTextField?>
+<?import com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf.DoubleTextField?>
 <AnchorPane prefHeight="619.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore.LavoroMenuController">
