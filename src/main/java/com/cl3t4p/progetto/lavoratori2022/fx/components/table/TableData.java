@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.components.table;
 
-import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
+import com.cl3t4p.progetto.lavoratori2022.functions.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.ButtonColumn;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.factory.ICellButtonFactory;
 import javafx.collections.FXCollections;

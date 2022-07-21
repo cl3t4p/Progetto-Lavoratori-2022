@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.annotation;
 
-import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
+import com.cl3t4p.progetto.lavoratori2022.functions.validation.RegexChecker;
 
 import java.lang.annotation.*;
 

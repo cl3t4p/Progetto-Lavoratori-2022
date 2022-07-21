@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.database;
+package com.cl3t4p.progetto.lavoratori2022.repo;
 
 import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class DataRepo {
+public class MemRepo {
     Dipendente dipendente;
     Integer lavoratore_id;
 }

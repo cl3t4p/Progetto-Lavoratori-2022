@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
+import com.cl3t4p.progetto.lavoratori2022.functions.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.button.CellButtonFactoryFactory;
@@ -62,7 +62,7 @@ public class SearchController implements Initializable {
 
 
         CellButtonFactoryFactory factory = new CellButtonFactoryFactory(map -> {
-            Main.getDataRepo().setLavoratore_id(Integer.valueOf(map.get("id")));
+            Main.getMemRepo().setLavoratore_id(Integer.valueOf(map.get("id")));
             Main.getLoader().loadView("VIEW_LAVORATORE");
             return null;
         }, "+");

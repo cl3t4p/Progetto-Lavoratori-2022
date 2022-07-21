@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.view;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.MemRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
 import com.cl3t4p.progetto.lavoratori2022.type.Dipendente;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class LavoratoreViewController implements Initializable {
 
-    final DataRepo dataRepo = Main.getDataRepo();
+    final MemRepo memRepo = Main.getMemRepo();
     final LavoratoreRepo lavRepo = Main.getRepo().getLavoratoreRepo();
 
 
@@ -27,9 +27,9 @@ public class LavoratoreViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Dipendente dipendente = dataRepo.getDipendente();
+        Dipendente dipendente = memRepo.getDipendente();
         id_dipendente.setText(id_dipendente.getText() + dipendente.getId());
-        id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
+        id_lavoratore.setText(id_lavoratore.getText() + memRepo.getLavoratore_id());
         setupLavoratore();
     }
 
@@ -47,7 +47,7 @@ public class LavoratoreViewController implements Initializable {
 
 
     private void setupLavoratore() {
-        Lavoratore lavoratore = lavRepo.getLavoratoreByID(dataRepo.getLavoratore_id());
+        Lavoratore lavoratore = lavRepo.getLavoratoreByID(memRepo.getLavoratore_id());
         nome.setText(lavoratore.getNome());
         cognome.setText(lavoratore.getCognome());
         luogo_nascita.setText(lavoratore.getLuogo_nascita());

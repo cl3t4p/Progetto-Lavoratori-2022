@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
+import com.cl3t4p.progetto.lavoratori2022.functions.validation.RegexChecker;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf.LongTextField;
@@ -45,7 +45,7 @@ public class EmeMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-        lavoratore_id = Main.getDataRepo().getLavoratore_id();
+        lavoratore_id = Main.getMemRepo().getLavoratore_id();
         lav_id.setText(lav_id.getText() + lavoratore_id);
 
 

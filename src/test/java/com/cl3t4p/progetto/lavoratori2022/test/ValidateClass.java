@@ -2,8 +2,8 @@ package com.cl3t4p.progetto.lavoratori2022.test;
 
 import com.cl3t4p.progetto.lavoratori2022.annotation.RegexCheck;
 import com.cl3t4p.progetto.lavoratori2022.annotation.Optional;
-import com.cl3t4p.progetto.lavoratori2022.data.checks.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.data.checks.ValidateData;
+import com.cl3t4p.progetto.lavoratori2022.functions.validation.RegexChecker;
+import com.cl3t4p.progetto.lavoratori2022.functions.validation.ValidateData;
 import lombok.Data;
 
 @Data

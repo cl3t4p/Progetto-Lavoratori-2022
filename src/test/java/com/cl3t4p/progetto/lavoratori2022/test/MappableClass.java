@@ -1,6 +1,6 @@
 package com.cl3t4p.progetto.lavoratori2022.test;
 
-import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
+import com.cl3t4p.progetto.lavoratori2022.functions.Mappable;
 import lombok.Data;
 
 import java.time.LocalDate;

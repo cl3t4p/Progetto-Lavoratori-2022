@@ -36,7 +36,7 @@ public class OpzViewModeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        int lavoratore_id = Main.getDataRepo().getLavoratore_id();
+        int lavoratore_id = Main.getMemRepo().getLavoratore_id();
         label_id.setText(String.valueOf(lavoratore_id));
 
         setupRow(patenti_view, patente);

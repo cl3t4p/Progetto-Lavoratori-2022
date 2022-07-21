@@ -49,7 +49,7 @@ public class OpzMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        lavoratore_id = Main.getDataRepo().getLavoratore_id();
+        lavoratore_id = Main.getMemRepo().getLavoratore_id();
         setupLabel();
         setupPatenti();
         setupLingue();

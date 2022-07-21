@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.database.DataRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.MemRepo;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf.DoubleTextField;
@@ -34,7 +34,7 @@ public class LavoroMenuController implements Initializable {
 
     final LavoroRepo lavoroRepo = Main.getRepo().getLavoroRepo();
 
-    final DataRepo dataRepo = Main.getDataRepo();
+    final MemRepo memRepo = Main.getMemRepo();
     @FXML
     TableData lav_view;
 
@@ -55,8 +55,8 @@ public class LavoroMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (dataRepo.getLavoratore_id() != null) {
-            lav_id.setText(lav_id.getText() + dataRepo.getLavoratore_id());
+        if (memRepo.getLavoratore_id() != null) {
+            lav_id.setText(lav_id.getText() + memRepo.getLavoratore_id());
             lav_id.setVisible(true);
         }
 
@@ -68,7 +68,7 @@ public class LavoroMenuController implements Initializable {
         });
 
 
-        lav_view.setSupplier(() -> TableData.toMap(lavoroRepo.getLavoroByLavID(dataRepo.getLavoratore_id())));
+        lav_view.setSupplier(() -> TableData.toMap(lavoroRepo.getLavoroByLavID(memRepo.getLavoratore_id())));
         lav_view.setButtonColumn(factory.getCellFactory(ColumnAction.REMOVE));
 
         lav_view.setupColumn(col_id, "id", 30);
@@ -82,7 +82,7 @@ public class LavoroMenuController implements Initializable {
 
 
     public void back(ActionEvent event) {
-        Main.getDataRepo().setLavoratore_id(null);
+        Main.getMemRepo().setLavoratore_id(null);
         Main.getLoader().loadView("MENU");
     }
 
@@ -127,7 +127,7 @@ public class LavoroMenuController implements Initializable {
         lavoro.setRetribuzione(retri.getValue().intValue());
         lavoro.setInizio_periodo(Date.valueOf(ini_per.getValue()));
         lavoro.setFine_periodo(Date.valueOf(fine_per.getValue()));
-        lavoro.setId_lavoratore(dataRepo.getLavoratore_id());
+        lavoro.setId_lavoratore(memRepo.getLavoratore_id());
         return lavoro;
     }
 }

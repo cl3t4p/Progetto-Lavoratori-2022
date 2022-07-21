@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.data;
+package com.cl3t4p.progetto.lavoratori2022.functions;
 
 import com.cl3t4p.progetto.lavoratori2022.test.MappableClass;
 import org.junit.jupiter.api.BeforeEach;

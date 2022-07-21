@@ -1,4 +1,4 @@
-package com.cl3t4p.progetto.lavoratori2022.data.checks;
+package com.cl3t4p.progetto.lavoratori2022.functions.validation;
 
 
 import com.cl3t4p.progetto.lavoratori2022.annotation.RegexCheck;

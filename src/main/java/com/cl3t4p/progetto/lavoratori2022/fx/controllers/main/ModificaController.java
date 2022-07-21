@@ -2,7 +2,7 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.main;
 
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
-import com.cl3t4p.progetto.lavoratori2022.data.Mappable;
+import com.cl3t4p.progetto.lavoratori2022.functions.Mappable;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.PostFilterBuilder;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf.LongTextField;
@@ -45,7 +45,7 @@ public class ModificaController implements Initializable {
         lav_bt.disableProperty().bind(lav_view.getSelectionModel().getTableView().getFocusModel().focusedIndexProperty().isEqualTo(-1));
 
         CellButtonFactoryFactory factory = new CellButtonFactoryFactory((lav) -> {
-            Main.getDataRepo().setLavoratore_id(Integer.valueOf(lav.get("id")));
+            Main.getMemRepo().setLavoratore_id(Integer.valueOf(lav.get("id")));
             Main.getLoader().loadView("LAVORATORE");
             return null;
         }, "*");
@@ -92,7 +92,7 @@ public class ModificaController implements Initializable {
     }
 
     public void aggLavoro(ActionEvent actionEvent) {
-        Main.getDataRepo().setLavoratore_id(Integer.valueOf(lav_view.getSelectionModel().getTableView().getFocusModel().getFocusedItem().get("id")));
+        Main.getMemRepo().setLavoratore_id(Integer.valueOf(lav_view.getSelectionModel().getTableView().getFocusModel().getFocusedItem().get("id")));
         Main.getLoader().loadView("MENU_LAVORO");
     }
 }
