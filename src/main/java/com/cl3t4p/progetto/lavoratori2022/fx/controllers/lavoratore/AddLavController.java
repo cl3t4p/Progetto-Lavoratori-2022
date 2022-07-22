@@ -24,9 +24,10 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-//TODO Ask rename LavoratoreController
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AddLavController implements Initializable {
 
@@ -38,7 +39,7 @@ public class AddLavController implements Initializable {
     @FXML
     GridPane eme_pane;
     @FXML
-    Button main_button;
+    Button main_button,remove_button;
     @FXML
     DatePicker data_inizio, data_fine, data_nascita;
     @FXML
@@ -67,6 +68,7 @@ public class AddLavController implements Initializable {
 
 
     private void setupModify() {
+        remove_button.setVisible(true);
         id_lavoratore.setText(id_lavoratore.getText() + memRepo.getLavoratore_id());
         id_lavoratore.setVisible(true);
         eme_pane.setVisible(false);
@@ -91,23 +93,6 @@ public class AddLavController implements Initializable {
         data_inizio.setValue(lavoratore.getInizio_disponibile().toLocalDate());
         data_fine.setValue(lavoratore.getFine_disponibile().toLocalDate());
         automunito.setValue(lavoratore.getAutomunito());
-    }
-
-
-    @FXML
-    private void checkNascita(ActionEvent event) {
-        if (data_nascita.getValue() != null)
-            nascita_invalida.setVisible(Date.valueOf(data_nascita.getValue()).after(Date.valueOf(LocalDate.now())));
-    }
-
-    @FXML
-    private void checkDate(ActionEvent event) {
-        if (data_inizio.getValue() == null || data_fine.getValue() == null) {
-            nascita_invalida.setVisible(false);
-            return;
-        }
-        data_fin_invalida.setVisible(Date.valueOf(data_inizio.getValue()).after(Date.valueOf(data_fine.getValue())));
-        data_in_invalida.setVisible(Date.valueOf(data_inizio.getValue()).after(Date.valueOf(data_fine.getValue())));
     }
 
 
@@ -138,40 +123,6 @@ public class AddLavController implements Initializable {
         return date.getValue() == null;
     }
 
-
-    private void modifica_lavoratore(ActionEvent event) {
-        try {
-            Lavoratore lavoratore = getLavoratore();
-            lavoratore.setId(memRepo.getLavoratore_id());
-            try {
-                lavRepo.updateLavoratore(lavoratore);
-                Main.getLoader().loadView("LAVORATORE");
-
-            } catch (SQLException e) {
-                throw new JavaFXDataError("Database Error!");
-            }
-        } catch (JavaFXDataError e) {
-            e.show();
-        }
-    }
-
-    @FXML
-    private void inserimento_lavoratore(ActionEvent event) {
-        try {
-            Lavoratore lavoratore = getLavoratore();
-            Emergenza emergenza = getEmergenza();
-            try {
-                int id = lavRepo.addLavoratore(lavoratore);
-                memRepo.setLavoratore_id(id);
-                emeRepo.addEmergenza(emergenza, id);
-                Main.getLoader().loadView("LAVORATORE");
-            } catch (SQLException e) {
-                throw new JavaFXDataError("Database Error!");
-            }
-        } catch (JavaFXDataError e) {
-            e.show();
-        }
-    }
 
 
     /***
@@ -233,6 +184,56 @@ public class AddLavController implements Initializable {
         return lavoratore;
     }
 
+    private void modifica_lavoratore(ActionEvent event) {
+        try {
+            Lavoratore lavoratore = getLavoratore();
+            lavoratore.setId(memRepo.getLavoratore_id());
+            try {
+                lavRepo.updateLavoratore(lavoratore);
+                Main.getLoader().loadView("LAVORATORE");
+
+            } catch (SQLException e) {
+                throw new JavaFXDataError("Database Error!");
+            }
+        } catch (JavaFXDataError e) {
+            e.show();
+        }
+    }
+
+    @FXML
+    private void inserimento_lavoratore(ActionEvent event) {
+        try {
+            Lavoratore lavoratore = getLavoratore();
+            Emergenza emergenza = getEmergenza();
+            try {
+                int id = lavRepo.addLavoratore(lavoratore);
+                memRepo.setLavoratore_id(id);
+                emeRepo.addEmergenza(emergenza, id);
+                Main.getLoader().loadView("LAVORATORE");
+            } catch (SQLException e) {
+                throw new JavaFXDataError("Database Error!");
+            }
+        } catch (JavaFXDataError e) {
+            e.show();
+        }
+    }
+
+    @FXML
+    private void checkNascita(ActionEvent event) {
+        if (data_nascita.getValue() != null)
+            nascita_invalida.setVisible(Date.valueOf(data_nascita.getValue()).after(Date.valueOf(LocalDate.now())));
+    }
+
+    @FXML
+    private void checkDate(ActionEvent event) {
+        if (data_inizio.getValue() == null || data_fine.getValue() == null) {
+            nascita_invalida.setVisible(false);
+            return;
+        }
+        data_fin_invalida.setVisible(Date.valueOf(data_inizio.getValue()).after(Date.valueOf(data_fine.getValue())));
+        data_in_invalida.setVisible(Date.valueOf(data_inizio.getValue()).after(Date.valueOf(data_fine.getValue())));
+    }
+
     @FXML
     private void back(ActionEvent event) {
         Main.getMemRepo().setLavoratore_id(null);
@@ -249,4 +250,21 @@ public class AddLavController implements Initializable {
         Main.getLoader().loadView("MENU_EMERGENZE");
     }
 
+    @FXML
+    private void delLav(ActionEvent event) {
+        ButtonType si = new ButtonType("Si", ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Si è sicuri di voler eliminare il lavoratore?",
+                si,
+                no);
+
+        alert.setTitle("Conferma");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.orElse(si) == si) {
+            lavRepo.delLavoratore(memRepo.getLavoratore_id());
+        }
+
+    }
 }

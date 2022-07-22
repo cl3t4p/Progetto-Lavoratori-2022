@@ -5,11 +5,13 @@ import java.lang.annotation.*;
 
 
 /**
- * This annotation is used to skip the check of a field.
+ * This annotation is used to make a field optional.
+ * If the field is null, or if it's a empty string, the field is considered as valid.
+ * This annotation can be used with RegexCheck
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface Optional {
+public @interface  Optional {
 
 }

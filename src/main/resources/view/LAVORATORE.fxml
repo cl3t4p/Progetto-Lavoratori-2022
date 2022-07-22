@@ -36,11 +36,11 @@
                 <TextField fx:id="em_email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </children>
         </GridPane>
-        <GridPane alignment="CENTER_LEFT" layoutX="21.0" layoutY="22.0" prefHeight="367.0" prefWidth="380.0">
+        <GridPane alignment="CENTER_LEFT" layoutX="21.0" layoutY="22.0" prefHeight="367.0" prefWidth="475.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="106.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="169.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="106.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="170.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="197.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -92,5 +92,6 @@
               <Label fx:id="tel_invalido" text="Telefono invalido" textFill="RED" underline="true" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             </children>
         </GridPane>
+      <Button layoutX="816.0" fx:id="remove_button" layoutY="16.0" mnemonicParsing="false" onAction="#delLav" prefHeight="31.0" prefWidth="82.0" text="ELIMINA" visible="false" textFill="#942424" />
     </children>
 </AnchorPane>
