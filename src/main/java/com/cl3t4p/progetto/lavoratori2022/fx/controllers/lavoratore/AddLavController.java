@@ -180,7 +180,9 @@ public class AddLavController implements Initializable {
             throw new JavaFXDataError("Campo vuoto o errore nell'inserimento di un dato");
         if(data_inizio.getValue().isAfter(data_fine.getValue()))
             throw new JavaFXDataError("La data di inizio non puó essere dopo la data di fine");
-        lavoratore.setId_dipendente(Main.getMemRepo().getDipendente().getId());
+        if(data_nascita.getValue().isAfter(LocalDate.now()))
+            throw new JavaFXDataError("La data di nascita non puó essere dopo la data odierna");
+        lavoratore.setId_dipendente(memRepo.getDipendente().getId());
         return lavoratore;
     }
 
@@ -254,7 +256,7 @@ public class AddLavController implements Initializable {
     private void delLav(ActionEvent event) {
         ButtonType si = new ButtonType("Si", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+        Alert alert = new Alert(Alert.AlertType.NONE,
                 "Si è sicuri di voler eliminare il lavoratore?",
                 si,
                 no);
