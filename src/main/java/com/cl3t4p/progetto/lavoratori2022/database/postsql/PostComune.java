@@ -17,14 +17,18 @@ public class PostComune extends APost implements ComuneRepo {
 
 
     @Override
-    public String getComuniByName(String name) throws SQLException {
+    public String getComuniByName(String name) {
         String sql = "SELECT DISTINCT * FROM comune WHERE nome_comune ILIKE ?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1, name.toUpperCase(Locale.ROOT));
-        ResultSet resultSet = statement.executeQuery();
-        if (!resultSet.next())
-            return "";
-        return resultSet.getString(1);
+        try(
+        PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setString(1, name.toUpperCase(Locale.ROOT));
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next())
+                return null;
+            return resultSet.getString(1);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     @Override
@@ -32,7 +36,7 @@ public class PostComune extends APost implements ComuneRepo {
         String sql = "DELETE FROM lav_comune WHERE ( id_lavoratore = ? AND comune = ?);";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lav_id);
-            statement.setString(2, key);
+            statement.setString(2, key.toUpperCase());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             return false;
@@ -40,12 +44,14 @@ public class PostComune extends APost implements ComuneRepo {
     }
 
     @Override
-    public void addComuneByID(String comune, int id_lavoratore) throws SQLException {
+    public boolean addComuneByID(String comune, int id_lavoratore) {
         String sql = "INSERT INTO lav_comune(comune,id_lavoratore) VALUES(?,?)";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, comune.toUpperCase());
             statement.setInt(2, id_lavoratore);
-            statement.executeUpdate();
+            return statement.executeUpdate() > 0;
+        }catch (SQLException e) {
+            return false;
         }
     }
 
@@ -56,22 +62,20 @@ public class PostComune extends APost implements ComuneRepo {
     }
 
     @Override
-    public List<String> getComuneILike(String name) throws SQLException {
-        name = "%" + name + "%";
-        String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1, name.toUpperCase(Locale.ROOT));
-        return getAllComuni(statement);
+    public List<String> getComuneILike(String name) {
+        return getComuneILike(name, 20);
     }
 
     @Override
-    public List<String> getComuneILike(String name, int limit) throws SQLException {
-        name = "%" + name + "%";
-        String sql = "SELECT * FROM comune WHERE nome_comune ILIKE ? LIMIT ?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1, name.toUpperCase(Locale.ROOT));
-        statement.setInt(2, limit);
-        return getAllComuni(statement);
+    public List<String> getComuneILike(String name, int limit) {
+        String sql = "SELECT * FROM comune WHERE nome_comune ILIKE concat('%', ?, '%') LIMIT ?";
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setString(1, name.toUpperCase(Locale.ROOT));
+            statement.setInt(2, limit);
+            return getAllComuni(statement);
+        } catch (SQLException e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override
@@ -84,13 +88,12 @@ public class PostComune extends APost implements ComuneRepo {
     }
 
 
-    protected boolean dellAllComuniByID(int lav_id) {
+    protected void dellAllComuniByID(int lav_id) {
         String sql = "DELETE FROM lav_comune WHERE id_lavoratore = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lav_id);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            return false;
+            statement.executeUpdate();
+        } catch (SQLException ignored) {
         }
     }
 }

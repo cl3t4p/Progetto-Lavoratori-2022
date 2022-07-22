@@ -36,12 +36,6 @@ public class Lavoro implements ValidateData, Mappable {
     public boolean validate() {
         if (!ValidateData.super.validate())
             return false;
-        try {
-            if (Main.getRepo().getComuneRepo().getComuniByName(luogo) == null)
-                return false;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return true;
+        return Main.getRepo().getComuneRepo().getComuniByName(luogo) != null;
     }
 }

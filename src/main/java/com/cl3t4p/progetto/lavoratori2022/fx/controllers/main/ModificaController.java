@@ -45,7 +45,7 @@ public class ModificaController implements Initializable {
         lav_bt.disableProperty().bind(lav_view.getSelectionModel().getTableView().getFocusModel().focusedIndexProperty().isEqualTo(-1));
 
         CellButtonFactoryFactory factory = new CellButtonFactoryFactory((lav) -> {
-            Main.getMemRepo().setLavoratore_id(Integer.valueOf(lav.get("id")));
+            Main.getDataRepo().setLavoratore_id(Integer.valueOf(lav.get("id")));
             Main.getLoader().loadView("LAVORATORE");
             return null;
         }, "*");
@@ -92,7 +92,7 @@ public class ModificaController implements Initializable {
     }
 
     public void aggLavoro(ActionEvent actionEvent) {
-        Main.getMemRepo().setLavoratore_id(Integer.valueOf(lav_view.getSelectionModel().getTableView().getFocusModel().getFocusedItem().get("id")));
+        Main.getDataRepo().setLavoratore_id(Integer.valueOf(lav_view.getSelectionModel().getTableView().getFocusModel().getFocusedItem().get("id")));
         Main.getLoader().loadView("MENU_LAVORO");
     }
 }

@@ -27,7 +27,7 @@ public class LoginController {
         String password = txpass.getText();
         Dipendente dipendente = dipendenteRepo.getDipendenteByUserAndPassword(username, password);
         if (dipendente != null) {
-            Main.getMemRepo().setDipendente(dipendente);
+            Main.getDataRepo().setDipendente(dipendente);
             Main.getLoader().loadView("MENU");
         } else
             JavaFXError.show("Username o password errati!");

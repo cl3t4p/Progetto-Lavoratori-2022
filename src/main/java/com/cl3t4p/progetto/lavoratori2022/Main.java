@@ -1,7 +1,7 @@
 package com.cl3t4p.progetto.lavoratori2022;
 
 
-import com.cl3t4p.progetto.lavoratori2022.repo.MemRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.io.ViewLoader;
@@ -21,7 +21,7 @@ public class Main extends Application {
     @Getter
     static ViewLoader loader = new ViewLoader("/view/");
     @Getter
-    static MemRepo memRepo = new MemRepo();
+    static DataRepo dataRepo = new DataRepo();
 
     @Override
     public void start(Stage stage) {
@@ -37,7 +37,7 @@ public class Main extends Application {
         stage.setResizable(false);
         loader.setPrimaryStage(stage);
 
-        memRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01","12345"));
+        dataRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01","12345"));
 
         loader.loadView("MENU");
     }
@@ -47,7 +47,6 @@ public class Main extends Application {
     }
 
     private void loadDBConfig() throws IOException {
-        //TODO make the file originate from outside folder
         FileReader reader = new FileReader(getClass().getResource("/db.properties").getPath());
         Properties p = new Properties();
         p.load(reader);

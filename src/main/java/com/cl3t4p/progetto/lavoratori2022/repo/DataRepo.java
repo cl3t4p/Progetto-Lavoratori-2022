@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class MemRepo {
+public class DataRepo {
     Dipendente dipendente;
     Integer lavoratore_id;
 }

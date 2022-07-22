@@ -32,7 +32,7 @@ public class EmeViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lavoratore_id = Main.getMemRepo().getLavoratore_id();
+        lavoratore_id = Main.getDataRepo().getLavoratore_id();
         lav_id.setText(lav_id.getText() + lavoratore_id);
 
         eme_view.setupColumn(col_nome, "nome");

@@ -68,13 +68,12 @@ public class PostLingua extends APost implements LinguaRepo {
     }
 
 
-    protected boolean delAllLingueByID(int lav_id) {
+    protected void delAllLingueByID(int lav_id) {
         String sql = "DELETE FROM lingua_lav WHERE id_lavoratore = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, lav_id);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            return false;
+            statement.executeUpdate();
+        } catch (SQLException ignored) {
         }
     }
 }

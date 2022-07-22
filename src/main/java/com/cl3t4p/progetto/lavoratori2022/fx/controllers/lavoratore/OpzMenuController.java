@@ -49,7 +49,7 @@ public class OpzMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        lavoratore_id = Main.getMemRepo().getLavoratore_id();
+        lavoratore_id = Main.getDataRepo().getLavoratore_id();
         setupLabel();
         setupPatenti();
         setupLingue();
@@ -81,11 +81,7 @@ public class OpzMenuController implements Initializable {
     public void comune_search(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
             List<String> comuni;
-            try {
-                comuni = comuneRepo.getComuneILike(comune.getEditor().getText(), 20);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            comuni = comuneRepo.getComuneILike(comune.getEditor().getText(), 20);
             comune.getItems().clear();
             comune.getItems().addAll(comuni);
             comune.show();
@@ -94,17 +90,14 @@ public class OpzMenuController implements Initializable {
 
     public void addComune(ActionEvent event) {
         if (comune.getValue().isEmpty()) return;
-        try {
-            if (comuneRepo.getComuniByName(comune.getValue()).isEmpty()) {
-                JavaFXError.show("Non esiste quel comune!");
-                return;
-            }
-            comuneRepo.addComuneByID(comune.getValue(), lavoratore_id);
-            comuni_view.refreshData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JavaFXError.DB_ERROR.show();
+        if (comuneRepo.getComuniByName(comune.getValue())== null) {
+            JavaFXError.show("Non esiste quel comune!");
+            return;
         }
+        if(comuneRepo.addComuneByID(comune.getValue(), lavoratore_id))
+            comuni_view.refreshData();
+        else
+            JavaFXError.DB_ERROR.printContent("Impossibile aggiungere il comune");
         comune.setValue("");
     }
 

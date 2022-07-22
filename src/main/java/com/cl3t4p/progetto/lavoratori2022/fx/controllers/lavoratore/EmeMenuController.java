@@ -45,7 +45,7 @@ public class EmeMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {
-        lavoratore_id = Main.getMemRepo().getLavoratore_id();
+        lavoratore_id = Main.getDataRepo().getLavoratore_id();
         lav_id.setText(lav_id.getText() + lavoratore_id);
 
 

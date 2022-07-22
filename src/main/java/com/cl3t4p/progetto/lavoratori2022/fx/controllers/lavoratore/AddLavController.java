@@ -2,7 +2,7 @@ package com.cl3t4p.progetto.lavoratori2022.fx.controllers.lavoratore;
 
 import com.cl3t4p.progetto.lavoratori2022.Main;
 import com.cl3t4p.progetto.lavoratori2022.functions.validation.RegexChecker;
-import com.cl3t4p.progetto.lavoratori2022.repo.MemRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.DataRepo;
 import com.cl3t4p.progetto.lavoratori2022.exception.JavaFXDataError;
 import com.cl3t4p.progetto.lavoratori2022.fx.components.numbertf.LongTextField;
 import com.cl3t4p.progetto.lavoratori2022.repo.EmergenzaRepo;
@@ -24,8 +24,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -36,7 +34,7 @@ public class AddLavController implements Initializable {
 
     final LavoratoreRepo lavRepo = Main.getRepo().getLavoratoreRepo();
     final EmergenzaRepo emeRepo = Main.getRepo().getEmergenzaRepo();
-    final MemRepo memRepo = Main.getMemRepo();
+    final DataRepo dataRepo = Main.getDataRepo();
 
     @FXML
     GridPane eme_pane;
@@ -60,18 +58,18 @@ public class AddLavController implements Initializable {
         telefono.focusedProperty().addListener(this::check_number);
         data_nascita.setOnAction(this::checkNascita);
 
-        Dipendente dipendente = memRepo.getDipendente();
+        Dipendente dipendente = dataRepo.getDipendente();
         id_dipendente.setText(id_dipendente.getText() + dipendente.getId());
 
 
-        if (memRepo.getLavoratore_id() != null)
+        if (dataRepo.getLavoratore_id() != null)
             setupModify();
     }
 
 
     private void setupModify() {
         remove_button.setVisible(true);
-        id_lavoratore.setText(id_lavoratore.getText() + memRepo.getLavoratore_id());
+        id_lavoratore.setText(id_lavoratore.getText() + dataRepo.getLavoratore_id());
         id_lavoratore.setVisible(true);
         eme_pane.setVisible(false);
         main_button.setText("CONFERMA MODIFICHE");
@@ -83,7 +81,7 @@ public class AddLavController implements Initializable {
      * This method will fill the fields with the data of the lavoratore that is being edited.
      */
     private void setupLavoratore() {
-        Lavoratore lavoratore = lavRepo.getLavoratoreByID(memRepo.getLavoratore_id());
+        Lavoratore lavoratore = lavRepo.getLavoratoreByID(dataRepo.getLavoratore_id());
         nome.setText(lavoratore.getNome());
         cognome.setText(lavoratore.getCognome());
         luogo_nascita.setText(lavoratore.getLuogo_nascita());
@@ -184,14 +182,14 @@ public class AddLavController implements Initializable {
             throw new JavaFXDataError("La data di inizio non puó essere dopo la data di fine");
         if(data_nascita.getValue().isAfter(LocalDate.now()))
             throw new JavaFXDataError("La data di nascita non puó essere dopo la data odierna");
-        lavoratore.setId_dipendente(memRepo.getDipendente().getId());
+        lavoratore.setId_dipendente(dataRepo.getDipendente().getId());
         return lavoratore;
     }
 
     private void modifica_lavoratore(ActionEvent event) {
         try {
             Lavoratore lavoratore = getLavoratore();
-            lavoratore.setId(memRepo.getLavoratore_id());
+            lavoratore.setId(dataRepo.getLavoratore_id());
             try {
                 lavRepo.updateLavoratore(lavoratore);
                 Main.getLoader().loadView("LAVORATORE");
@@ -211,7 +209,7 @@ public class AddLavController implements Initializable {
             Emergenza emergenza = getEmergenza();
             try {
                 int id = lavRepo.addLavoratore(lavoratore);
-                memRepo.setLavoratore_id(id);
+                dataRepo.setLavoratore_id(id);
                 emeRepo.addEmergenza(emergenza, id);
                 Main.getLoader().loadView("LAVORATORE");
             } catch (SQLException e) {
@@ -240,7 +238,7 @@ public class AddLavController implements Initializable {
 
     @FXML
     private void back(ActionEvent event) {
-        Main.getMemRepo().setLavoratore_id(null);
+        Main.getDataRepo().setLavoratore_id(null);
         Main.getLoader().loadView("MENU");
     }
 
@@ -267,9 +265,9 @@ public class AddLavController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.orElse(si) == si) {
-            int id = memRepo.getLavoratore_id();
+            int id = dataRepo.getLavoratore_id();
             lavRepo.delLavoratore(id);
-            memRepo.setLavoratore_id(null);
+            dataRepo.setLavoratore_id(null);
             Main.getLoader().loadView("MENU");
         }
 

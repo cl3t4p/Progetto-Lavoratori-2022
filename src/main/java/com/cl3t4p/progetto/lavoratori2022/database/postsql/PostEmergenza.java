@@ -123,13 +123,7 @@ public class PostEmergenza extends APost implements EmergenzaRepo {
     }
 
 
-    protected boolean dellAllEmergenzeByID(int lav_id) {
-        List<Emergenza> emergenze = getEmergenze(lav_id);
-        boolean success = true;
-        for (Emergenza emergenza : emergenze) {
-            if(!delEmergenzeByID(lav_id, emergenza.toMap()))
-                success = false;
-        }
-        return success;
+    protected void dellAllEmergenzeByID(int lav_id) {
+        getEmergenze(lav_id).forEach(emergenza -> delEmergenzeByID(lav_id, emergenza.toMap()));
     }
 }
