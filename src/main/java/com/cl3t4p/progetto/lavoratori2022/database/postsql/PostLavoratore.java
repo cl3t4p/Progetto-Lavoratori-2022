@@ -3,16 +3,17 @@ package com.cl3t4p.progetto.lavoratori2022.database.postsql;
 import com.cl3t4p.progetto.lavoratori2022.database.PostDriver;
 import com.cl3t4p.progetto.lavoratori2022.database.SQLMapper;
 import com.cl3t4p.progetto.lavoratori2022.database.filter.FilterBuilder;
+import com.cl3t4p.progetto.lavoratori2022.repo.ComuneRepo;
 import com.cl3t4p.progetto.lavoratori2022.repo.LavoratoreRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.LavoroRepo;
+import com.cl3t4p.progetto.lavoratori2022.repo.MainRepo;
 import com.cl3t4p.progetto.lavoratori2022.type.Lavoratore;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class PostLavoratore extends APost implements LavoratoreRepo {
 
@@ -82,6 +83,13 @@ public class PostLavoratore extends APost implements LavoratoreRepo {
 
     @Override
     public boolean delLavoratore(int id) {
+        PostDriver repo = super.driver;
+        ((PostEmergenza)repo.getEmergenzaRepo()).dellAllEmergenzeByID(id);
+        ((PostComune)repo.getComuneRepo()).dellAllComuniByID(id);
+        ((PostEsperienza)repo.getEsperienzaRepo()).dellAllEspByID(id);
+        ((PostLavoro)repo.getLavoroRepo()).dellAllLavoroByID(id);
+        ((PostLingua)repo.getLinguaRepo()).delAllLingueByID(id);
+        ((PostPatente)repo.getPatenteRepo()).delAllPatentiByID(id);
         String sql = "DELETE FROM lavoratore WHERE id=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);

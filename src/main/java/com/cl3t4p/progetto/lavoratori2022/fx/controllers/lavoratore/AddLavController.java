@@ -24,6 +24,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -265,7 +267,10 @@ public class AddLavController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.orElse(si) == si) {
-            lavRepo.delLavoratore(memRepo.getLavoratore_id());
+            int id = memRepo.getLavoratore_id();
+            lavRepo.delLavoratore(id);
+            memRepo.setLavoratore_id(null);
+            Main.getLoader().loadView("MENU");
         }
 
     }

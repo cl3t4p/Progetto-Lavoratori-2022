@@ -66,4 +66,15 @@ public class PostEsperienza extends APost implements EsperienzaRepo {
         String sql = "SELECT esp_lav.esperienza FROM lavoratore INNER JOIN esp_lav ON(lavoratore.id=esp_lav.id_lavoratore) WHERE lavoratore.id=?";
         return getListString(id, sql);
     }
+
+
+    protected boolean dellAllEspByID(int lav_id) {
+        String sql = "DELETE FROM esp_lav WHERE id_lavoratore = ?";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, lav_id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

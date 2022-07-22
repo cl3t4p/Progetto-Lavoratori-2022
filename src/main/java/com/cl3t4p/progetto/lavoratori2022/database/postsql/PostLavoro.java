@@ -68,4 +68,15 @@ public class PostLavoro extends APost implements LavoroRepo {
             return false;
         }
     }
+
+
+    protected boolean dellAllLavoroByID(int lav_id) {
+        String sql = "DELETE FROM lavoro_svolto WHERE id_lavoratore=?";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, lav_id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

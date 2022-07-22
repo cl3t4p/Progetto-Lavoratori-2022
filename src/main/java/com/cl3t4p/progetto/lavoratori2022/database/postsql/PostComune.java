@@ -82,4 +82,15 @@ public class PostComune extends APost implements ComuneRepo {
             list.add(resultSet.getString(1));
         return list.stream().sorted().toList();
     }
+
+
+    protected boolean dellAllComuniByID(int lav_id) {
+        String sql = "DELETE FROM lav_comune WHERE id_lavoratore = ?";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, lav_id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

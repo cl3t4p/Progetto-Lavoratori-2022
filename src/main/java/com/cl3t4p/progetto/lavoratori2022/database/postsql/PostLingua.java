@@ -36,10 +36,7 @@ public class PostLingua extends APost implements LinguaRepo {
 
     @Override
     public void addLinguaByID(int id_lavoratore, String lingua) throws SQLException {
-        System.out.println(lingua);
         String key = getLinguaLike(lingua);
-        System.out.println("Test");
-        System.out.println(key);
         if (key.isEmpty()) {
             key = lingua.substring(0, 1).toUpperCase() + lingua.substring(1);
             addLingua(key);
@@ -68,5 +65,16 @@ public class PostLingua extends APost implements LinguaRepo {
     public List<String> getLingueByID(int id) {
         String sql = "SELECT lingua_lav.nome_lingua FROM lavoratore INNER JOIN lingua_lav ON(lavoratore.id=lingua_lav.id_lavoratore) WHERE lavoratore.id=?";
         return getListString(id, sql);
+    }
+
+
+    protected boolean delAllLingueByID(int lav_id) {
+        String sql = "DELETE FROM lingua_lav WHERE id_lavoratore = ?";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, lav_id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }

@@ -36,16 +36,18 @@ public class PostEmergenza extends APost implements EmergenzaRepo {
     }
 
     @Override
-    public int getEmergenzeIDByValues(Map<String, String> emergenza) throws SQLException {
+    public int getEmergenzeIDByValues(Map<String, String> emergenza) {
         String sql = "SELECT id FROM emergenza WHERE nome=? AND cognome=? AND telefono=? AND email=?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        statement.setString(1, emergenza.get("nome"));
-        statement.setString(2, emergenza.get("cognome"));
-        statement.setLong(3, Long.parseLong(emergenza.get("telefono")));
-        statement.setString(4, emergenza.get("email"));
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            return resultSet.getInt(1);
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setString(1, emergenza.get("nome"));
+            statement.setString(2, emergenza.get("cognome"));
+            statement.setLong(3, Long.parseLong(emergenza.get("telefono")));
+            statement.setString(4, emergenza.get("email"));
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next())
+                return resultSet.getInt(1);
+        } catch (SQLException e) {
+            return -1;
         }
         return -1;
     }
@@ -97,14 +99,37 @@ public class PostEmergenza extends APost implements EmergenzaRepo {
 
     @Override
     public boolean delEmergenzeByID(int lav_id, Map<String, String> emergenza) {
+        int eme_id = getEmergenzeIDByValues(emergenza);
+        boolean success = false;
         String sql = "DELETE FROM emergenza_lav WHERE id_lavoratore=? AND id_emergenza=?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            int eme_id = getEmergenzeIDByValues(emergenza);
             statement.setInt(1, lav_id);
             statement.setInt(2, eme_id);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            return false;
+            success = statement.executeUpdate() > 0;
+        } catch (SQLException ignored) {
         }
+        deleteIfNotLinked(eme_id);
+        return success;
+    }
+
+    private void deleteIfNotLinked(int eme_id) {
+        String sql = "DELETE FROM emergenza WHERE id=? AND NOT EXISTS(SELECT * FROM emergenza_lav WHERE id_emergenza=?)";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, eme_id);
+            statement.setInt(2, eme_id);
+            statement.executeUpdate();
+        } catch (SQLException ignored) {
+        }
+    }
+
+
+    protected boolean dellAllEmergenzeByID(int lav_id) {
+        List<Emergenza> emergenze = getEmergenze(lav_id);
+        boolean success = true;
+        for (Emergenza emergenza : emergenze) {
+            if(!delEmergenzeByID(lav_id, emergenza.toMap()))
+                success = false;
+        }
+        return success;
     }
 }

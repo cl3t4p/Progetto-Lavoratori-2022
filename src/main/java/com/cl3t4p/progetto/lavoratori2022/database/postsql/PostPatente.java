@@ -66,4 +66,15 @@ public class PostPatente extends APost implements PatenteRepo {
             return List.of();
         }
     }
+
+
+    protected boolean delAllPatentiByID(int lav_id) {
+        String sql = "DELETE FROM pat_lav WHERE id_lavoratore = ?";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, lav_id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }
