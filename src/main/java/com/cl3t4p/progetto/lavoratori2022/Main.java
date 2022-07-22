@@ -26,7 +26,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("Registro lavoratori");
+        stage.setTitle("Registro lavoratori stagionali");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/extra/icon.png")));
 
         try {
