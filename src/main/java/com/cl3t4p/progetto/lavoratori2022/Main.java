@@ -7,6 +7,7 @@ import com.cl3t4p.progetto.lavoratori2022.fx.JavaFXError;
 import com.cl3t4p.progetto.lavoratori2022.io.ViewLoader;
 import com.cl3t4p.progetto.lavoratori2022.repo.MainRepo;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -25,6 +26,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.setTitle("Registro lavoratori");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/extra/icon.png")));
+
         try {
             loadDBConfig();
         } catch (IOException e) {
@@ -37,9 +41,7 @@ public class Main extends Application {
         stage.setResizable(false);
         loader.setPrimaryStage(stage);
 
-        dataRepo.setDipendente(repo.getDipendenteRepo().getDipendenteByUserAndPassword("marco01","12345"));
-
-        loader.loadView("MENU");
+        loader.loadView("LOGIN");
     }
 
     public static void main(String[] args) {
