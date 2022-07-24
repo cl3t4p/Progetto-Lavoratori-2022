@@ -34,6 +34,7 @@ public class LavoratoreViewController implements Initializable {
     }
 
     public void back(ActionEvent event) {
+        dataRepo.setLavoratore_id(null);
         Main.getLoader().loadView("MENU");
     }
 
