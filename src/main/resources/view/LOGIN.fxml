@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="302.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/17"
+<AnchorPane onKeyPressed="#enterPress" prefHeight="302.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cl3t4p.progetto.lavoratori2022.fx.controllers.main.LoginController">
     <Label layoutX="102.0" layoutY="105.0" text="USERNAME"/>
