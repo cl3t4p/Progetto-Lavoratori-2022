@@ -1,9 +1,0 @@
-Date controlli
-Sequence Diagram del software progettato punto d. sul testo
-
-
-Da fare in futuro
-Automatizzare da database eliminare lavori superiori ai 5 anni\
-
-Hashing password
-
